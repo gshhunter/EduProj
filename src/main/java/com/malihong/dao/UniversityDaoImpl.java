@@ -21,10 +21,10 @@ public class UniversityDaoImpl implements UniversityDao{
 	@PersistenceContext
 	private EntityManager em;
 	
-	@Override
+/*	@Override
 	@Transactional
 	public University findUniversityById(int uid) {
-		String str = "SELECT u FROM University u WHERE u.id_eUni = ?1";
+		String str = "SELECT u FROM University u WHERE u.id = ?1";
 		Query query = em.createQuery(str, University.class);
 		query.setParameter(1, uid);
 		
@@ -36,6 +36,13 @@ public class UniversityDaoImpl implements UniversityDao{
 			// e.printStackTrace();
 			logger.info("There is no result");
 		}
+		return u;
+	}*/
+	
+	@Override
+	@Transactional
+	public University findUniversityById(int uid) {
+		University u=em.find(University.class, uid);
 		return u;
 	}
 
