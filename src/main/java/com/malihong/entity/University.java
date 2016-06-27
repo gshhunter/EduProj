@@ -1,68 +1,58 @@
 package com.malihong.entity;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 
+
+/**
+ * The persistent class for the e_university database table.
+ * 
+ */
 @Entity
-@Table(name = "eUniversity")
-public class University implements Serializable{
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4634141734900055469L;
+@Table(name="e_university")
+@NamedQuery(name="University.findAll", query="SELECT u FROM University u")
+public class University implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
-	private int id_eUni;
-	
-	private String cn_name;
-	
-	private String en_name;
-	
+	@Column(name="id_e_uni")
+	private int idEUni;
+
 	private String address;
-	
+
 	private String city;
-	
-	private String state;
-	
+
+	@Column(name="cn_name")
+	private String cnName;
+
 	private String country;
-	
-	private int postcode;
-	
+
+	@Column(name="en_name")
+	private String enName;
+
 	private double latitude;
-	
+
 	private double longitude;
-	
+
+	private int postcode;
+
+	private String state;
+
 	private String website;
 
-	public int getId_eUni() {
-		return id_eUni;
+	public University() {
 	}
 
-	public void setId_eUni(int id_eUni) {
-		this.id_eUni = id_eUni;
+	public int getIdEUni() {
+		return this.idEUni;
 	}
 
-	public String getCn_name() {
-		return cn_name;
-	}
-
-	public void setCn_name(String cn_name) {
-		this.cn_name = cn_name;
-	}
-
-	public String getEn_name() {
-		return en_name;
-	}
-
-	public void setEn_name(String en_name) {
-		this.en_name = en_name;
+	public void setIdEUni(int idEUni) {
+		this.idEUni = idEUni;
 	}
 
 	public String getAddress() {
-		return address;
+		return this.address;
 	}
 
 	public void setAddress(String address) {
@@ -70,39 +60,39 @@ public class University implements Serializable{
 	}
 
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-	public String getState() {
-		return state;
+	public String getCnName() {
+		return this.cnName;
 	}
 
-	public void setState(String state) {
-		this.state = state;
+	public void setCnName(String cnName) {
+		this.cnName = cnName;
 	}
 
 	public String getCountry() {
-		return country;
+		return this.country;
 	}
 
 	public void setCountry(String country) {
 		this.country = country;
 	}
 
-	public int getPostcode() {
-		return postcode;
+	public String getEnName() {
+		return this.enName;
 	}
 
-	public void setPostcode(int postcode) {
-		this.postcode = postcode;
+	public void setEnName(String enName) {
+		this.enName = enName;
 	}
 
 	public double getLatitude() {
-		return latitude;
+		return this.latitude;
 	}
 
 	public void setLatitude(double latitude) {
@@ -110,20 +100,35 @@ public class University implements Serializable{
 	}
 
 	public double getLongitude() {
-		return longitude;
+		return this.longitude;
 	}
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
+	public int getPostcode() {
+		return this.postcode;
+	}
+
+	public void setPostcode(int postcode) {
+		this.postcode = postcode;
+	}
+
+	public String getState() {
+		return this.state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
 	public String getWebsite() {
-		return website;
+		return this.website;
 	}
 
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
-	
+
 }

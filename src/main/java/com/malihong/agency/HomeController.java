@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.malihong.entity.University;
+import com.malihong.service.AccountService;
 import com.malihong.service.UniversityService;
 
 /**
@@ -26,6 +27,9 @@ public class HomeController {
 	
 	@Autowired
 	private UniversityService universityService;
+	@Autowired
+	private AccountService accountService;
+	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -35,16 +39,6 @@ public class HomeController {
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		University uni = universityService.findUniversityById(3);
-		List<University> us = universityService.findAllUniversity();
-		if (uni != null) {
-			logger.info("University CN_name: " + uni.getCn_name());
-		}
-		
-		if(us != null) {
-			logger.info("One of list: " + us.get(0).getCn_name());
-		}
 		
 		String formattedDate = dateFormat.format(date);
 		

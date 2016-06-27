@@ -33,8 +33,8 @@ public class UniversityDaoImpl implements UniversityDao{
 			u = (University)query.getSingleResult();
 		} catch (NoResultException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.debug("There is no result");
+			// e.printStackTrace();
+			logger.info("There is no result");
 		}
 		return u;
 	}

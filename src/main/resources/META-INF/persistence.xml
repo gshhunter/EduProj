@@ -6,6 +6,12 @@
   		<class>com.malihong.entity.University</class>
   		<class>com.malihong.entity.Profile</class>
   		<class>com.malihong.entity.Identification</class>
+  		<class>com.malihong.entity.Creditcard</class>
+  		<class>com.malihong.entity.Option</class>
+  		<class>com.malihong.entity.Order</class>
+  		<class>com.malihong.entity.Plan</class>
+  		<class>com.malihong.entity.Request</class>
+  		<class>com.malihong.entity.Transaction</class>
     	<properties>
 	        <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
 	        <property name="hibernate.hbm2ddl.auto" value="update"/>

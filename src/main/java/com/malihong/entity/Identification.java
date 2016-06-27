@@ -1,161 +1,171 @@
 package com.malihong.entity;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
 
-@Entity
-@Table(name = "eIdentification")
-public class Identification implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8328505150390339336L;
+/**
+ * The persistent class for the e_identification database table.
+ * 
+ */
+@Entity
+@Table(name="e_identification")
+@NamedQuery(name="Identification.findAll", query="SELECT i FROM Identification i")
+public class Identification implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name = "id_identity")
-	@GeneratedValue
-	private int id_identity;
-	
-	private String qq;
-	
-	private int is_qq;
-	
-	private String weibo;
-	
-	private int is_weibo;
-	
-	private String wechat;
-	
-	private int is_wechat;
-	
-	private String passport;
-	
-	private int is_passport;
-	
+	@Column(name="id_identity")
+	private int idIdentity;
+
 	private String cellphone;
-	
-	private int is_cellphone;
-	
+
 	private String email;
-	
-	private int is_email;
 
-	@OneToOne(fetch=FetchType.LAZY, mappedBy="identity")
-	private Account account;
-	
-	public int getId_identity() {
-		return id_identity;
+	@Column(name="is_cellphone")
+	private int isCellphone;
+
+	@Column(name="is_email")
+	private int isEmail;
+
+	@Column(name="is_passport")
+	private int isPassport;
+
+	@Column(name="is_qq")
+	private int isQq;
+
+	@Column(name="is_wechat")
+	private int isWechat;
+
+	@Column(name="is_weibo")
+	private int isWeibo;
+
+	private String passport;
+
+	private String qq;
+
+	private String wechat;
+
+	private String weibo;
+
+	//bi-directional many-to-one association to Account
+	@ManyToOne
+	@JoinColumn(name="id_account")
+	private Account EAccount;
+
+	public Identification() {
 	}
 
-	public void setId_identity(int id_identity) {
-		this.id_identity = id_identity;
+	public int getIdIdentity() {
+		return this.idIdentity;
 	}
 
-	public String getQq() {
-		return qq;
-	}
-
-	public void setQq(String qq) {
-		this.qq = qq;
-	}
-
-	public int getIs_qq() {
-		return is_qq;
-	}
-
-	public void setIs_qq(int is_qq) {
-		this.is_qq = is_qq;
-	}
-
-	public String getWeibo() {
-		return weibo;
-	}
-
-	public void setWeibo(String weibo) {
-		this.weibo = weibo;
-	}
-
-	public int getIs_weibo() {
-		return is_weibo;
-	}
-
-	public void setIs_weibo(int is_weibo) {
-		this.is_weibo = is_weibo;
-	}
-
-	public String getWechat() {
-		return wechat;
-	}
-
-	public void setWechat(String wechat) {
-		this.wechat = wechat;
-	}
-
-	public int getIs_wechat() {
-		return is_wechat;
-	}
-
-	public void setIs_wechat(int is_wechat) {
-		this.is_wechat = is_wechat;
-	}
-
-	public String getPassport() {
-		return passport;
-	}
-
-	public void setPassport(String passport) {
-		this.passport = passport;
-	}
-
-	public int getIs_passport() {
-		return is_passport;
-	}
-
-	public void setIs_passport(int is_passport) {
-		this.is_passport = is_passport;
+	public void setIdIdentity(int idIdentity) {
+		this.idIdentity = idIdentity;
 	}
 
 	public String getCellphone() {
-		return cellphone;
+		return this.cellphone;
 	}
 
 	public void setCellphone(String cellphone) {
 		this.cellphone = cellphone;
 	}
 
-	public int getIs_cellphone() {
-		return is_cellphone;
-	}
-
-	public void setIs_cellphone(int is_cellphone) {
-		this.is_cellphone = is_cellphone;
-	}
-
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public int getIs_email() {
-		return is_email;
+	public int getIsCellphone() {
+		return this.isCellphone;
 	}
 
-	public void setIs_email(int is_email) {
-		this.is_email = is_email;
+	public void setIsCellphone(int isCellphone) {
+		this.isCellphone = isCellphone;
 	}
 
-	public Account getAccount() {
-		return account;
+	public int getIsEmail() {
+		return this.isEmail;
 	}
 
-	public void setAccount(Account account) {
-		this.account = account;
+	public void setIsEmail(int isEmail) {
+		this.isEmail = isEmail;
 	}
-	
-	
+
+	public int getIsPassport() {
+		return this.isPassport;
+	}
+
+	public void setIsPassport(int isPassport) {
+		this.isPassport = isPassport;
+	}
+
+	public int getIsQq() {
+		return this.isQq;
+	}
+
+	public void setIsQq(int isQq) {
+		this.isQq = isQq;
+	}
+
+	public int getIsWechat() {
+		return this.isWechat;
+	}
+
+	public void setIsWechat(int isWechat) {
+		this.isWechat = isWechat;
+	}
+
+	public int getIsWeibo() {
+		return this.isWeibo;
+	}
+
+	public void setIsWeibo(int isWeibo) {
+		this.isWeibo = isWeibo;
+	}
+
+	public String getPassport() {
+		return this.passport;
+	}
+
+	public void setPassport(String passport) {
+		this.passport = passport;
+	}
+
+	public String getQq() {
+		return this.qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getWechat() {
+		return this.wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public String getWeibo() {
+		return this.weibo;
+	}
+
+	public void setWeibo(String weibo) {
+		this.weibo = weibo;
+	}
+
+	public Account getEAccount() {
+		return this.EAccount;
+	}
+
+	public void setEAccount(Account EAccount) {
+		this.EAccount = EAccount;
+	}
+
 }

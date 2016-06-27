@@ -1,126 +1,160 @@
 package com.malihong.entity;
 
 import java.io.Serializable;
-import java.util.Date;
-
 import javax.persistence.*;
+import java.util.Date;
+import java.util.List;
 
+
+/**
+ * The persistent class for the e_account database table.
+ * 
+ */
 @Entity
-@Table(name = "eAccount")
+@Table(name="e_account")
+@NamedQuery(name="Account.findAll", query="SELECT a FROM Account a")
 public class Account implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8258995044531622156L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue
-	private int id_account;
-	
-	private String username;
-	
-	private String email;
-	
+	@Column(name="id_account")
+	private int idAccount;
+
 	private String cellphone;
-	
-	private String passwordMD5;
-	
+
+	private String email;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="last_login_time")
+	private Date lastLoginTime;
+
+	private String passwordmd5;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="reg_time")
+	private Date regTime;
+
 	private String type;
-	
-	private Date reg_time;
-	
-	private Date last_login_time;
 
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "id_profile")
-	private Profile profile;
-	
-	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "id_identity")
-	private Identification identity;
-	
-	public int getId_account() {
-		return id_account;
+	private String username;
+
+	//bi-directional many-to-one association to Identification
+	@OneToMany(mappedBy="EAccount")
+	private List<Identification> EIdentifications;
+
+	//bi-directional many-to-one association to Profile
+	@OneToMany(mappedBy="EAccount")
+	private List<Profile> EProfiles;
+
+	public Account() {
 	}
 
-	public void setId_account(int id_account) {
-		this.id_account = id_account;
+	public int getIdAccount() {
+		return this.idAccount;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
+	public void setIdAccount(int idAccount) {
+		this.idAccount = idAccount;
 	}
 
 	public String getCellphone() {
-		return cellphone;
+		return this.cellphone;
 	}
 
 	public void setCellphone(String cellphone) {
 		this.cellphone = cellphone;
 	}
 
-	public String getPasswordMD5() {
-		return passwordMD5;
+	public String getEmail() {
+		return this.email;
 	}
 
-	public void setPasswordMD5(String passwordMD5) {
-		this.passwordMD5 = passwordMD5;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getLastLoginTime() {
+		return this.lastLoginTime;
+	}
+
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+
+	public String getPasswordmd5() {
+		return this.passwordmd5;
+	}
+
+	public void setPasswordmd5(String passwordmd5) {
+		this.passwordmd5 = passwordmd5;
+	}
+
+	public Date getRegTime() {
+		return this.regTime;
+	}
+
+	public void setRegTime(Date regTime) {
+		this.regTime = regTime;
 	}
 
 	public String getType() {
-		return type;
+		return this.type;
 	}
 
 	public void setType(String type) {
 		this.type = type;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getReg_time() {
-		return reg_time;
+	public String getUsername() {
+		return this.username;
 	}
 
-	public void setReg_time(Date reg_time) {
-		this.reg_time = reg_time;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getLast_login_time() {
-		return last_login_time;
+	public List<Identification> getEIdentifications() {
+		return this.EIdentifications;
 	}
 
-	public void setLast_login_time(Date last_login_time) {
-		this.last_login_time = last_login_time;
+	public void setEIdentifications(List<Identification> EIdentifications) {
+		this.EIdentifications = EIdentifications;
 	}
 
-	public Profile getProfile() {
-		return profile;
+	public Identification addEIdentification(Identification EIdentification) {
+		getEIdentifications().add(EIdentification);
+		EIdentification.setEAccount(this);
+
+		return EIdentification;
 	}
 
-	public void setProfile(Profile profile) {
-		this.profile = profile;
+	public Identification removeEIdentification(Identification EIdentification) {
+		getEIdentifications().remove(EIdentification);
+		EIdentification.setEAccount(null);
+
+		return EIdentification;
 	}
 
-	public Identification getIdentity() {
-		return identity;
+	public List<Profile> getEProfiles() {
+		return this.EProfiles;
 	}
 
-	public void setIdentity(Identification identity) {
-		this.identity = identity;
+	public void setEProfiles(List<Profile> EProfiles) {
+		this.EProfiles = EProfiles;
 	}
-	
-	
+
+	public Profile addEProfile(Profile EProfile) {
+		getEProfiles().add(EProfile);
+		EProfile.setEAccount(this);
+
+		return EProfile;
+	}
+
+	public Profile removeEProfile(Profile EProfile) {
+		getEProfiles().remove(EProfile);
+		EProfile.setEAccount(null);
+
+		return EProfile;
+	}
+
 }
