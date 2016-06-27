@@ -16,6 +16,7 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@Column(name="id_order")
 	private int id_eOrder;
 
 	@Temporal(TemporalType.TIMESTAMP)
