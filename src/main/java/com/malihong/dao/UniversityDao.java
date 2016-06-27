@@ -9,4 +9,8 @@ public interface UniversityDao {
 	public University findUniversityById(int uid);
 	
 	public List<University> findAllUniversity();
+	
+	public University addUniversity(University u);
+	
+	public 
 }
