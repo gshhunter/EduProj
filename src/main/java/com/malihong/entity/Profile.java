@@ -46,10 +46,9 @@ public class Profile implements Serializable {
 
 	private String surname;
 
-	//bi-directional many-to-one association to Account
-	@ManyToOne
-	@JoinColumn(name="id_account")
-	private Account EAccount;
+	//bi-directional one-to-one association to Account
+	@OneToOne(mappedBy="profile")
+	private Account Account;
 
 	public Profile() {
 	}
@@ -150,12 +149,12 @@ public class Profile implements Serializable {
 		this.surname = surname;
 	}
 
-	public Account getEAccount() {
-		return this.EAccount;
+	public Account getAccount() {
+		return this.Account;
 	}
 
-	public void setEAccount(Account EAccount) {
-		this.EAccount = EAccount;
+	public void setAccount(Account Account) {
+		this.Account = Account;
 	}
 
 }

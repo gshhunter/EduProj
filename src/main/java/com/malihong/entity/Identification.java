@@ -48,10 +48,9 @@ public class Identification implements Serializable {
 
 	private String weibo;
 
-	//bi-directional many-to-one association to Account
-	@ManyToOne
-	@JoinColumn(name="id_account")
-	private Account EAccount;
+	//bi-directional one-to-one association to Account
+	@OneToOne(mappedBy="account")
+	private Account Account;
 
 	public Identification() {
 	}
@@ -160,12 +159,12 @@ public class Identification implements Serializable {
 		this.weibo = weibo;
 	}
 
-	public Account getEAccount() {
-		return this.EAccount;
+	public Account getAccount() {
+		return this.Account;
 	}
 
-	public void setEAccount(Account EAccount) {
-		this.EAccount = EAccount;
+	public void setAccount(Account Account) {
+		this.Account = Account;
 	}
 
 }

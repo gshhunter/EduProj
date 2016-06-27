@@ -2,16 +2,16 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="persistenceUnit" transaction-type="RESOURCE_LOCAL">
   		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-  		<class>com.malihong.entity.Account</class>
   		<class>com.malihong.entity.University</class>
-  		<class>com.malihong.entity.Profile</class>
-  		<class>com.malihong.entity.Identification</class>
   		<class>com.malihong.entity.Creditcard</class>
   		<class>com.malihong.entity.Option</class>
   		<class>com.malihong.entity.Order</class>
   		<class>com.malihong.entity.Plan</class>
   		<class>com.malihong.entity.Request</class>
   		<class>com.malihong.entity.Transaction</class>
+  		<class>com.malihong.entity.Account</class>
+  		<class>com.malihong.entity.Identification</class>
+  		<class>com.malihong.entity.Profile</class>
     	<properties>
 	        <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
 	        <property name="hibernate.hbm2ddl.auto" value="update"/>

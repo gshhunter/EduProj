@@ -39,12 +39,14 @@ public class Account implements Serializable {
 	private String username;
 
 	//bi-directional many-to-one association to Identification
-	@OneToMany(mappedBy="EAccount")
-	private List<Identification> EIdentifications;
+	@OneToOne
+	@JoinColumn(name="id_identity")
+	private Identification identification;
 
 	//bi-directional many-to-one association to Profile
-	@OneToMany(mappedBy="EAccount")
-	private List<Profile> EProfiles;
+	@OneToOne
+	@JoinColumn(name="id_profile")
+	private Profile profile;
 
 	public Account() {
 	}
@@ -113,48 +115,20 @@ public class Account implements Serializable {
 		this.username = username;
 	}
 
-	public List<Identification> getEIdentifications() {
-		return this.EIdentifications;
+	public Identification getIdentification() {
+		return identification;
 	}
 
-	public void setEIdentifications(List<Identification> EIdentifications) {
-		this.EIdentifications = EIdentifications;
+	public void setIdentification(Identification identification) {
+		this.identification = identification;
 	}
 
-	public Identification addEIdentification(Identification EIdentification) {
-		getEIdentifications().add(EIdentification);
-		EIdentification.setEAccount(this);
-
-		return EIdentification;
+	public Profile getProfile() {
+		return profile;
 	}
 
-	public Identification removeEIdentification(Identification EIdentification) {
-		getEIdentifications().remove(EIdentification);
-		EIdentification.setEAccount(null);
-
-		return EIdentification;
-	}
-
-	public List<Profile> getEProfiles() {
-		return this.EProfiles;
-	}
-
-	public void setEProfiles(List<Profile> EProfiles) {
-		this.EProfiles = EProfiles;
-	}
-
-	public Profile addEProfile(Profile EProfile) {
-		getEProfiles().add(EProfile);
-		EProfile.setEAccount(this);
-
-		return EProfile;
-	}
-
-	public Profile removeEProfile(Profile EProfile) {
-		getEProfiles().remove(EProfile);
-		EProfile.setEAccount(null);
-
-		return EProfile;
+	public void setProfile(Profile profile) {
+		this.profile = profile;
 	}
 
 }
