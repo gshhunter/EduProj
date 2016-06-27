@@ -15,8 +15,9 @@ public class University implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="id_e_uni")
-	private int idEUni;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id_university")
+	private int id_university;
 
 	private String address;
 
@@ -43,13 +44,16 @@ public class University implements Serializable {
 	public University() {
 	}
 
-	public int getIdEUni() {
-		return this.idEUni;
+	
+	public int getId_university() {
+		return id_university;
 	}
 
-	public void setIdEUni(int idEUni) {
-		this.idEUni = idEUni;
+
+	public void setId_university(int id_university) {
+		this.id_university = id_university;
 	}
+
 
 	public String getAddress() {
 		return this.address;
