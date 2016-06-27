@@ -4,5 +4,5 @@ import com.malihong.entity.Account;
 
 public interface AccountService {
 
-	public int addNewUser(Account account);
+	public void addNewUser(Account account);
 }

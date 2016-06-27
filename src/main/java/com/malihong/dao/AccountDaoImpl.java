@@ -20,18 +20,8 @@ public class AccountDaoImpl implements AccountDao {
 	
 	@Override
 	@Transactional
-	public int addNewUser(Account account) {
-		
-		try {
-			em.persist(account);
-			logger.info("Register successfully!");
-			return 1;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.info("Failed to register!");
-			return 0;
-		}
+	public void save(Account account) {
+		em.persist(account);
 	}
 	
 }

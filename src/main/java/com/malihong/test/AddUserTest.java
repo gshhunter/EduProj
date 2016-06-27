@@ -12,17 +12,7 @@ import com.malihong.service.AccountServiceimpl;
 public class AddUserTest {
 
 	public static void main(String[] args) {
-		
-		Profile pf = new Profile();
-		Identification identity = new Identification();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date currentDate = new Date();
-		Account account = new Account();
-		
-		
-		AccountDaoImpl aServ = new AccountDaoImpl();
-		aServ.addNewUser(account);
+
 	}
 
 }

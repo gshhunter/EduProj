@@ -13,8 +13,8 @@ public class AccountServiceimpl implements AccountService{
 	private AccountDao accountDao;
 	
 	@Override
-	public int addNewUser(Account account) {
-		return accountDao.addNewUser(account);
+	public void addNewUser(Account account) {
+		accountDao.save(account);
 	}
 
 }
