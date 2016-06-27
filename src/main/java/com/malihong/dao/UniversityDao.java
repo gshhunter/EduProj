@@ -12,5 +12,5 @@ public interface UniversityDao {
 	
 	public University addUniversity(University u);
 	
-	public 
+	public boolean deleteUniversityById(int uid);
 }

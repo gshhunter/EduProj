@@ -53,4 +53,16 @@ public class UniversityDaoImpl implements UniversityDao{
 		return query.getResultList();
 	}
 
+	@Override
+	public University addUniversity(University u) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteUniversityById(int uid) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
