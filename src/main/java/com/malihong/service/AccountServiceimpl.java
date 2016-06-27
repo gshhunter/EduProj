@@ -22,8 +22,6 @@ public class AccountServiceimpl implements AccountService{
 	
 	@Override
 	public void addNewUser(Account account, Profile profile, Identification identification) {
-		profileDao.save(profile);
-		identDao.save(identification);
 		account.setProfile(profile);
 		account.setIdentification(identification);
 		accountDao.save(account);

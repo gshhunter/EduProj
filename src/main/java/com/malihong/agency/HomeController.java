@@ -53,6 +53,8 @@ public class HomeController {
 			profile.setPostcode(1234);
 			
 			Identification ident = new Identification();
+			ident.setQq("12345678");
+			ident.setIsQq(1);
 			
 			accountService.addNewUser(account, profile, ident);
 			

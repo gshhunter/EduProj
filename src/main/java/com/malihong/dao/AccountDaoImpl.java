@@ -27,8 +27,21 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	@Transactional
 	public Account findById(int id) {
-		Account account = em.find(Account.class, id);
+		Account account = (Account)em.find(Account.class, id);
 		return account;
+	}
+
+	@Override
+	public void delete(Account account) {
+		em.remove(em.merge(account));
+		em.flush();
+	}
+
+	@Override
+	public void update(Account account) {
+		System.out.println(account);
+		em.merge(account);
+		em.flush();
 	}
 	
 	
