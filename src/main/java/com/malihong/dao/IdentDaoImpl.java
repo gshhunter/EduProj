@@ -6,18 +6,18 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.malihong.entity.Profile;
+import com.malihong.entity.Identification;
 
 @Component
-public class ProfileDaoImpl implements ProfileDao{
-
+public class IdentDaoImpl implements IdentDao{
+	
 	@PersistenceContext
 	private EntityManager em;
 	
 	@Override
 	@Transactional
-	public void save(Profile profile) {
-		em.persist(profile);
+	public void save(Identification ident) {
+		em.persist(ident);
 	}
 
 }

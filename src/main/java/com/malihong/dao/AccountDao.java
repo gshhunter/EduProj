@@ -5,4 +5,6 @@ import com.malihong.entity.Account;
 public interface AccountDao {
 	
 	public void save(Account account);
+	
+	public Account findById(int id);
 }

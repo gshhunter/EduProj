@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.malihong.entity.Account;
+import com.malihong.entity.Identification;
+import com.malihong.entity.Profile;
 import com.malihong.entity.University;
 import com.malihong.service.AccountService;
 import com.malihong.service.UniversityService;
@@ -40,6 +43,20 @@ public class HomeController {
 		logger.info(city);
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		//Testing Account addUser function
+			Account account = new Account();
+			account.setEmail("asdadadada");
+			account.setUsername("Shuhao");
+			
+			Profile profile = new Profile();
+			profile.setPostcode(1234);
+			
+			Identification ident = new Identification();
+			
+			accountService.addNewUser(account, profile, ident);
+			
+		//Testing Account addUser function - end
 		
 		String formattedDate = dateFormat.format(date);
 		

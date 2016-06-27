@@ -23,5 +23,13 @@ public class AccountDaoImpl implements AccountDao {
 	public void save(Account account) {
 		em.persist(account);
 	}
+
+	@Override
+	@Transactional
+	public Account findById(int id) {
+		Account account = em.find(Account.class, id);
+		return account;
+	}
+	
 	
 }
