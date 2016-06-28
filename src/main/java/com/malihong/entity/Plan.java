@@ -35,7 +35,7 @@ public class Plan implements Serializable {
 	private int idStudent;
 
 	//bi-directional many-to-one association to Option
-	@OneToMany(mappedBy="Plan")
+	@OneToMany(mappedBy="Plan", fetch=FetchType.EAGER)
 	private List<Option> Options;
 
 	public Plan() {

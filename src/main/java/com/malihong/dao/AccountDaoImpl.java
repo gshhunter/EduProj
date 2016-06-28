@@ -32,12 +32,14 @@ public class AccountDaoImpl implements AccountDao {
 	}
 
 	@Override
+	@Transactional
 	public void delete(Account account) {
 		em.remove(em.merge(account));
 		em.flush();
 	}
 
 	@Override
+	@Transactional
 	public void update(Account account) {
 		System.out.println(account);
 		em.merge(account);
