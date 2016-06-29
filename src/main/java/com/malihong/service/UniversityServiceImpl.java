@@ -20,8 +20,33 @@ public class UniversityServiceImpl implements UniversityService{
 	}
 
 	@Override
-	public List<University> findAllUniversity() {
-		return universityDao.findAllUniversity();
+	public List<University> findAllUniversity(int start) {
+		return universityDao.findAllUniversity(start);
+	}
+
+	@Override
+	public University addUniversity(University u) {
+		return universityDao.addUniversity(u);
+	}
+
+	@Override
+	public University updateUniversity(University u) {
+		return universityDao.updateUniversity(u);
+	}
+
+	@Override
+	public boolean deleteUniversityById(int uid) {
+		return universityDao.deleteUniversityById(uid);
+	}
+
+	@Override
+	public List<University> findUniversityByCity(String city) {
+		return universityDao.findUniversityByCity(city);
+	}
+
+	@Override
+	public List<String> getAllCity() {
+		return universityDao.getAllCity();
 	}
 
 }
