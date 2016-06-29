@@ -4,6 +4,7 @@
 package com.malihong.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.malihong.dao.AccountDao;
@@ -15,7 +16,8 @@ import com.malihong.entity.Profile;
  * @author GSH1
  *
  */
-@Service("accountService")
+@Service
+@Qualifier("accountService")
 public class AccountServiceImpl implements AccountService{
 
 	@Autowired
