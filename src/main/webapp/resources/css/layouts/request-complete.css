@@ -1,0 +1,24 @@
+.sub-content {
+    position: absolute;
+    width: 50%;
+    height: 60%;
+    left:25%;
+    top: 15%;
+    background: #2d3e50;
+    color: #FFFFFF;
+    border-radius: 4%;
+}
+
+.message-head {
+    color: #FFFFFF;
+}
+
+.view-more p {
+    text-align: right;
+    padding-top: 10px;
+    padding-right: 30px;
+}
+
+.view-more a {
+    color: #FFFFFF;
+}

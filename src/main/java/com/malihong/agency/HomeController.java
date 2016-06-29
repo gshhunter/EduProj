@@ -45,19 +45,26 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		//Testing Account addUser function
-			Account account = new Account();
-			account.setEmail("asdadadada");
-			account.setUsername("Shuhao");
+//			Account account = new Account();
+//			account.setEmail("asdadadada");
+//			account.setUsername("Shuhao");
+//			
+//			Profile profile = new Profile();
+//			profile.setPostcode(1234);
+//			
+//			Identification ident = new Identification();
+//			ident.setQq("12345678");
+//			ident.setIsQq(1);
+//			
+//			accountService.addNewUser(account, profile, ident);
 			
-			Profile profile = new Profile();
-			profile.setPostcode(1234);
+		//Testing Account addUser function - end
 			
-			Identification ident = new Identification();
-			ident.setQq("12345678");
-			ident.setIsQq(1);
-			
-			accountService.addNewUser(account, profile, ident);
-			
+		//Testing Account addUser function
+			Account account1 = accountService.findUserById(1);
+			Profile p = account1.getProfile();
+			p.setCountry("Yamaha");
+			accountService.update(account1);
 		//Testing Account addUser function - end
 		
 		String formattedDate = dateFormat.format(date);

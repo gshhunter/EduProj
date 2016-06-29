@@ -29,6 +29,7 @@ public class OptionDaoImpl implements OptionDao{
 	@Override
 	@Transactional
 	public void add(Option o) {
+		logger.info(o.getUniversity());
 		em.persist(o);
 	}
 
