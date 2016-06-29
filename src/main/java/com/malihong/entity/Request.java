@@ -43,7 +43,7 @@ public class Request implements Serializable {
 	private String interestMajor2;
 
 	@Column(name="is_cancel")
-	private String isCancel;
+	private int isCancel;
 
 	@Column(name="language_testing")
 	private String languageTesting;
@@ -132,11 +132,11 @@ public class Request implements Serializable {
 		this.interestMajor2 = interestMajor2;
 	}
 
-	public String getIsCancel() {
-		return this.isCancel;
+	public int getIsCancel() {
+		return isCancel;
 	}
 
-	public void setIsCancel(String isCancel) {
+	public void setIsCancel(int isCancel) {
 		this.isCancel = isCancel;
 	}
 

@@ -19,5 +19,11 @@ public interface StudentRequestDao {
 	
 	public void update(Request r);
 	
+	public Request findValidRequestByUserId(int uid);
+	
+	public List<Request> findCancelledRequestByUserId(int uid);
+	
+	public List<Request> findFinishedRequestsByUserId(int uid);
+	
 	public List<Request> findRequestsByUserId(int uid);
 }

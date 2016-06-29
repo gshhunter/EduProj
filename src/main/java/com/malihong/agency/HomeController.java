@@ -61,9 +61,9 @@ public class HomeController {
 		//Testing Account addUser function - end
 			
 		//Testing Account addUser function
-			Account account1 = accountService.findUserById(1);
+			Account account1 = accountService.findUserById(3);
 			Profile p = account1.getProfile();
-			p.setCountry("Yamaha");
+			p.setCountry("Dayang");
 			accountService.update(account1);
 		//Testing Account addUser function - end
 		

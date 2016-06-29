@@ -7,6 +7,8 @@ import java.util.Date;
 
 /**
  * The persistent class for the e_account database table.
+ * @author GSH1
+ * Account与Identification和Profile都是一对一关系
  * 
  */
 @Entity
@@ -38,11 +40,11 @@ public class Account implements Serializable {
 
 	private String username;
 
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToOne(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="id_profile")
 	private Profile profile;
 	
-	@OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.PERSIST)
+	@OneToOne(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="id_identity")
 	private Identification identification;
 	

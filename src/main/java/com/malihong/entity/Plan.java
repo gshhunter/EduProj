@@ -34,8 +34,8 @@ public class Plan implements Serializable {
 	@Column(name="id_student")
 	private int idStudent;
 
-	//bi-directional many-to-one association to Option
-	@OneToMany(mappedBy="Plan", fetch=FetchType.EAGER)
+	//bi-directional many-to-one association to Option/级联存储会直接把数据存储到Plan和Option表中
+	@OneToMany(mappedBy="Plan", fetch=FetchType.EAGER, cascade={CascadeType.PERSIST})
 	private List<Option> Options;
 
 	public Plan() {

@@ -19,7 +19,7 @@ import com.malihong.entity.Request;
  *
  */
 
-@Component
+@Component("requestDao")
 public class StudentRequestDaoImpl implements StudentRequestDao{
 
 	@PersistenceContext
@@ -54,6 +54,43 @@ public class StudentRequestDaoImpl implements StudentRequestDao{
 		Query query = em.createQuery(str, Request.class);
 		query.setParameter(1, uid);
 		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public Request findValidRequestByUserId(int uid) {
+		String str = "SELECT r FROM Request r WHERE r.idAccount = ?1 and r.isCancel = 1";
+		Query query = em.createQuery(str, Request.class);
+		query.setParameter(1, uid);
+		List<Request> list = query.getResultList();
+		if (list.isEmpty() == true) {
+			return null;
+		} else {
+			return (Request)list.get(0);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Request> findCancelledRequestByUserId(int uid) {
+		String str = "SELECT r FROM Request r WHERE r.idAccount = ?1 and r.isCancel = 0";
+		Query query = em.createQuery(str, Request.class);
+		query.setParameter(1, uid);
+		List<Request> list = query.getResultList();
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Request> findFinishedRequestsByUserId(int uid) {
+		String str = "SELECT r FROM Request r WHERE r.idAccount = ?1 and r.isCancel = 2";
+		Query query = em.createQuery(str, Request.class);
+		query.setParameter(1, uid);
+		List<Request> list = query.getResultList();
+		return list;
 	}
 
 }
