@@ -20,18 +20,31 @@ public class AccountDaoImpl implements AccountDao {
 	
 	@Override
 	@Transactional
-	public int addNewUser(Account account) {
-		
-		try {
-			em.persist(account);
-			logger.info("Register successfully!");
-			return 1;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			logger.info("Failed to register!");
-			return 0;
-		}
+	public void save(Account account) {
+		em.persist(account);
 	}
+
+	@Override
+	@Transactional
+	public Account findById(int id) {
+		Account account = (Account)em.find(Account.class, id);
+		return account;
+	}
+
+	@Override
+	@Transactional
+	public void delete(Account account) {
+		em.remove(em.merge(account));
+		em.flush();
+	}
+
+	@Override
+	@Transactional
+	public void update(Account account) {
+		System.out.println(account);
+		em.merge(account);
+		em.flush();
+	}
+	
 	
 }

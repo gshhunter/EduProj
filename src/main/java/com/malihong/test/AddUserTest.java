@@ -1,28 +1,25 @@
 package com.malihong.test;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.malihong.dao.AccountDaoImpl;
 import com.malihong.entity.Account;
-import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
-import com.malihong.service.AccountServiceimpl;
+import com.malihong.service.AccountService;
 
 public class AddUserTest {
 
+	@Autowired
+	private AccountService accountService;
+	
 	public static void main(String[] args) {
-		
-		Profile pf = new Profile();
-		Identification identity = new Identification();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date currentDate = new Date();
 		Account account = new Account();
+		account.setEmail("asdadadada");
+		account.setUsername("Shuhao");
+		
+		Profile profile = new Profile();
+		profile.setPostcode(1234);
 		
 		
-		AccountDaoImpl aServ = new AccountDaoImpl();
-		aServ.addNewUser(account);
 	}
 
 }

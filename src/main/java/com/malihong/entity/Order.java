@@ -36,7 +36,7 @@ public class Order implements Serializable {
 	@Column(name="is_paid")
 	private String isPaid;
 
-	private String price;
+	private Double price;
 
 	public Order() {
 	}
@@ -89,11 +89,11 @@ public class Order implements Serializable {
 		this.isPaid = isPaid;
 	}
 
-	public String getPrice() {
+	public Double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+        
+    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
-
+	<mvc:annotation-driven/>
+	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
 	
 	<!-- Beans -->
-	<beans:bean id="homeController" class="com.malihong.agency.HomeController" />
+	<bean id="homeController" class="com.malihong.agency.HomeController" />
 	
 	<!-- Package -->
 	<context:component-scan base-package="com.malihong.agency" />
@@ -31,22 +31,23 @@
 	<context:component-scan base-package="com.malihong.entity" />
 	
 	<!-- MYSQL connection -->
-	<beans:bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
-		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    	<beans:property name="url" value="jdbc:mysql://mel-edu.comx0njktrjq.ap-southeast-2.rds.amazonaws.com:3306/edu"/>
-    	<beans:property name="username" value="root0"/>
-    	<beans:property name="password" value="12345678"/>
-	</beans:bean>
+	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    	<property name="url" value="jdbc:mysql://mel-edu.comx0njktrjq.ap-southeast-2.rds.amazonaws.com:3306/edu"/>
+    	<property name="username" value="root0"/>
+    	<property name="password" value="12345678"/>
+	</bean>
 	
 	<!-- EntityManagerFactory -->
-    <beans:bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
-	    <beans:property name="persistenceUnitName" value="persistenceUnit"/>
-	    <beans:property name="dataSource" ref="dataSource"/>
-    </beans:bean>
+    <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
+	    <property name="persistenceUnitName" value="persistenceUnit"/>
+	    <property name="dataSource" ref="dataSource"/>
+    </bean>
    
 	<!-- Transaction Manager -->
-	<beans:bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
-	    <beans:property name="entityManagerFactory" ref="entityManagerFactory"/>
-	</beans:bean>
+	<bean class="org.springframework.orm.jpa.JpaTransactionManager" id="transactionManager">
+	    <property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
 	
-</beans:beans>
+	<tx:annotation-driven transaction-manager="transactionManager" />  
+</beans>

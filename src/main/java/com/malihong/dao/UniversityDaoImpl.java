@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import com.malihong.entity.University;
 
-@Transactional
 @Component
 public class UniversityDaoImpl implements UniversityDao {
 
@@ -35,6 +34,7 @@ public class UniversityDaoImpl implements UniversityDao {
 	 */
 
 	@Override
+	@Transactional
 	public University findUniversityById(int uid) {
 		University u = em.find(University.class, uid);
 		return u;
@@ -42,6 +42,7 @@ public class UniversityDaoImpl implements UniversityDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<University> findAllUniversity(int start) {
 		Query query = em.createQuery("from University");
 		query.setFirstResult(start);
@@ -50,19 +51,19 @@ public class UniversityDaoImpl implements UniversityDao {
 	}
 
 	@Override
+	@Transactional
 	public University addUniversity(University u) {
-		try{
-		em.persist(u);
-		em.flush();
-		logger.info("@@@@@@");
+		try {
+			em.persist(u);
 
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return u;
 	}
 
 	@Override
+	@Transactional
 	public boolean deleteUniversityById(int uid) {
 		try {
 			em.remove(uid);
@@ -73,11 +74,13 @@ public class UniversityDaoImpl implements UniversityDao {
 	}
 
 	@Override
+	@Transactional
 	public University updateUniversity(University u) {
 		return em.merge(u);
 	}
 
 	@Override
+	@Transactional
 	public List<University> findUniversityByCity(String city) {
 		Query q = em.createQuery("select * from University where city=?1");
 		q.setParameter(1, city);
@@ -85,6 +88,7 @@ public class UniversityDaoImpl implements UniversityDao {
 	}
 
 	@Override
+	@Transactional
 	public List<String> getAllCity() {
 		Query q = em.createQuery("select distinct city from University");
 
