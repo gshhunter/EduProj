@@ -27,20 +27,14 @@ import com.malihong.service.UniversityService;
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	@Autowired
-	private UniversityService universityService;
-	@Autowired
-	private AccountService accountService;
+
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		String city=universityService.findUniversityById(2).getCity();
-		logger.info(city);
+
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
@@ -61,10 +55,10 @@ public class HomeController {
 		//Testing Account addUser function - end
 			
 		//Testing Account addUser function
-			Account account1 = accountService.findUserById(3);
-			Profile p = account1.getProfile();
-			p.setCountry("Dayang");
-			accountService.update(account1);
+//			Account account1 = accountService.findUserById(3);
+//			Profile p = account1.getProfile();
+//			p.setCountry("Dayang");
+//			accountService.update(account1);
 		//Testing Account addUser function - end
 		
 		String formattedDate = dateFormat.format(date);
