@@ -19,4 +19,6 @@ public interface AccountService {
 	public void delete(Account account);
 	
 	public void update(Account account);
+	
+	public boolean checkAccountByEmail(String email);
 }

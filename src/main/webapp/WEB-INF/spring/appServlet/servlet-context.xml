@@ -51,4 +51,11 @@
 	</bean>
 	
 	<tx:annotation-driven transaction-manager="transactionManager" />  
+	
+	<!-- bind your messages.properties -->
+	<bean class="org.springframework.context.support.ResourceBundleMessageSource"
+		id="messageSource">
+		<property name="basename" value="messages_CN" />
+	</bean>
+	
 </beans>

@@ -1,7 +1,10 @@
 package com.malihong.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +45,21 @@ public class AccountDaoImpl implements AccountDao {
 		System.out.println(account);
 		em.merge(account);
 		em.flush();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public Account findByEmail(String email) {
+		String str = "SELECT a FROM Account a WHERE a.email = ?1";
+		Query query = em.createQuery(str);
+		query.setParameter(1, email);
+		List<Account> list = query.getResultList();
+		if (list.isEmpty()){
+			return null;
+		} else {
+			return list.get(0);
+		}
 	}
 	
 	

@@ -2,8 +2,10 @@ package com.malihong.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import java.util.Date;
-
 
 /**
  * The persistent class for the e_account database table.
@@ -11,6 +13,7 @@ import java.util.Date;
  * Account与Identification和Profile都是一对一关系
  * 
  */
+
 @Entity
 @Table(name="e_account")
 @NamedQuery(name="Account.findAll", query="SELECT a FROM Account a")
@@ -23,14 +26,18 @@ public class Account implements Serializable {
 	private int idAccount;
 
 	private String cellphone;
-
+	
+	@NotEmpty
+	@Email 
 	private String email;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="last_login_time")
 	private Date lastLoginTime;
-
-	private String passwordmd5;
+	
+	@Size(min=6, max=32)
+	@Column(name="passwordmd5")
+	private String password;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="reg_time")
@@ -38,8 +45,10 @@ public class Account implements Serializable {
 
 	private String type;
 
-	private String username;
-
+	private String firstname;
+	
+	private String lastname;
+	
 	@OneToOne(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="id_profile")
 	private Profile profile;
@@ -83,12 +92,13 @@ public class Account implements Serializable {
 		this.lastLoginTime = lastLoginTime;
 	}
 
-	public String getPasswordmd5() {
-		return this.passwordmd5;
+
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPasswordmd5(String passwordmd5) {
-		this.passwordmd5 = passwordmd5;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Date getRegTime() {
@@ -106,13 +116,21 @@ public class Account implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	public String getUsername() {
-		return this.username;
+	
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
 	public Profile getProfile() {
