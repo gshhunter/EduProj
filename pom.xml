@@ -46,7 +46,7 @@
 			<version>4.1.0.Final</version>
 		</dependency>
 		
-		<!-- Google JSON API -->
+		<!-- JSON API -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-core</artifactId>
