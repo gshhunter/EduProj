@@ -48,6 +48,22 @@
 		
 		<!-- Google JSON API -->
 		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		
+		<dependency>
 	        <groupId>com.google.code.gson</groupId>
 	        <artifactId>gson</artifactId>
 	        <version>2.2.2</version>
@@ -73,13 +89,6 @@
         	<version>1.8.2.RELEASE</version>
     	</dependency>
     	
-    	<!-- Jackson -->
-		<!-- <dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.version}</version>
-		</dependency> -->
-		
 		<!-- Hibernate -->
 	  	<dependency>
 	    	<groupId>org.hibernate</groupId>
