@@ -11,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.malihong.bean.EmailLoginBean;
 import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
@@ -27,6 +29,27 @@ public class AccountController {
 	
 	@Autowired
 	private AccountService accountService;
+	
+	@RequestMapping(value="/toEmailLogin", method=RequestMethod.GET)
+	public String toEmailLogin(Model model) {
+		model.addAttribute("emailLoginBean", new EmailLoginBean());
+		return "email_login";
+	}
+	
+	@RequestMapping(value="/loginEmail", method=RequestMethod.POST)
+	public String loginEmail(@ModelAttribute("emailLoginBean") EmailLoginBean emailLoginBean, BindingResult result, Model model) {
+		String email = emailLoginBean.getEmail();
+		String password = emailLoginBean.getPassword();
+		boolean remember_me = emailLoginBean.isRemember_me();
+		
+		logger.info("----------form info---------");
+		logger.info("Email: " + email);
+		logger.info("Remember me: " + remember_me);
+		
+		
+		return "home";
+		
+	}
 	
 	@RequestMapping(value="/toEmailRegister", method=RequestMethod.GET)
 	public String toEmailRegister(ModelMap model) {

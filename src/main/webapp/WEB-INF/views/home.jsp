@@ -39,7 +39,7 @@
         <ul class="pure-menu-list">
             <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
             <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-            <li class="pure-menu-item"><a href="#" class="pure-menu-link">登录</a></li>
+            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
         </ul>
     </div>
 </div>
