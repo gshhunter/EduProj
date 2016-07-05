@@ -46,4 +46,14 @@ public class AccountServiceImpl implements AccountService{
 		accountDao.update(account);
 	}
 
+	@Override
+	public boolean checkAccountByEmail(String email) {
+		Account account = null;
+		account = accountDao.findByEmail(email);
+		if (account == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

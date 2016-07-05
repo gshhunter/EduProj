@@ -43,6 +43,7 @@ public class OrderDaoImpl implements OrderDao {
 		return  (Order) q.getSingleResult();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<Order> findOrderbyPriceRange(Double minPrice,Double maxPrice) {

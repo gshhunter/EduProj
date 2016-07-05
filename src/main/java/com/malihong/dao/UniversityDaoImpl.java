@@ -3,7 +3,6 @@ package com.malihong.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -79,6 +78,7 @@ public class UniversityDaoImpl implements UniversityDao {
 		return em.merge(u);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<University> findUniversityByCity(String city) {
@@ -90,9 +90,7 @@ public class UniversityDaoImpl implements UniversityDao {
 	@Override
 	@Transactional
 	public List<String> getAllCity() {
-		Query q = em.createQuery("select distinct city from University");
-
-		return q.getResultList();
+		return null;
 	}
 
 }

@@ -11,4 +11,6 @@ public interface AccountDao {
 	public void delete(Account account);
 	
 	public void update(Account account);
+	
+	public Account findByEmail(String email); 
 }
