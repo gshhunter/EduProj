@@ -19,6 +19,7 @@ import com.malihong.entity.University;
 import com.malihong.service.StudentRequestService;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,16 +36,20 @@ public class StudentRequestController {
 	private StudentRequestService reqService;
 	
 	@RequestMapping(value = "/post", method = RequestMethod.POST)
-	public @ResponseBody University newRequest(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException{
+	public @ResponseBody String newRequest(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException{
+		logger.info(r);
+		String r2=URLDecoder.decode(r, "UTF-8");
+		logger.info(r2);
+
 		ObjectMapper mapper = new ObjectMapper();
-		University u=mapper.readValue(r, University.class);
-		//University u=new University();
-		u.setCity(u.getCity()+"123");
-		String s = mapper.writeValueAsString(u);
+		Request re=new Request();
+		re=mapper.readValue(r2, Request.class);
 
-		//logger.info(obj.name);
-
-		return u;
+		re.setIdAccount(12345);
+		this.reqService.save(re);
+		String s = mapper.writeValueAsString(re);
+		logger.info(s);
+		return "seccu";
 	}
 	
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
