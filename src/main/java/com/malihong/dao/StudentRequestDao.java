@@ -26,4 +26,10 @@ public interface StudentRequestDao {
 	public List<Request> findFinishedRequestsByUserId(int uid);
 	
 	public List<Request> findRequestsByUserId(int uid);
+	
+	public int countResponsedConcelledApplyByUserId(int uid); //isConcel=3
+	
+	public boolean setIsConcelStatusById(int id, int status);
+	
+	public Request findRequestingApplyByUserId(int uid);
 }
