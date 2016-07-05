@@ -48,15 +48,15 @@
 	
 	        <ul class="pure-menu-list">
 	            <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="#" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="#" class="pure-menu-link">登录</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
 	        </ul>
 	    </div>
 	</div>
 	
 	<div class="content" id="main-content">
 		
-		<h2 class="content-head is-center"><a href="">邮箱注册</a> | <a href="">手机注册</a></h2>
+		<h2 class="content-head is-center">邮箱注册<!-- | <a href="">手机注册</a> --></h2>
 			
 		<form:form class="pure-form pure-form-stacked" method="POST" commandName="account" action="registerEmail" >
 			<fieldset>
