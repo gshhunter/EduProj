@@ -20,11 +20,11 @@ import com.malihong.entity.Request;
  */
 
 @Component("requestDao")
-public class StudentRequestDaoImpl implements StudentRequestDao{
+public class StudentRequestDaoImpl implements StudentRequestDao {
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Override
 	@Transactional
 	public void add(Request r) {
@@ -67,7 +67,7 @@ public class StudentRequestDaoImpl implements StudentRequestDao{
 		if (list.isEmpty() == true) {
 			return null;
 		} else {
-			return (Request)list.get(0);
+			return (Request) list.get(0);
 		}
 	}
 
@@ -81,7 +81,7 @@ public class StudentRequestDaoImpl implements StudentRequestDao{
 		List<Request> list = query.getResultList();
 		return list;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
@@ -91,6 +91,27 @@ public class StudentRequestDaoImpl implements StudentRequestDao{
 		query.setParameter(1, uid);
 		List<Request> list = query.getResultList();
 		return list;
+	}
+
+	@Override
+	@Transactional
+	public int countResponsedConcelledApplyByUserId(int uid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	@Transactional
+	public boolean setIsConcelStatusById(int id, int status) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	@Transactional
+	public Request findRequestingApplyByUserId(int uid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
