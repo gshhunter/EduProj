@@ -6,9 +6,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Email register page">
+    <meta name="description" content="Email login page">
 
-    <title>邮箱注册页面</title>
+    <title>登录页面</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <!--[if lte IE 8]>
     
@@ -32,7 +32,7 @@
 	<style>
 		#main-content {
 			position: absolute;
-			top: 35px;
+			top: 50px;
 			width: 100%;
 		}
 		.error {
@@ -56,23 +56,26 @@
 	
 	<div class="content" id="main-content">
 		
-		<h2 class="content-head is-center">邮箱注册<!-- | <a href="">手机注册</a> --></h2>
+		<h2 class="content-head is-center">邮箱登录<!-- <a href="">手机登录</a> --></h2>
 			
-		<form:form class="pure-form pure-form-stacked" method="POST" commandName="account" action="registerEmail" >
+		<form:form class="pure-form pure-form-stacked" method="POST" commandName="emailLoginBean" action="loginEmail" >
 			<fieldset>
-				<legend>创建用户</legend>
+				<legend>用户登录</legend>
 				<div class="pure-g">
 					<!-- 行1 -->
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <form:label path="email">*电子邮箱</form:label>
+                        <form:label path="email">电子邮箱</form:label>
                         <form:input path="email" class="pure-input-1" type="email" placeHolder="电子邮箱"/>
-                    	<form:errors path="email" cssClass="error" />
+                        <form:label path="email" class="hint">
+                    		<form:errors path="email" cssClass="error" />
+                    	</form:label>
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
+
                     </div>
                     <!-- 行1 end -->
                     
@@ -81,12 +84,15 @@
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <form:label path="password">*密码</form:label>
+                        <form:label path="password">密码</form:label>
                         <form:password path="password" class="pure-input-1" placeHolder="密码"/>
-                    	<form:errors path="password" cssClass="error" />
+                        <form:label path="password">
+                    		<form:errors path="password" cssClass="error" />
+                    	</form:label>
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
+                    	
                     </div>
                     <!-- 行2 end -->
                     
@@ -94,46 +100,28 @@
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                     </div>
                     
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                        <form:label path="firstname">名称</form:label>
-                        <form:input path="firstname" class="pure-input-1" placeHolder="名称"/>
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                    	<form:label path="lastname">姓氏</form:label>
-                    	<form:input id="lastname" path="lastname" class="pure-input-1" placeHolder="姓氏"/>
+                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
+                    	<form:label path="remember_me" class="pure-checkbox">
+                    		<form:checkbox path="remember_me" /> &nbsp;&nbsp;记住登录密码
+                    	</form:label>
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
+                    
                     </div>
                     <!-- 行3 end -->
-                    
                     
                     <!-- 行4 -->
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    	<br/>
-                        <input class="pure-button pure-input-1" type="submit" value="创建账户" />
+                        <input class="pure-button pure-input-1" type="submit" value="登录" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                     </div>
                     <!-- 行4 end -->
-                    <br/>
-                    
-                    <!-- 行5 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    	<p>单击"创建账户"，即表示同意XXX的<a href="">条款和条件</a>以及<a href="">隐私策略</a></p>
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行5 end -->
 				</div>
 			</fieldset>
 		</form:form>

@@ -55,6 +55,7 @@
 	<context:component-scan base-package="com.malihong.service" />
 	<context:component-scan base-package="com.malihong.dao" />
 	<context:component-scan base-package="com.malihong.entity" />
+	<context:component-scan base-package="com.malihong.bean" />
 	
 	<!-- MYSQL connection -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
