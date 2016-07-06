@@ -19,7 +19,7 @@ public interface StudentRequestDao {
 	
 	public void update(Request r);
 	
-	public Request findValidRequestByUserId(int uid);
+	public Request findValidRequestByUserId(int uid); //isConcel=1
 	
 	public List<Request> findCancelledRequestByUserId(int uid);
 	

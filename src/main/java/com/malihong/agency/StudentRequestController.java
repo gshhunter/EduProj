@@ -51,10 +51,16 @@ public class StudentRequestController {
 	}
 
 	@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public String newtest() throws JsonProcessingException {
+	public String applyRequestPage() throws JsonProcessingException {
 		logger.info("get!");
 
 		return "applyrequest";
 	}
 
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String newtest() throws JsonProcessingException {
+		logger.info("test!");
+
+		return "requestcomplete";
+	}
 }
