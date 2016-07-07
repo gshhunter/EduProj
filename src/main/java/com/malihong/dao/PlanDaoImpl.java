@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +24,7 @@ import com.malihong.entity.Plan;
 @Component
 public class PlanDaoImpl implements PlanDao{
 
-	//private static final Logger logger = LoggerFactory.getLogger(PlanDaoImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(PlanDaoImpl.class);
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -30,6 +32,7 @@ public class PlanDaoImpl implements PlanDao{
 	@Override
 	@Transactional
 	public void add(Plan p) {
+		logger.info("dao add");
 		em.persist(p);
 	}
 

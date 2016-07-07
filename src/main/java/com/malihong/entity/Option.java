@@ -41,7 +41,11 @@ public class Option implements Serializable {
 	private Date startDate;
 
 	private String university;
-
+	
+	//new addition field
+	@Column(name="status")
+	private int status;
+	
 	//bi-directional many-to-one association to Plan
 	@ManyToOne
 	@JoinColumn(name="id_plan")
@@ -122,6 +126,14 @@ public class Option implements Serializable {
 		this.university = university;
 	}
 
+	public int getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	public Plan getPlan() {
 		return this.Plan;
 	}
