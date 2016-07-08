@@ -11,10 +11,10 @@ public interface PlanDao {
 	public void delete(Plan p);
 	
 	public void update(Plan p);
-	
-	public List<Plan> findPlansByRequestId(int rid);
-	
-	public Plan findByRequestIdAndAgencyId(int rid, int aid);
+		
+	public Plan findByRequestIdAndAgencyId(Integer rid, Integer aid);
 	
 	public List<Plan> findPlansByAgencyId(int aid);
+	
+	public List<Plan> findPlansByRequestId(int rid);
 }

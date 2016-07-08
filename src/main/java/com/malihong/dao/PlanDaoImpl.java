@@ -23,8 +23,6 @@ import com.malihong.entity.Plan;
 
 @Component
 public class PlanDaoImpl implements PlanDao{
-
-	private static final Logger logger = LoggerFactory.getLogger(PlanDaoImpl.class);
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -32,7 +30,6 @@ public class PlanDaoImpl implements PlanDao{
 	@Override
 	@Transactional
 	public void add(Plan p) {
-		logger.info("dao add");
 		em.persist(p);
 	}
 
@@ -53,19 +50,8 @@ public class PlanDaoImpl implements PlanDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Plan> findPlansByRequestId(int rid) {
-		String str = "SELECT p FROM Plan p WHERE r.idPlan = ?1";
-		Query query = em.createQuery(str, Plan.class);
-		query.setParameter(1, rid);
-		List<Plan> list = query.getResultList();
-		return list;
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	@Transactional
-	public Plan findByRequestIdAndAgencyId(int rid, int aid) {
-		String str = "SELECT p FROM Plan p WHERE r.idPlan = ?1 AND r.idAgency = ?2";
+	public Plan findByRequestIdAndAgencyId(Integer rid, Integer aid) {
+		String str = "SELECT p FROM Plan p WHERE p.idRequest = ?1 AND p.idAgency = ?2";
 		Query query = em.createQuery(str, Plan.class);
 		query.setParameter(1, rid);
 		query.setParameter(2, aid);
@@ -81,10 +67,19 @@ public class PlanDaoImpl implements PlanDao{
 	@Override
 	@Transactional
 	public List<Plan> findPlansByAgencyId(int aid) {
-		String str = "SELECT p FROM Plan p WHERE r.idAgency = ?1";
+		String str = "SELECT p FROM Plan p WHERE p.idAgency = ?1";
 		Query query = em.createQuery(str, Plan.class);
 		query.setParameter(1, aid);
 		List<Plan> list = query.getResultList();
+		return list;
+	}
+
+	@Override
+	@Transactional
+	public List<Plan> findPlansByRequestId(int rid) {
+		String str = "SELECT p FROM Plan p WHERE p.idRequest = ?1";
+		Query query = em.createQuery(str, Plan.class);
+		List<Plan> list=query.setParameter(1, rid).getResultList();	
 		return list;
 	}
 

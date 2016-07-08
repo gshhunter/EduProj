@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.malihong.dao.OptionDao;
 import com.malihong.dao.PlanDao;
-import com.malihong.dao.PlanDaoImpl;
 import com.malihong.entity.Plan;
 
 @Service
@@ -19,6 +19,8 @@ public class PlanServiceImpl implements PlanService{
 	private static final Logger logger = LoggerFactory.getLogger(PlanServiceImpl.class);
 	@Autowired
 	private PlanDao planDao;
+	@Autowired
+	private OptionDao optionDao;
 	
 	@Override
 	public void add(Plan p) {
@@ -33,7 +35,9 @@ public class PlanServiceImpl implements PlanService{
 
 	@Override
 	public List<Plan> findPlansByRequestId(int rid) {
-		return planDao.findPlansByRequestId(rid);
+		List<Plan> list=planDao.findPlansByRequestId(rid);
+
+		return list;
 	}
 
 	@Override

@@ -39,7 +39,8 @@ public class Plan implements Serializable {
 
 	// bi-directional many-to-one association to
 	// Option/级联存储会直接把数据存储到Plan和Option表中
-	@OneToMany(mappedBy = "Plan", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST })
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinColumn(name="id_plan")
 	private List<Option> Options;
 
 	public Plan() {
@@ -99,20 +100,6 @@ public class Plan implements Serializable {
 
 	public void setOptions(List<Option> Options) {
 		this.Options = Options;
-	}
-
-	public Option addOption(Option Option) {
-		getOptions().add(Option);
-		Option.setPlan(this);
-
-		return Option;
-	}
-
-	public Option removeOption(Option Option) {
-		getOptions().remove(Option);
-		Option.setPlan(null);
-
-		return Option;
 	}
 
 }

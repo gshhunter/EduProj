@@ -19,17 +19,15 @@ public interface StudentRequestDao {
 	
 	public void update(Request r);
 	
-	public Request findValidRequestByUserId(int uid); //isCancel=1
+	public Request findValidRequestByUserId(int uid); //isCancel=0 or 1
 	
-	public List<Request> findCancelledRequestByUserId(int uid);
+	public List<Request> findCancelledRequestByUserId(int uid); //isCancel=3 or 4
 	
-	public List<Request> findFinishedRequestsByUserId(int uid);
+	public List<Request> findFinishedRequestsByUserId(int uid); //isCancel=2
 	
 	public List<Request> findRequestsByUserId(int uid);
 	
-	public int countResponsedConcelledApplyByUserId(int uid); //isCancel=3
+	public int countResponsedConcelledApplyByUserId(int uid); //isCancel=4, every unpaid student can have no more than 1
 	
-	public boolean setIsConcelStatusById(int id, int status);
-	
-	public Request findRequestingApplyByUserId(int uid);
+	public List<Request> findActiveRequests(); //in last two days, isCancel=0 or 1
 }

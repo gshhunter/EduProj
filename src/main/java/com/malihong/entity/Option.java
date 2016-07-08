@@ -47,9 +47,9 @@ public class Option implements Serializable {
 	private int status;
 	
 	//bi-directional many-to-one association to Plan
-	@ManyToOne
-	@JoinColumn(name="id_plan")
-	private Plan Plan;
+
+	@Column(name="id_plan")
+	private int idPlan;
 
 	public Option() {
 	}
@@ -134,12 +134,12 @@ public class Option implements Serializable {
 		this.status = status;
 	}
 	
-	public Plan getPlan() {
-		return this.Plan;
+	public int getIdPlan() {
+		return this.idPlan;
 	}
 
-	public void setPlan(Plan Plan) {
-		this.Plan = Plan;
+	public void setIdPlan(int idPlan) {
+		this.idPlan = idPlan;
 	}
 
 }
