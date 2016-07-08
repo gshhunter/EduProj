@@ -1,5 +1,7 @@
 package com.malihong.service;
 
+import java.util.List;
+
 import com.malihong.entity.Request;
 
 public interface StudentRequestService {
@@ -21,4 +23,7 @@ public interface StudentRequestService {
 	 * @return
 	 */
 	public Request findValidRequestByUserId(int uid);
+	
+	public List<Request> findUnresponsedActiveRequestsByAgentID(int aid);
+
 }

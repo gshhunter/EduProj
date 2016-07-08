@@ -5,37 +5,42 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-
 /**
  * The persistent class for the e_plan database table.
  * 
  */
 @Entity
-@Table(name="e_plan")
-@NamedQuery(name="Plan.findAll", query="SELECT p FROM Plan p")
+@Table(name = "e_plan")
+@NamedQuery(name = "Plan.findAll", query = "SELECT p FROM Plan p")
 public class Plan implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="id_plan")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id_plan")
 	private int idPlan;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_time")
+	@Column(name = "created_time")
 	private Date createdTime;
 
-	@Column(name="id_agency")
+	@Column(name = "id_agency")
 	private int idAgency;
 
-	@Column(name="id_request")
+	@Column(name = "id_request")
 	private int idRequest;
 
-	@Column(name="id_student")
+	@Column(name = "id_student")
 	private int idStudent;
 
-	//bi-directional many-to-one association to Option/级联存储会直接把数据存储到Plan和Option表中
-	@OneToMany(mappedBy="Plan", fetch=FetchType.EAGER, cascade={CascadeType.PERSIST})
+	// new addition field
+	@Column(name = "status")
+	private int status;
+
+	// bi-directional many-to-one association to
+	// Option/级联存储会直接把数据存储到Plan和Option表中
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@JoinColumn(name="id_plan")
 	private List<Option> Options;
 
 	public Plan() {
@@ -80,6 +85,14 @@ public class Plan implements Serializable {
 	public void setIdStudent(int idStudent) {
 		this.idStudent = idStudent;
 	}
+	
+	public int getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 
 	public List<Option> getOptions() {
 		return this.Options;
@@ -87,20 +100,6 @@ public class Plan implements Serializable {
 
 	public void setOptions(List<Option> Options) {
 		this.Options = Options;
-	}
-
-	public Option addOption(Option Option) {
-		getOptions().add(Option);
-		Option.setPlan(this);
-
-		return Option;
-	}
-
-	public Option removeOption(Option Option) {
-		getOptions().remove(Option);
-		Option.setPlan(null);
-
-		return Option;
 	}
 
 }
