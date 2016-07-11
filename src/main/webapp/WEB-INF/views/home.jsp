@@ -38,8 +38,22 @@
 
         <ul class="pure-menu-list">
             <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
-            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
+            <c:if test="${loginUser == null || loginUser == undefined}">
+                
+            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>
+            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
+            </c:if>
+            <c:if test="${loginUser != null && loginUser != undefined }">
+            	<c:choose>
+            		<c:when test="${loginUser.firstname == null || loginUser.lastname == null || loginUser.firstname == '' || loginUser.lastname == ''}">
+            			<li class="pure-menu-item"><a href="<%=request.getContextPath() %>" class="pure-menu-link">${loginUser.email}</a></li>
+            		</c:when>
+            		<c:otherwise>
+            			<li class="pure-menu-item"><a href="<%=request.getContextPath() %>" class="pure-menu-link">${loginUser.firstname} ${loginUser.lastname}</a></li>
+            		</c:otherwise>
+            	</c:choose>
+            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/logout" class="pure-menu-link">注销</a></li>
+            </c:if>
         </ul>
     </div>
 </div>

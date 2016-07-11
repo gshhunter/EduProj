@@ -56,4 +56,9 @@ public class AccountServiceImpl implements AccountService{
 			return true;
 		}
 	}
+
+	@Override
+	public Account findUserByEmail(String email) {
+		return accountDao.findByEmail(email);
+	}
 }
