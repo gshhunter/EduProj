@@ -21,6 +21,7 @@ import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
 import com.malihong.service.AccountService;
 import com.malihong.util.MD5Encript;
+import com.malihong.validation.ValidationUtil;
 
 @Controller
 @RequestMapping("/account")
@@ -45,6 +46,27 @@ public class AccountController {
 		logger.info("----------form info---------");
 		logger.info("Email: " + email);
 		logger.info("Remember me: " + remember_me);
+		
+		if (email == null || "".equals(email.trim())) {
+			result.rejectValue("email", "电子邮件不能为空，请重新输入", "电子邮件不能为空，请重新输入");
+			return "email_login";
+		}
+		
+		if (!ValidationUtil.isEmail(email)) {
+			result.rejectValue("email", "不符合电子邮件格式，请重新输入", "不符合电子邮件格式，请重新输入");
+			return "email_login";
+		}
+		
+		if (password == null || "".equals(password)) {
+			result.rejectValue("password", "密码不能为空，请重新输入", "密码不能为空，请重新输入");
+			return "email_login";
+		}
+		
+		if (!ValidationUtil.isPassword(password)) {
+			result.rejectValue("password", "密码只能是6-32位的字母数字和下划线，开头必须为字母，请重新输入", "密码只能是6-32位的字符数字和下划线，开头必须为字母，请重新输入");
+			return "email_login";
+		}
+		
 		
 		
 		return "home";

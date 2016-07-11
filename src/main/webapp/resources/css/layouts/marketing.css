@@ -80,6 +80,12 @@ label {
     font-size: 100%;
 }
 
+.pure-form form:label {
+    margin: 1em 0 0;
+    font-weight: bold;
+    font-size: 100%;
+}
+
 .pure-form form:input[type] {
     border: 2px solid #ddd;
     box-shadow: none;

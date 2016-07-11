@@ -100,10 +100,16 @@
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                     </div>
                     
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
+                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
                     	<form:label path="remember_me" class="pure-checkbox">
                     		<form:checkbox path="remember_me" /> &nbsp;&nbsp;记住登录密码
                     	</form:label>
+                    </div>
+                    
+                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
+                    	<label for="forget">
+                    		<a id="forget" href="">忘记密码？</a> | <a href="">去注册</a>
+                    	</label>
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
