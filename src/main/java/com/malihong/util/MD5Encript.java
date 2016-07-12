@@ -44,4 +44,10 @@ public class MD5Encript {
         }
         return hexString.toString();
     }
+    
+    public static void main(String[] args) {
+    	System.out.println(MD5Encript.crypt("gsh123"));
+    	
+    }
 }
+

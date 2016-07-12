@@ -1,7 +1,12 @@
 package com.malihong.agency;
 
+import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -20,7 +25,9 @@ import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
 import com.malihong.service.AccountService;
+import com.malihong.util.Base64Encript;
 import com.malihong.util.MD5Encript;
+import com.malihong.validation.ValidationUtil;
 
 @Controller
 @RequestMapping("/account")
@@ -36,19 +43,80 @@ public class AccountController {
 		return "email_login";
 	}
 	
+	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for(Cookie cookie: cookies) {
+				if ("EDUJSESSION" == cookie.getName()) {
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
+					break;
+				}
+			}
+		}
+		
+		model.addAttribute("loginUser", null);
+		return "redirect:/";
+	}
+	
 	@RequestMapping(value="/loginEmail", method=RequestMethod.POST)
-	public String loginEmail(@ModelAttribute("emailLoginBean") EmailLoginBean emailLoginBean, BindingResult result, Model model) {
+	public String loginEmail(@ModelAttribute("emailLoginBean") EmailLoginBean emailLoginBean, BindingResult result, Model model,
+			HttpServletRequest request, HttpServletResponse response) {
 		String email = emailLoginBean.getEmail();
 		String password = emailLoginBean.getPassword();
 		boolean remember_me = emailLoginBean.isRemember_me();
 		
 		logger.info("----------form info---------");
 		logger.info("Email: " + email);
+		logger.info("Password: " + password);
 		logger.info("Remember me: " + remember_me);
 		
+		if (email == null || "".equals(email.trim())) {
+			result.rejectValue("email", "电子邮件不能为空，请重新输入", "电子邮件不能为空，请重新输入");
+			return "email_login";
+		}
+		
+		if (!ValidationUtil.isEmail(email)) {
+			result.rejectValue("email", "不符合电子邮件格式，请重新输入", "不符合电子邮件格式，请重新输入");
+			return "email_login";
+		}
+		
+		if (password == null || "".equals(password)) {
+			result.rejectValue("password", "密码不能为空，请重新输入", "密码不能为空，请重新输入");
+			return "email_login";
+		}
+		
+		if (!ValidationUtil.isPassword(password)) {
+			result.rejectValue("password", "密码只能是6-32位的字母数字和下划线，开头必须为字母，请重新输入", "密码只能是6-32位的字符数字和下划线，开头必须为字母，请重新输入");
+			return "email_login";
+		}
+		
+		Account account = accountService.findUserByEmail(email);
+		
+		if (null == account) {
+			result.rejectValue("email", "该电子邮箱还未注册，请前往注册页面", "该电子邮箱还未注册，请前往注册页面");
+			return "email_login";
+		} else {
+			if (!account.getPassword().equals(MD5Encript.crypt(password))) {
+				result.rejectValue("email", "您的电子邮箱或密码错误，请重新输入", "您的电子邮箱或密码错误，请重新输入");
+				return "email_login";
+			} else {
+				Date currentDate = new Date();
+				long time = currentDate.getTime();
+				String mingwen = account.getIdAccount() + "&" + time;
+				String miwen = Base64Encript.encode(mingwen);
+				Cookie cookie = new Cookie("EDUJSESSION", miwen);
+				if (remember_me == true) {
+					cookie.setMaxAge(7*24*60*60);
+				}
+				cookie.setPath("/agency");
+				response.addCookie(cookie);
+				model.addAttribute("loginUser", account);
+			}
+		}
 		
 		return "home";
-		
 	}
 	
 	@RequestMapping(value="/toEmailRegister", method=RequestMethod.GET)

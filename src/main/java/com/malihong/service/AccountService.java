@@ -21,4 +21,6 @@ public interface AccountService {
 	public void update(Account account);
 	
 	public boolean checkAccountByEmail(String email);
+	
+	public Account findUserByEmail(String email);
 }
