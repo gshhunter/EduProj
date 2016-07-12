@@ -21,9 +21,13 @@ public class Order implements Serializable {
 	private int idOrder;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="created_time")
-	private Date createdTime;
-
+	@Column(name="create_time")
+	private Date createTime;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="complete_time")
+	private Date completeTime;
+	
 	@Column(name="id_agency")
 	private int idAgency;
 
@@ -33,9 +37,12 @@ public class Order implements Serializable {
 	@Column(name="id_student")
 	private int idStudent;
 
-	@Column(name="is_paid")
-	private String isPaid;
+	@Column(name="status")
+	private int status;
 
+	@Column(name="transaction_count")
+	private int transactionCount;
+	
 	private Double price;
 
 	public Order() {
@@ -49,14 +56,22 @@ public class Order implements Serializable {
 		this.idOrder = idOrder;
 	}
 
-	public Date getCreatedTime() {
-		return this.createdTime;
+	public Date getCreateTime() {
+		return this.createTime;
 	}
 
-	public void setCreatedTime(Date createdTime) {
-		this.createdTime = createdTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	
+	public Date getCompleteTime() {
+		return this.completeTime;
 	}
 
+	public void setCompleteTime(Date completeTime) {
+		this.completeTime = completeTime;
+	}
+	
 	public int getIdAgency() {
 		return this.idAgency;
 	}
@@ -81,14 +96,22 @@ public class Order implements Serializable {
 		this.idStudent = idStudent;
 	}
 
-	public String getIsPaid() {
-		return this.isPaid;
+	public int getStatus() {
+		return this.status;
 	}
 
-	public void setIsPaid(String isPaid) {
-		this.isPaid = isPaid;
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
+	public int getTransactionCount() {
+		return this.transactionCount;
 	}
 
+	public void setTransactionCount(int transactionCount) {
+		this.transactionCount = transactionCount;
+	}
+	
 	public Double getPrice() {
 		return this.price;
 	}
