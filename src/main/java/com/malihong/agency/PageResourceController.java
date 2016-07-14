@@ -24,7 +24,7 @@ import com.malihong.entity.Request;
 import com.malihong.service.StudentRequestService;
 
 @Controller
-@RequestMapping(value = "/apply")
+@RequestMapping(value = "/1")
 public class PageResourceController {
 	private static final Logger logger = LoggerFactory.getLogger(PageResourceController.class);
 
@@ -33,7 +33,7 @@ public class PageResourceController {
 	
 	//开发：学生ID：12345； 中介ID：67890
 	// 学生创建新的request
-	@RequestMapping(value = "/api/newrequest", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/2", method = RequestMethod.POST)
 	public @ResponseBody String newRequest(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");
 		ObjectMapper mapper = new ObjectMapper();
@@ -56,7 +56,7 @@ public class PageResourceController {
 	}
 
 	// 中介查看待回应的requests（中介未回应，未过期，isCancel状态正常）
-	@RequestMapping(value = "/api/getactiverequestlist", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/3", method = RequestMethod.GET)
 	public @ResponseBody List<Request> getActiveRequestList(@RequestParam(value="page",required=false) Integer page){
 		logger.info("get");
 		ObjectMapper mapper = new ObjectMapper();
@@ -68,7 +68,7 @@ public class PageResourceController {
 	}
 	
 	//学生创建request页面
-	@RequestMapping(value = "/req", method = RequestMethod.GET)
+	@RequestMapping(value = "/4", method = RequestMethod.GET)
 	public String applyRequestPage() throws JsonProcessingException {
 		return "applyrequest";
 	}

@@ -31,46 +31,58 @@ public class PayThenApplyController {
 
 	@Autowired
 	private StudentRequestService reqService;
-	
-	//开发：学生ID：12345； 中介ID：67890
-	// 学生创建新的request
-	@RequestMapping(value = "/api/newrequest", method = RequestMethod.POST)
-	public @ResponseBody String newRequest(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
-		r = URLDecoder.decode(r, "UTF-8");
-		ObjectMapper mapper = new ObjectMapper();
-		Request re = new Request();		
-		ObjectNode root=mapper.createObjectNode();		
-		root.put("status", 0);
-		//TODO
-		int accountId=12345;
-		try {
-			re = mapper.readValue(r, Request.class);
-			re.setIdAccount(accountId);
-			re.setCreatedTime(new Date());
-			this.reqService.save(re);
-		} catch (Exception e) {
-			//应该把一场状态进一步细分
-			root.put("status", 1);
-		}
-		logger.info(root.toString());
-		return root.toString();
-	}
 
-	// 中介查看待回应的requests（中介未回应，未过期，isCancel状态正常）
-	@RequestMapping(value = "/api/getactiverequestlist", method = RequestMethod.GET)
-	public @ResponseBody List<Request> getActiveRequestList(@RequestParam(value="page",required=false) Integer page){
-		logger.info("get");
+	// 验证邀请码
+	@RequestMapping(value = "/api/codevalidation", method = RequestMethod.GET)
+	public @ResponseBody List<Request> getCodeValidation(@RequestParam(value="code",required=true) String code,@RequestParam(value="planid",required=true) int pid){
 		ObjectMapper mapper = new ObjectMapper();
 		//TODO
-		int agentID=67890;
-		List<Request> list=this.reqService.findUnresponsedActiveRequestsByAgentID(agentID);
-		logger.info("get list");
-		return list;
+		return null;
 	}
 	
-	//学生创建request页面
-	@RequestMapping(value = "/req", method = RequestMethod.GET)
-	public String applyRequestPage() throws JsonProcessingException {
+	// 返回plan所对应的中介的联系方式
+	@RequestMapping(value = "/api/agentcommunication", method = RequestMethod.GET)
+	public @ResponseBody List<Request> getAgentCommunication(@RequestParam(value="planid",required=true) int pid){
+		ObjectMapper mapper = new ObjectMapper();
+		//TODO
+		//checks status(payment)
+		//return agent communication
+		return null;
+	}
+	
+	// 返回plan所对应的中介的联系方式
+	@RequestMapping(value = "/api/finalizeorder", method = RequestMethod.GET)
+	public @ResponseBody List<Request> finalizeOrder(@RequestParam(value="planid",required=true) int pid){
+		ObjectMapper mapper = new ObjectMapper();
+		//TODO
+		//update plan
+		//update request
+		//update order
+		//与中介结算服务费
+		return null;
+	}
+	
+	//价格清单页面
+	@RequestMapping(value = "/price", method = RequestMethod.GET)
+	public String pricePage() throws JsonProcessingException {
+		return "applyrequest";
+	}
+	
+	//输入邀请码页面
+	@RequestMapping(value = "/entercode", method = RequestMethod.GET)
+	public String promotionCodePage() throws JsonProcessingException {
+		return "applyrequest";
+	}
+	
+	//付款后给出中介联系方式页面
+	@RequestMapping(value = "/agentcommunication", method = RequestMethod.GET)
+	public String agentCommunicationPage() throws JsonProcessingException {
+		return "applyrequest";
+	}
+	
+	//学生确认收到offer，完成交易页面
+	@RequestMapping(value = "/finalizeorder", method = RequestMethod.GET)
+	public String finalizeOrderPage() throws JsonProcessingException {
 		return "applyrequest";
 	}
 }

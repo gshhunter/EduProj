@@ -156,9 +156,9 @@ public class StudentRequestController {
 		logger.info("test!");
 		Option o = new Option();
 		Option o2 = new Option();
-		o.setUniversity("Moanash");
+		o.setUnivercityName("Moanash");
 		o.setStatus(10);
-		o2.setUniversity("NU");
+		o2.setUnivercityName("NU");
 		Plan p = new Plan();
 		List<Option> os = new ArrayList<Option>();
 		os.add(o);
