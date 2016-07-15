@@ -56,7 +56,7 @@
 	
 	<div class="content" id="main-content">
 		
-		<h2 class="content-head is-center">邮箱注册<!-- | <a href="">手机注册</a> --></h2>
+		<h2 class="content-head is-center"><b>邮箱注册<!-- | <a href="">手机注册</a> --></b></h2>
 			
 		<form:form class="pure-form pure-form-stacked" method="POST" commandName="account" action="registerEmail" >
 			<fieldset>
@@ -95,12 +95,12 @@
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                        <form:label path="firstname">名称</form:label>
+                        <form:label path="firstname">*名称</form:label>
                         <form:input path="firstname" class="pure-input-1" placeHolder="名称"/>
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                    	<form:label path="lastname">姓氏</form:label>
+                    	<form:label path="lastname">*姓氏</form:label>
                     	<form:input id="lastname" path="lastname" class="pure-input-1" placeHolder="姓氏"/>
                     </div>
                     
@@ -128,7 +128,7 @@
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    	<p>单击"创建账户"，即表示同意XXX的<a href="">条款和条件</a>以及<a href="">隐私策略</a></p>
+                    	<p><b>单击"创建账户"，即表示同意XXX的<a href="">条款和条件</a>以及<a href="">隐私策略</a></b></p>
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
