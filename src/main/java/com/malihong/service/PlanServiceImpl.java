@@ -45,4 +45,9 @@ public class PlanServiceImpl implements PlanService{
 		return planDao.findPlansByAgencyId(aid);
 	}
 
+	@Override
+	public Plan findPlanById(int pid) {
+		return this.planDao.findPlanById(pid);
+	}
+
 }

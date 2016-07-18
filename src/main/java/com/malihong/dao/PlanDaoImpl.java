@@ -83,4 +83,10 @@ public class PlanDaoImpl implements PlanDao{
 		return list;
 	}
 
+	@Override
+	@Transactional
+	public Plan findPlanById(int pid) {
+		return em.find(Plan.class, pid);
+	}
+
 }

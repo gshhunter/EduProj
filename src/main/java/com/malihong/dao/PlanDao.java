@@ -5,7 +5,7 @@ import java.util.List;
 import com.malihong.entity.Plan;
 
 public interface PlanDao {
-
+	public Plan findPlanById(int pid);
 	public void add(Plan p);
 	
 	public void delete(Plan p);

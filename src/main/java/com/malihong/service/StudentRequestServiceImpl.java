@@ -75,4 +75,9 @@ public class StudentRequestServiceImpl implements StudentRequestService{
 		return list;
 	}
 
+	@Override
+	public Request findRequestById(int rid) {
+		return this.requestDao.findRequestById(rid);
+	}
+
 }

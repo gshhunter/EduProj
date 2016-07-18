@@ -12,7 +12,7 @@ import com.malihong.entity.Request;
  * Student Request maintain all requests from student
  */
 public interface StudentRequestDao {
-
+	public Request findRequestById(int rid);
 	public void add(Request r);
 	
 	public void delete(Request r);
