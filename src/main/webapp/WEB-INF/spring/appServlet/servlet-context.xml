@@ -36,6 +36,19 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<!-- MVC Login Interceptors -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*" />
+			<mvc:exclude-mapping path="/account/toEmailLogin"/>
+			<mvc:exclude-mapping path="/account/loginEmail"/>
+			<mvc:exclude-mapping path="/1/*"/>
+			<mvc:exclude-mapping path="/apply/*"/>
+			<mvc:exclude-mapping path="/req/*"/>
+			<bean class="com.malihong.bean.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<!-- Beans -->
 	<bean id="homeController" class="com.malihong.agency.HomeController" />
 	<bean id="accountController" class="com.malihong.agency.AccountController" />

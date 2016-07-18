@@ -1,13 +1,12 @@
 package com.malihong.agency;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,14 +15,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.malihong.bean.BeAgentBean;
+import com.malihong.entity.Account;
+import com.malihong.service.AccountService;
+import com.malihong.service.CookieHelper;
+import com.malihong.util.Base64Encript;
 import com.malihong.util.CountryList;
 
 @Controller
 @RequestMapping("/agent")
 public class AgentController {
 
+	@Autowired
+	private AccountService accountService;
+	
 	@RequestMapping(value="/toBeAgent", method=RequestMethod.GET)
-	public String toBeAgent(Model model) {
+	public String toBeAgent(Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		
+		if (null == miwen) {
+			
+		} else {
+			String mingwen = Base64Encript.decode(miwen);
+			if (mingwen.contains("&")) {
+				String[] parts = mingwen.split("&");
+				String uid = parts[0];
+				Account account = accountService.findUserById(Integer.parseInt(uid));
+				if (null != account) {
+					model.addAttribute("loginUser", account);
+				}
+			}
+		}
 		Map<String, String> countryList = CountryList.getCountryList(Locale.CHINESE);
 		
 		model.addAttribute("beAgentBean", new BeAgentBean());
@@ -38,11 +60,4 @@ public class AgentController {
 		return "";
 	}
 	
-//	protected Map referenceData(HttpServletRequest request) throws Exception {
-//		Map referenceData = new HashMap();
-//		Map<String,String> country = new LinkedHashMap<String,String>();
-//
-//		referenceData.put("countryList", country);
-//		return referenceData;
-//	}
 }

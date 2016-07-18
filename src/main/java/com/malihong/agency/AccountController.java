@@ -2,9 +2,7 @@ package com.malihong.agency;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -27,7 +25,6 @@ import com.malihong.entity.Profile;
 import com.malihong.service.AccountService;
 import com.malihong.service.CookieHelper;
 import com.malihong.util.Base64Encript;
-import com.malihong.util.CountryList;
 import com.malihong.util.MD5Encript;
 import com.malihong.validation.ValidationUtil;
 
@@ -40,11 +37,15 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@RequestMapping(value="/toEmailLogin", method=RequestMethod.GET)
-	public String toEmailLogin(Model model) {
-		
-		model.addAttribute("emailLoginBean", new EmailLoginBean());
-		
-		return "email_login";
+	public String toEmailLogin(Model model, HttpServletRequest request) {
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		if (null != miwen) {
+			
+			return "home";
+		} else {
+			model.addAttribute("emailLoginBean", new EmailLoginBean());
+			return "email_login";
+		}
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
