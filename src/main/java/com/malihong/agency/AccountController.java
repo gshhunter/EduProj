@@ -26,6 +26,7 @@ import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
 import com.malihong.service.AccountService;
 import com.malihong.util.Base64Encript;
+import com.malihong.util.CountryList;
 import com.malihong.util.MD5Encript;
 import com.malihong.validation.ValidationUtil;
 
@@ -39,7 +40,9 @@ public class AccountController {
 	
 	@RequestMapping(value="/toEmailLogin", method=RequestMethod.GET)
 	public String toEmailLogin(Model model) {
+		
 		model.addAttribute("emailLoginBean", new EmailLoginBean());
+		
 		return "email_login";
 	}
 	

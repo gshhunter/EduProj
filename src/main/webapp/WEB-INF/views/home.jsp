@@ -37,7 +37,7 @@
         <a class="pure-menu-heading" href="<%=request.getContextPath() %>">Logo</a>
 
         <ul class="pure-menu-list">
-            <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
+            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
             <c:if test="${loginUser == null || loginUser == undefined}">
                 
             	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>

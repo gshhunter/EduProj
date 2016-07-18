@@ -39,6 +39,7 @@
 	<!-- Beans -->
 	<bean id="homeController" class="com.malihong.agency.HomeController" />
 	<bean id="accountController" class="com.malihong.agency.AccountController" />
+	<bean id="agentController" class="com.malihong.agency.AgentController" />
 	<bean id="studentRequestController" class="com.malihong.agency.StudentRequestController" />
 	<bean
 		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ page language="java" contentType="text/html;charset=utf-8" %>
+<%@ page language="java" contentType="text/html;charset=utf-8" isELIgnored="false"%>
 <!doctype html>
 <html>
 <head>
