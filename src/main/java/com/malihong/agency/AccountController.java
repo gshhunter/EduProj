@@ -25,6 +25,7 @@ import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
 import com.malihong.service.AccountService;
+import com.malihong.service.CookieHelper;
 import com.malihong.util.Base64Encript;
 import com.malihong.util.CountryList;
 import com.malihong.util.MD5Encript;
@@ -48,19 +49,9 @@ public class AccountController {
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for(Cookie cookie: cookies) {
-				if ("EDUJSESSION" == cookie.getName()) {
-					cookie.setMaxAge(0);
-					response.addCookie(cookie);
-					break;
-				}
-			}
-		}
-		
-		model.addAttribute("loginUser", null);
-		return "redirect:/";
+		CookieHelper.deleteCookieValue("EDUJSESSION", request, response);
+		model.addAttribute("userLogin", null);
+		return "home";
 	}
 	
 	@RequestMapping(value="/loginEmail", method=RequestMethod.POST)
@@ -107,14 +98,10 @@ public class AccountController {
 			} else {
 				Date currentDate = new Date();
 				long time = currentDate.getTime();
-				String mingwen = account.getIdAccount() + "&" + time;
+				String mingwen = account.getIdAccount() + "&" + email + "&" + time;
 				String miwen = Base64Encript.encode(mingwen);
-				Cookie cookie = new Cookie("EDUJSESSION", miwen);
-				if (remember_me == true) {
-					cookie.setMaxAge(7*24*60*60);
-				}
-				cookie.setPath("/agency");
-				response.addCookie(cookie);
+				//新建并保存Cookie
+				CookieHelper.saveCookie("EDUJSESSION", miwen, remember_me, response);
 				model.addAttribute("loginUser", account);
 			}
 		}
