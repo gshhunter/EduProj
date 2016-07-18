@@ -5,7 +5,7 @@ import java.util.List;
 import com.malihong.entity.Request;
 
 public interface StudentRequestService {
-
+	public Request findRequestById(int rid);
 	public void save(Request r);
 	
 	public void update(Request r);

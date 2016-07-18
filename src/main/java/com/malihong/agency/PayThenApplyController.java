@@ -1,7 +1,5 @@
 package com.malihong.agency;
 
-import java.io.IOException;
-import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +18,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.entity.Order;
+import com.malihong.entity.Plan;
+import com.malihong.entity.PromotionCode;
 import com.malihong.entity.Request;
+import com.malihong.service.OrderService;
+import com.malihong.service.PlanService;
+import com.malihong.service.PromotionCodeService;
 import com.malihong.service.StudentRequestService;
 
 @Controller
@@ -30,17 +34,58 @@ public class PayThenApplyController {
 	private static final Logger logger = LoggerFactory.getLogger(PayThenApplyController.class);
 
 	@Autowired
+	private PromotionCodeService codeService;
+	@Autowired
+	private PlanService planService;
+	@Autowired
 	private StudentRequestService reqService;
-
+	@Autowired
+	private OrderService orderService;
+	
 	// 验证邀请码
 	@RequestMapping(value = "/api/codevalidation", method = RequestMethod.GET)
-	public @ResponseBody List<Request> getCodeValidation(@RequestParam(value="code",required=true) String code,@RequestParam(value="planid",required=true) int pid){
+	public @ResponseBody String getCodeValidation(@RequestParam(value="code",required=true) String code,@RequestParam(value="planid",required=true) int pid,@RequestParam(value="type",required=true) int type){
 		ObjectMapper mapper = new ObjectMapper();
-		//TODO
-		return null;
+		ObjectNode root=mapper.createObjectNode();		
+		root.put("status", 0);
+		PromotionCode pc=this.codeService.validateCode(type, code);
+		if(pc==null){
+			root.put("status", 1);
+		}else{
+			pc.setStatus(1);
+			Plan plan=this.planService.findPlanById(pid);
+			if(plan==null){
+				root.put("status", 2);
+			}else{
+				plan.setStatus(1);
+				Request req=this.reqService.findRequestById(plan.getIdRequest());
+				if(req==null){
+					root.put("status", 3);
+				}else{
+					//update plan status, request status, create order, update code status
+					this.planService.update(plan);
+
+					req.setIsCancel(2);
+					this.reqService.update(req);
+					
+					Order order=new Order();
+					order.setCreateTime(new Date());
+					order.setStatus(2);
+					order.setIdPlan(plan.getIdPlan());
+					order.setIdAgency(plan.getIdAgency());
+					order.setIdStudent(plan.getIdStudent());
+					this.orderService.add(order);
+					
+					this.codeService.upadte(pc);
+					
+					//想中介发送邮件，提醒尽快联系学生
+				}
+			}
+		}
+		return root.toString();
 	}
 	
-	// 返回plan所对应的中介的联系方式
+	// 返回plan所对应的中介的联系方式->改为向中介发送邮件，提示学生已付款，尽快联系学生
 	@RequestMapping(value = "/api/agentcommunication", method = RequestMethod.GET)
 	public @ResponseBody List<Request> getAgentCommunication(@RequestParam(value="planid",required=true) int pid){
 		ObjectMapper mapper = new ObjectMapper();
@@ -50,7 +95,7 @@ public class PayThenApplyController {
 		return null;
 	}
 	
-	// 返回plan所对应的中介的联系方式
+	// 学生确认完结此order
 	@RequestMapping(value = "/api/finalizeorder", method = RequestMethod.GET)
 	public @ResponseBody List<Request> finalizeOrder(@RequestParam(value="planid",required=true) int pid){
 		ObjectMapper mapper = new ObjectMapper();

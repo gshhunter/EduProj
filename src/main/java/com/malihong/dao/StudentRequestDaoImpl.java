@@ -131,4 +131,10 @@ public class StudentRequestDaoImpl implements StudentRequestDao {
 		return list;
 	}
 
+	@Override
+	@Transactional
+	public Request findRequestById(int rid) {
+		return em.find(Request.class, rid);
+	}
+
 }

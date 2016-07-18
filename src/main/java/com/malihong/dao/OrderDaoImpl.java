@@ -53,4 +53,17 @@ public class OrderDaoImpl implements OrderDao {
 		return q.getResultList();
 	}
 
+	@Override
+	@Transactional
+	public void add(Order o) {
+		em.persist(o);
+	}
+
+	@Override
+	@Transactional
+	public void update(Order o) {
+		em.merge(o);
+		em.flush();
+	}
+
 }

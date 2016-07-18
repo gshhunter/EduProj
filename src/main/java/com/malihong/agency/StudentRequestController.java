@@ -19,6 +19,7 @@ import com.malihong.entity.Plan;
 import com.malihong.entity.Request;
 import com.malihong.service.OptionService;
 import com.malihong.service.PlanService;
+import com.malihong.service.PromotionCodeService;
 import com.malihong.service.StudentRequestService;
 
 import java.io.IOException;
@@ -42,6 +43,8 @@ public class StudentRequestController {
 	private PlanService planService;
 	@Autowired
 	private OptionService optionService;
+	@Autowired
+	private PromotionCodeService codeService;
 	
 	
 	//开发：学生ID：12345； 中介ID：67890
@@ -127,6 +130,7 @@ public class StudentRequestController {
 	// 学生查看与request对应的plans
 	@RequestMapping(value = "/api/getplanlist", method = RequestMethod.GET)
 	public @ResponseBody List<Plan> getPlanList(@RequestParam(value="requestid") int requestId) throws JsonParseException, JsonMappingException, IOException {
+		logger.info("get");
 		List<Plan> list =this.planService.findPlansByRequestId(requestId);
 		return list;
 	}
@@ -154,7 +158,7 @@ public class StudentRequestController {
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public @ResponseBody Plan newtest() throws JsonProcessingException {
 		logger.info("test!");
-		Option o = new Option();
+	/*	Option o = new Option();
 		Option o2 = new Option();
 		o.setUnivercityName("Moanash");
 		o.setStatus(10);
@@ -170,12 +174,14 @@ public class StudentRequestController {
 		p.setStatus(3);
 		//this.planService.add(p);
 
-		/*
+		
 		 * Account a=new Account(); Profile pro=new Profile(); Identification
 		 * iden=new Identification(); iden.setCellphone("1234567890");
 		 * pro.setCityName("Mel"); //a.setProfile(pro); a.setLastname("test");
 		 * a.setEmail("qqq@qqq.com"); this.aService.addNewUser(a, pro, iden);
 		 */
-		return p;
+		
+		//this.codeService.generateCode(100, 4, 1);
+		return null;
 	}
 }

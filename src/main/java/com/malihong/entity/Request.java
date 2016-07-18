@@ -20,19 +20,28 @@ public class Request implements Serializable {
 	@Column(name="id_request")
 	private int idRequest;
 
+	@Column(name="id_account")
+	private int idAccount;
+
+	@Column(name="is_cancel")
+	private int isCancel;	
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="created_time")
 	private Date createdTime;
 
 	@Column(name="current_degree")
-	private String currentDegree;
+	private int currentDegree;
 
 	@Column(name="gaokao_result")
-	private int gaokaoResult;
+	private double gaokaoResult;
 
-	@Column(name="id_account")
-	private int idAccount;
+	@Column(name="gaokao_location")
+	private String gaokaoLocation;
 
+	@Column(name="gaokao_year")
+	private int gaokaoYear;
+	
 	@Column(name="interest_city")
 	private String interestCity;
 
@@ -41,29 +50,6 @@ public class Request implements Serializable {
 
 	@Column(name="interest_major2")
 	private String interestMajor2;
-
-	@Column(name="is_cancel")
-	private int isCancel;
-
-	@Column(name="language_testing")
-	private String languageTesting;
-
-	@Column(name="listening_score")
-	private double listeningScore;
-
-	@Column(name="overall_score")
-	private double overallScore;
-
-	@Column(name="reading_score")
-	private double readingScore;
-
-	@Column(name="speaking_score")
-	private double speakingScore;
-
-	private String status;
-
-	@Column(name="writing_score")
-	private double writingScore;
 
 	public Request() {
 	}
@@ -76,6 +62,22 @@ public class Request implements Serializable {
 		this.idRequest = idRequest;
 	}
 
+	public int getIdAccount() {
+		return this.idAccount;
+	}
+
+	public void setIdAccount(int idAccount) {
+		this.idAccount = idAccount;
+	}
+	
+	public int getIsCancel() {
+		return isCancel;
+	}
+
+	public void setIsCancel(int isCancel) {
+		this.isCancel = isCancel;
+	}
+	
 	public Date getCreatedTime() {
 		return this.createdTime;
 	}
@@ -84,30 +86,37 @@ public class Request implements Serializable {
 		this.createdTime = createdTime;
 	}
 
-	public String getCurrentDegree() {
+	public int getCurrentDegree() {
 		return this.currentDegree;
 	}
 
-	public void setCurrentDegree(String currentDegree) {
+	public void setCurrentDegree(int currentDegree) {
 		this.currentDegree = currentDegree;
 	}
 
-	public int getGaokaoResult() {
+	public double getGaokaoResult() {
 		return this.gaokaoResult;
 	}
 
-	public void setGaokaoResult(int gaokaoResult) {
+	public void setGaokaoResult(double gaokaoResult) {
 		this.gaokaoResult = gaokaoResult;
 	}
 
-	public int getIdAccount() {
-		return this.idAccount;
+	public String getGaokaoLocation() {
+		return this.gaokaoLocation;
 	}
 
-	public void setIdAccount(int idAccount) {
-		this.idAccount = idAccount;
+	public void setGaokaoLocation(String gaokaoLocation) {
+		this.gaokaoLocation = gaokaoLocation;
+	}
+	
+	public int getGaokaoYear() {
+		return this.gaokaoYear;
 	}
 
+	public void setGaokaoYear(int gaokaoYear) {
+		this.gaokaoYear = gaokaoYear;
+	}
 	public String getInterestCity() {
 		return this.interestCity;
 	}
@@ -132,68 +141,5 @@ public class Request implements Serializable {
 		this.interestMajor2 = interestMajor2;
 	}
 
-	public int getIsCancel() {
-		return isCancel;
-	}
-
-	public void setIsCancel(int isCancel) {
-		this.isCancel = isCancel;
-	}
-
-	public String getLanguageTesting() {
-		return this.languageTesting;
-	}
-
-	public void setLanguageTesting(String languageTesting) {
-		this.languageTesting = languageTesting;
-	}
-
-	public double getListeningScore() {
-		return this.listeningScore;
-	}
-
-	public void setListeningScore(double listeningScore) {
-		this.listeningScore = listeningScore;
-	}
-
-	public double getOverallScore() {
-		return this.overallScore;
-	}
-
-	public void setOverallScore(double overallScore) {
-		this.overallScore = overallScore;
-	}
-
-	public double getReadingScore() {
-		return this.readingScore;
-	}
-
-	public void setReadingScore(double readingScore) {
-		this.readingScore = readingScore;
-	}
-
-	public double getSpeakingScore() {
-		return this.speakingScore;
-	}
-
-	public void setSpeakingScore(double speakingScore) {
-		this.speakingScore = speakingScore;
-	}
-
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public double getWritingScore() {
-		return this.writingScore;
-	}
-
-	public void setWritingScore(double writingScore) {
-		this.writingScore = writingScore;
-	}
 
 }
