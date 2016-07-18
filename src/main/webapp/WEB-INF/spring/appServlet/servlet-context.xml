@@ -42,6 +42,7 @@
 			<mvc:mapping path="/*/*" />
 			<mvc:exclude-mapping path="/account/toEmailLogin"/>
 			<mvc:exclude-mapping path="/account/loginEmail"/>
+			<mvc:exclude-mapping path="/account/logout"/>
 			<mvc:exclude-mapping path="/1/*"/>
 			<mvc:exclude-mapping path="/apply/*"/>
 			<mvc:exclude-mapping path="/req/*"/>

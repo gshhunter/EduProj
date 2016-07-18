@@ -43,7 +43,7 @@ public class Account implements Serializable {
 	@Column(name="reg_time")
 	private Date regTime;
 
-	private String type;
+	private int type;
 
 	private String firstname;
 	
@@ -108,15 +108,16 @@ public class Account implements Serializable {
 	public void setRegTime(Date regTime) {
 		this.regTime = regTime;
 	}
-
-	public String getType() {
-		return this.type;
+	
+	
+	public int getType() {
+		return type;
 	}
 
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
-	
+
 	public String getFirstname() {
 		return firstname;
 	}
