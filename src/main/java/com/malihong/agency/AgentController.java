@@ -56,6 +56,10 @@ public class AgentController {
 	@RequestMapping(value="/beAgent", method=RequestMethod.POST)
 	public String beAgent(@ModelAttribute("beAgentBean") BeAgentBean beAgentBean, BindingResult result, Model model,
 			HttpServletRequest request, HttpServletResponse response) {
+		//个人信息
+		String firstname = beAgentBean.getFirstname();
+		String surname = beAgentBean.getSurname();
+		String address = beAgentBean.getAddress();
 		
 		return "";
 	}
