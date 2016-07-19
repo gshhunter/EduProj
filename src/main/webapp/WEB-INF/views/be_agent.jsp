@@ -50,7 +50,7 @@
 	
 	        <ul class="pure-menu-list">
 	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>" class="pure-menu-link">${loginUser.email}</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>" class="pure-menu-link">${login_email}</a></li>
 	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/logout" class="pure-menu-link">注销</a></li>
 	        </ul>
 	    </div>
@@ -60,7 +60,7 @@
 		
 		<h2 class="content-head is-center"><b>申请成为留学顾问</b></h2>
 			
-		<form:form class="pure-form pure-form-stacked" method="POST" commandName="beAgentBean" action="beAgent">
+		<form:form class="pure-form pure-form-stacked" method="GET" commandName="beAgentBean" action="beAgent">
 			<fieldset>
 				<legend>顾问认证信息填写</legend>
 				<div class="pure-g">
@@ -72,11 +72,13 @@
                     <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
                         <form:label path="surname">*真实姓</form:label>
                         <form:input path="surname" class="pure-input-1" placeHolder="真实姓"/>
+                        <form:errors path="surname" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
                     	<form:label path="firstname">*真实名</form:label>
                     	<form:input path="firstname" class="pure-input-1" placeHolder="真实名"/>
+                    	<form:errors path="firstname" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
@@ -89,7 +91,8 @@
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                         <form:label path="birthday">*出生日期</form:label>
-                        <form:input id="datepicker" path="birthday" class="pure-input-1" placeHolder="出生日期" readonly="true" />
+                        <form:input id="datepicker" path="birthday" class="pure-input-1" placeHolder="出生日期" value="" readonly="true" />
+                        <form:errors path="birthday" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
@@ -103,6 +106,7 @@
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                         <form:label path="address">*详细地址</form:label>
                         <form:input path="address" class="pure-input-1" placeHolder="详细地址" />
+                        <form:errors path="address" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
@@ -116,11 +120,13 @@
                     <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
                         <form:label path="postcode">*邮编</form:label>
                         <form:input path="postcode" class="pure-input-1" placeHolder="邮编"/>
+                        <form:errors path="postcode" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
                     	<form:label path="city">*所在城市</form:label>
                     	<form:input path="city" class="pure-input-1" placeHolder="城市"/>
+                    	<form:errors path="city" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
@@ -131,12 +137,19 @@
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                     </div>
                     
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
+                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
+                    	<form:label path="state">*所在省/州</form:label>
+                    	<form:input path="state" class="pure-input-1" placeHolder="省/州"/>
+                    	<form:errors path="state" cssClass="error" />
+                    </div>
+                    
+                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
                     	<form:label path="country">*所在国家</form:label>
                     	<form:select path="country" class="pure-input-1">
 						   <form:option value="NONE" label="--- 选择所在国家  ---"/>
 						   <form:options items="${countryList}" />
 						</form:select>
+						<form:errors path="country" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
