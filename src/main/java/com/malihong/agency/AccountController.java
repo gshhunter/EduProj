@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.malihong.bean.EmailBean;
 import com.malihong.bean.EmailLoginBean;
 import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
@@ -148,5 +149,35 @@ public class AccountController {
 			
 			return "register_success";
 		}
+	}
+	
+	@RequestMapping(value="/forgetPwd", method=RequestMethod.GET)
+	public String toForgetPassword(ModelMap model) {
+
+		model.addAttribute("emailBean", new EmailBean());
+		return "forget_pwd";
+	}
+	
+	@RequestMapping(value="/changePwd", method=RequestMethod.POST)
+	public String toChangePwd(@ModelAttribute("emailBean") EmailBean emailBean, BindingResult result, ModelMap model) {
+		String email = emailBean.getEmail();
+		String code = emailBean.getCode();
+		
+		
+		if (null == email || "".equals(email.trim())) {
+			result.rejectValue("email", "请输入正确的电子邮件", "请输入正确的电子邮件");
+			return "forget_pwd";
+		}
+		
+		if (!ValidationUtil.isEmail(email)) {
+			result.rejectValue("email", "请输入正确的电子邮件", "请输入正确的电子邮件");
+			return "forget_pwd";
+		}
+		
+		if (null == code || "".equals(code.trim())) {
+			result.rejectValue("code", "请输入您的验证码", "请输入您的验证码");
+			return "forget_pwd";
+		}
+		return "change_pwd";
 	}
 }
