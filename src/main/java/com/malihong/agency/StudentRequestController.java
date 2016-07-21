@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
+import com.malihong.bean.MailServer;
 import com.malihong.entity.Option;
 import com.malihong.entity.Plan;
 import com.malihong.entity.Request;
@@ -23,6 +23,7 @@ import com.malihong.service.PromotionCodeService;
 import com.malihong.service.StudentRequestService;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +31,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 @Controller
 @RequestMapping(value = "/req")
@@ -156,7 +158,7 @@ public class StudentRequestController {
 	
 	//For Test
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public @ResponseBody Plan newtest() throws JsonProcessingException {
+	public @ResponseBody Plan newtest() throws JsonProcessingException, UnsupportedEncodingException {
 		logger.info("test!");
 	/*	Option o = new Option();
 		Option o2 = new Option();
@@ -182,6 +184,14 @@ public class StudentRequestController {
 		 */
 		
 		//this.codeService.generateCode(100, 4, 1);
+		boolean res = MailServer.sendServiceMailAuto("lingkai.xu@gmail.com","中文","<h1>测试</h1>");
+		if (res == true) {
+			logger.info("t");
+		} else if (res == false) {
+			logger.info("f");
+		}else{
+			logger.info("n");
+		}
 		return null;
 	}
 }
