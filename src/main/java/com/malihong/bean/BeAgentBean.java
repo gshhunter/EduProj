@@ -8,11 +8,13 @@ public class BeAgentBean {
 	
 	private String surname;
 	
-	private Date birthday;
+	private String birthday;
 	
 	private String address;
 	
 	private String city;
+	
+	private String state;
 	
 	private String postcode;
 	
@@ -38,11 +40,11 @@ public class BeAgentBean {
 		this.surname = surname;
 	}
 
-	public Date getBirthday() {
+	public String getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(Date birthday) {
+	public void setBirthday(String birthday) {
 		this.birthday = birthday;
 	}
 
@@ -60,6 +62,14 @@ public class BeAgentBean {
 
 	public void setCity(String city) {
 		this.city = city;
+	}
+	
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	public String getPostcode() {

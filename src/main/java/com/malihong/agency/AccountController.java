@@ -2,9 +2,7 @@ package com.malihong.agency;
 
 import java.util.Date;
 import java.util.Locale;
-import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -25,8 +23,8 @@ import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
 import com.malihong.service.AccountService;
+import com.malihong.service.CookieHelper;
 import com.malihong.util.Base64Encript;
-import com.malihong.util.CountryList;
 import com.malihong.util.MD5Encript;
 import com.malihong.validation.ValidationUtil;
 
@@ -39,28 +37,22 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@RequestMapping(value="/toEmailLogin", method=RequestMethod.GET)
-	public String toEmailLogin(Model model) {
-		
-		model.addAttribute("emailLoginBean", new EmailLoginBean());
-		
-		return "email_login";
+	public String toEmailLogin(Model model, HttpServletRequest request) {
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		if (null != miwen) {
+			
+			return "home";
+		} else {
+			model.addAttribute("emailLoginBean", new EmailLoginBean());
+			return "email_login";
+		}
 	}
 	
 	@RequestMapping(value="/logout", method=RequestMethod.GET)
 	public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for(Cookie cookie: cookies) {
-				if ("EDUJSESSION" == cookie.getName()) {
-					cookie.setMaxAge(0);
-					response.addCookie(cookie);
-					break;
-				}
-			}
-		}
-		
-		model.addAttribute("loginUser", null);
-		return "redirect:/";
+		CookieHelper.deleteCookieValue("EDUJSESSION", request, response);
+		model.addAttribute("userLogin", null);
+		return "home";
 	}
 	
 	@RequestMapping(value="/loginEmail", method=RequestMethod.POST)
@@ -107,14 +99,10 @@ public class AccountController {
 			} else {
 				Date currentDate = new Date();
 				long time = currentDate.getTime();
-				String mingwen = account.getIdAccount() + "&" + time;
+				String mingwen = account.getIdAccount() + "&" + email + "&" + time;
 				String miwen = Base64Encript.encode(mingwen);
-				Cookie cookie = new Cookie("EDUJSESSION", miwen);
-				if (remember_me == true) {
-					cookie.setMaxAge(7*24*60*60);
-				}
-				cookie.setPath("/agency");
-				response.addCookie(cookie);
+				//新建并保存Cookie
+				CookieHelper.saveCookie("EDUJSESSION", miwen, remember_me, response);
 				model.addAttribute("loginUser", account);
 			}
 		}

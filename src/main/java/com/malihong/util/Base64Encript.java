@@ -18,6 +18,6 @@ public class Base64Encript {
 	public static void main(String[] args) {
 		String encode = Base64Encript.encode("Shuhao");
 		System.out.println("Encode: " + encode);
-		System.out.println("Decode: " +  Base64Encript.decode(encode));
+		System.out.println("Decode: " +  Base64Encript.decode("MzYmMTIzQDEyMy5jb20mMTQ2ODgwNTI3MTQyOQ=="));
 	}
 }

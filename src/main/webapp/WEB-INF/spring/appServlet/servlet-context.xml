@@ -36,6 +36,20 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 	
+	<!-- MVC Login Interceptors -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/*/*" />
+			<mvc:exclude-mapping path="/account/toEmailLogin"/>
+			<mvc:exclude-mapping path="/account/loginEmail"/>
+			<mvc:exclude-mapping path="/account/logout"/>
+			<mvc:exclude-mapping path="/1/*"/>
+			<mvc:exclude-mapping path="/apply/*"/>
+			<mvc:exclude-mapping path="/req/*"/>
+			<bean class="com.malihong.bean.LoginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
 	<!-- Beans -->
 	<bean id="homeController" class="com.malihong.agency.HomeController" />
 	<bean id="accountController" class="com.malihong.agency.AccountController" />
@@ -61,7 +75,7 @@
 	<!-- MYSQL connection -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-    	<property name="url" value="jdbc:mysql://mel-edu.comx0njktrjq.ap-southeast-2.rds.amazonaws.com:3306/edu"/>
+    	<property name="url" value="jdbc:mysql://mel-edu.comx0njktrjq.ap-southeast-2.rds.amazonaws.com:3306/edu?characterEncoding=UTF-8"/>
     	<property name="username" value="root0"/>
     	<property name="password" value="12345678"/>
 	</bean>
