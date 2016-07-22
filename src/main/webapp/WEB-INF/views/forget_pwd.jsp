@@ -62,23 +62,23 @@
 		
 		<h2 class="content-head is-center"><b>找回密码<!-- | <a href="">手机注册</a> --></b></h2>
 			
-		<form:form class="pure-form pure-form-stacked" method="POST" commandName="emailBean" action="changePwd" >
+		<form class="pure-form pure-form-stacked">
 			<fieldset>
-				<legend>向邮箱发送验证</legend>
+				<legend>请填写邮箱并发送验证</legend>
 				<div class="pure-g">
 					<!-- 行1 -->
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-4 pure-u-lg-1-4">
-                        <form:label path="email">电子邮箱</form:label>
-                        <form:input id="email" path="email" class="pure-input-1" type="email" placeHolder="电子邮箱"/>
-                    	<form:errors id="error" path="email" cssClass="error" />
+                        <label for="email">电子邮箱</label>
+                        <input id="email" class="pure-input-1" type="email" placeHolder="电子邮箱"/>
+                    	<span id="error"></span>
                     </div>
                     
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-8 pure-u-lg-1-8">
-                    	<input id="sendEmail" type="button" class="pure-button pure-input-1" value="发送邮件" onClick="sendmail(this);"/>
+                    	<input id="sendEmail" type="button" class="pure-button pure-input-1" value="发送邮件"/>
                     </div>
 
                     <div class="l-box-sm pure-u-1 pure-u-md-1-8 pure-u-lg-1-8">
@@ -89,112 +89,136 @@
                     <!-- 行1 end -->
                     
                     <!-- 行2 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-4 pure-u-lg-1-4">
-                        <form:label path="code">验证码</form:label>
-                        <form:password path="code" class="pure-input-1" placeHolder="验证码"/>
-                    	<form:errors path="code" cssClass="error" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-5-12 pure-u-lg-5-12">
-                    </div>
+                   
                     <!-- 行2 end -->
                     
                     <!-- 行4 -->
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                     </div>
                     
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-4 pure-u-lg-1-4">
+                    <div class="l-box-sm pure-u-1 pure-u-md-3-8 pure-u-lg-3-8">
                     	<br/>
-                        <input class="pure-button pure-input-1" type="submit" value="验证" />
+                        <input id="forwardEmail" class="pure-button pure-input-1" type="button" value="前往邮箱验证" />
                     </div>
                     
-                    <div class="l-box-sm pure-u-1 pure-u-md-5-12 pure-u-lg-5-12">
+                    <div class="l-box-sm pure-u-1 pure-u-md-7-24 pure-u-lg-7-24">
                     </div>
                     <!-- 行4 end -->
                     <br/>
 
 				</div>
 			</fieldset>
-		</form:form>
+		</form>
 		
 	</div>
 	
 	<div class="footer l-box is-center"> Malimaligong.com ® </div>
 
+	<script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
 	<script type="text/javascript">
+	$(document).ready(function() {
 		
-		//设置Cookie
-		function setCookie(cname) {
-			var d = new Date();
-			d.setTime(d.getTime() + 60);
-			var value = d.getTime();
-			var expires = "expires=" + d.toUTCString();
-			document.cookie = cname + "=" + value + "; " + expires;
-		}
-		
-		//取得Cookie
-		function getCookie(cname) {
-		    var name = cname + "=";
-		    var ca = document.cookie.split(';');
-		    for(var i = 0; i <ca.length; i++) {
-		        var c = ca[i];
-		        while (c.charAt(0)==' ') {
-		            c = c.substring(1);
-		        }
-		        if (c.indexOf(name) == 0) {
-		            return c.substring(name.length,c.length);
-		        }
-		    }
-		    return "";
-		}
-		
+		$("#forwardEmail").prop("disabled", true);
+		$("#error").text("");
 		var countdown = 60;
-		function settime(obj) {
-			if (countdown == 0) {
-				obj.removeAttribute("disabled");
-				obj.value="发送邮件";
-				countdown = 60;
-				return;
-				
-			} else {
-				obj.setAttribute("disabled", true);
-				obj.value = "重新发送（" + countdown + "）";
-				countdown--;
+		
+		$("#sendEmail").click(function(){
+			$("#forwardEmail").prop("disabled", true);
+			var email = $("#email").val();
+			console.log("---------" + email);
+			if (email == "" || email == "undefined" || email == null) {
+				$("#error").css("color", "red");
+				$("#error").text("请输入正确的电子邮箱");
+				return "";
 			}
+			if (!isEmail(email)) {
+				$("#error").css("color", "red");
+				$("#error").text("电子邮箱格式错误，请重新输入");
+				return "";
+			}
+			$("#error").text("");
 			
-			setTimeout(function(){
-				settime(obj)
-			}, 1000)
+			$.get('http://localhost:8080/agency/account/api/sendResetMail?email=' + email, function(sback){
+				
+				//var data = JSON.parse(sback);
+				//alert(status);
+				if (sback.status == -1) {
+					$("#error").css("color", "red");
+					$("#error").text("该电子邮箱还未被注册,请重新输入");
+					return "";
+				}
+				
+				if (sback.status == 0) {
+					$("#error").css("color", "red");
+					$("#error").text("请输入正确的电子邮箱");
+					return "";
+				}
+				
+				if (sback.status == 1) {
+					$("#error").css("color", "green");
+					$("#error").text("成功发送，请登录邮箱查看");
+					$("#forwardEmail").prop("disabled", false);
+					var cc = email.split("@");
+					var url = cc[1];
+					console.log("========== " + cc[0]);
+					console.log("++++++++++ " + cc[1]);
+					$("#forwardEmail").click(function(){
+						window.open("http://www." + url);
+					});
+					return "";
+				}
+			});
+			
+			
+		});
+		
+		
+	});
+	
+	function isEmail(email) {
+		var reg = /^[\w\-\.\+]+\@[a-zA-Z0-9\.\-]+\.[a-zA-z0-9]{2,4}$/;
+		if (reg.test(email)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function setCountdown() {
+		var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)countdown\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+		if (cookieValue == "" || cookieValue == "undefined") {
+		    var d = new Date();
+		    var expire = d.getTime() + 60;
+		    console.log(expire);
+		    document.cookie = "countdown=" + expire + "; expires=" + expire.toGMTString();
+		    countdown = 60;
+		} else {
+		    var b = new Date();
+		    countdown = cookieValue - b.getTime();
+		}
+	}
+	
+	function settime(obj) {
+		if (countdown == 0) {
+			obj.removeAttribute("disabled");
+			obj.value="发送邮件";
+			countdown = 60;
+			return;
+			
+		} else {
+			obj.setAttribute("disabled", true);
+			obj.value = "重新发送（" + countdown + "）";
+			countdown--;
 		}
 		
-		function sendmail(obj) {
-			var email = document.getElementById("email").value;
-			var error = document.getElementById("errorMsg");
-			var coo = getCookie("countdown");
-			var t = new Date();
-			
-			if (email == "") {
-				alert("请输入正确的电子邮件");
-				//error.value = "请输入正确的电子邮件";
-				//error.style.color = "red";
-				return false;
-			} else {
-				if (coo != "" && coo != undefined && coo != 'NaN') {
-					countdown = coo - t.getTime();
-				} else {
-					countdown = 60;
-					setCookie("countdown");
-				}
-				settime(obj);
-				//alert("邮件发送成功");
-				//error.value = "邮件发送成功";
-				//error.style.color = "green";
-			}
-			
-		}
+		setTimeout(function(){
+			settime(obj)
+		}, 1000)
+	}
+	
+	function sendmail(obj) {
+			settime(obj);	
+	}
 	</script>
 </body>
 </html>

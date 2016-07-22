@@ -3,6 +3,8 @@
  */
 package com.malihong.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import com.malihong.dao.AccountDao;
 import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
+import com.malihong.entity.ResetPwd;
 
 /**
  * @author GSH1
@@ -60,5 +63,20 @@ public class AccountServiceImpl implements AccountService{
 	@Override
 	public Account findUserByEmail(String email) {
 		return accountDao.findByEmail(email);
+	}
+
+	@Override
+	public ResetPwd findResetPwdByCode(String code) {
+		return accountDao.findResetByCode(code);
+	}
+
+	@Override
+	public void addResetCode(ResetPwd resetPwd) {
+		accountDao.addResetCode(resetPwd);
+	}
+
+	@Override
+	public List<ResetPwd> findResetListByEmail(String email) {
+		return accountDao.findResetListByEmail(email);
 	}
 }

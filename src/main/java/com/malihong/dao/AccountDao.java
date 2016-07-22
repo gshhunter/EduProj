@@ -1,6 +1,9 @@
 package com.malihong.dao;
 
+import java.util.List;
+
 import com.malihong.entity.Account;
+import com.malihong.entity.ResetPwd;
 
 public interface AccountDao {
 	
@@ -13,4 +16,10 @@ public interface AccountDao {
 	public void update(Account account);
 	
 	public Account findByEmail(String email); 
+	
+	public void addResetCode(ResetPwd resetPwd);
+	
+	public ResetPwd findResetByCode(String code);
+	
+	public List<ResetPwd> findResetListByEmail(String email);
 }

@@ -1,8 +1,11 @@
 package com.malihong.service;
 
+import java.util.List;
+
 import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
+import com.malihong.entity.ResetPwd;
 
 /**
  * 
@@ -23,4 +26,10 @@ public interface AccountService {
 	public boolean checkAccountByEmail(String email);
 	
 	public Account findUserByEmail(String email);
+	
+	public ResetPwd findResetPwdByCode(String code);
+	
+	public void addResetCode(ResetPwd resetPwd);
+	
+	public List<ResetPwd> findResetListByEmail(String email);
 }

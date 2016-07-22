@@ -1,7 +1,11 @@
 package com.malihong.agency;
 
+import java.io.IOException;
+
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,12 +21,21 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.malihong.bean.EmailBean;
 import com.malihong.bean.EmailLoginBean;
+import com.malihong.bean.MailServer;
+import com.malihong.bean.ResetPasswordBean;
 import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
+import com.malihong.entity.ResetPwd;
 import com.malihong.service.AccountService;
 import com.malihong.service.CookieHelper;
 import com.malihong.util.Base64Encript;
@@ -158,11 +171,10 @@ public class AccountController {
 		return "forget_pwd";
 	}
 	
-	@RequestMapping(value="/changePwd", method=RequestMethod.POST)
+	@RequestMapping(value="/toChangePwd", method=RequestMethod.POST)
 	public String toChangePwd(@ModelAttribute("emailBean") EmailBean emailBean, BindingResult result, ModelMap model) {
 		String email = emailBean.getEmail();
 		String code = emailBean.getCode();
-		
 		
 		if (null == email || "".equals(email.trim())) {
 			result.rejectValue("email", "请输入正确的电子邮件", "请输入正确的电子邮件");
@@ -180,4 +192,91 @@ public class AccountController {
 		}
 		return "change_pwd";
 	}
+	
+	@RequestMapping(value="/reset_password", method=RequestMethod.GET)
+	public String toResetPwd(@RequestParam(value="sid", required=false) String sid , @RequestParam(value="email", required=false) String email, ModelMap model) {
+		if (sid == null || "".equals(sid.trim()) || email ==null || "".equals(email.trim())) {
+			return "error_mail";
+		}
+		
+		List<ResetPwd> list = accountService.findResetListByEmail(email);
+		if (list == null) {
+			return "error_mail";
+		}
+		
+		//明文格式：<email>&<uuid_key>&<expire>
+		for (ResetPwd reset : list) {
+			String md5 = MD5Encript.crypt(reset.getEmail() + "&" + reset.getCode() + "&" + reset.getSendTime());
+			if (md5.equals(sid.trim())) {
+				model.addAttribute("resetPasswordBean", new ResetPasswordBean());
+				return "reset_pwd";
+			}
+		}
+		
+		return "error_mail";
+		
+		
+	}
+	
+	@RequestMapping(value="/api/sendResetMail", method=RequestMethod.GET)
+	public @ResponseBody String sendResetMail (@ModelAttribute("reset") ResetPwd reset, @RequestParam(value="email", required=true) String email) throws JsonParseException, JsonMappingException, IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root = mapper.createObjectNode();
+		root.put("status", 0);
+		
+		if (null == email || "".equals(email.trim())) {
+			root.put("status", 0);
+			return root.toString();
+		}
+		
+		if (!ValidationUtil.isEmail(email)) {
+			root.put("status", 0);
+			return root.toString();
+		} else {
+			boolean isExist = accountService.checkAccountByEmail(email);
+			if (!isExist) {
+				root.put("status", -1);
+				logger.info("不存在： " + email);
+				logger.info(root.toString());
+				return root.toString();
+			} else {
+				
+				String key = UUID.randomUUID().toString();
+				long expire = new Date().getTime() + 60*60;
+				
+				//明文格式：<email>&<uuid_key>&<expire>
+				String mingcode = email + "&" + key + "&" + expire;
+				String micode = MD5Encript.crypt(mingcode);
+				String url = "http://localhost:8080/agency/account/reset_password?sid=" + micode + "&email=" + email;
+				
+				reset.setCode(key);
+				reset.setEmail(email);
+				reset.setSendTime(expire);
+				
+				accountService.addResetCode(reset);
+				
+				//发送邮件接口
+				boolean res = MailServer.sendServiceMailAuto(email,"密码重置","<h1>" + url + "</h1>");
+				if (res == true) {
+					logger.info("t");
+				} else if (res == false) {
+					logger.info("f");
+				}else{
+					logger.info("n");
+				}
+				root.put("status", 1);
+				return root.toString();
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
 }
