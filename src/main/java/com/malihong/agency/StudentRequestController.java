@@ -28,6 +28,9 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -184,14 +187,17 @@ public class StudentRequestController {
 		 */
 		
 		//this.codeService.generateCode(100, 4, 1);
-		boolean res = MailServer.sendServiceMailAuto("lingkai.xu@gmail.com","中文","<h1>测试</h1>");
+        ExecutorService executorService = Executors.newCachedThreadPool();  
+        Future<String> future = executorService.submit(new MailServer("lingkai.xu@gmail.com","中文","<h1>测试</h1>"));  
+
+		/*boolean res = MailServer.sendServiceMailAuto("lingkai.xu@gmail.com","中文","<h1>测试</h1>");
 		if (res == true) {
 			logger.info("t");
 		} else if (res == false) {
 			logger.info("f");
 		}else{
 			logger.info("n");
-		}
+		}*/
 		return null;
 	}
 }
