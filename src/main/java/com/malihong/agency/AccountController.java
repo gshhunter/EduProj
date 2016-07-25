@@ -257,14 +257,8 @@ public class AccountController {
 				accountService.addResetCode(reset);
 				
 				//发送邮件接口
-				boolean res = MailServer.sendServiceMailAuto(email,"密码重置","<h1>" + url + "</h1>");
-				if (res == true) {
-					logger.info("t");
-				} else if (res == false) {
-					logger.info("f");
-				}else{
-					logger.info("n");
-				}
+//				boolean res = MailServer.sendServiceMailAuto(email,"密码重置","<h1>" + url + "</h1>");
+
 				root.put("status", 1);
 				return root.toString();
 			}

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.malihong.bean.MailServer;
+import com.malihong.bean.RedisServerPool;
 import com.malihong.entity.Option;
 import com.malihong.entity.Plan;
 import com.malihong.entity.Request;
@@ -21,6 +22,8 @@ import com.malihong.service.OptionService;
 import com.malihong.service.PlanService;
 import com.malihong.service.PromotionCodeService;
 import com.malihong.service.StudentRequestService;
+
+import redis.clients.jedis.Jedis;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -163,41 +166,19 @@ public class StudentRequestController {
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public @ResponseBody Plan newtest() throws JsonProcessingException, UnsupportedEncodingException {
 		logger.info("test!");
-	/*	Option o = new Option();
-		Option o2 = new Option();
-		o.setUnivercityName("Moanash");
-		o.setStatus(10);
-		o2.setUnivercityName("NU");
-		Plan p = new Plan();
-		List<Option> os = new ArrayList<Option>();
-		os.add(o);
-		os.add(o2);
-		p.setOptions(os);
-		p.setIdAgency(12345);
-		p.setIdStudent(12345);
-		p.setIdRequest(123);
-		p.setStatus(3);
-		//this.planService.add(p);
 
-		
-		 * Account a=new Account(); Profile pro=new Profile(); Identification
-		 * iden=new Identification(); iden.setCellphone("1234567890");
-		 * pro.setCityName("Mel"); //a.setProfile(pro); a.setLastname("test");
-		 * a.setEmail("qqq@qqq.com"); this.aService.addNewUser(a, pro, iden);
-		 */
-		
-		//this.codeService.generateCode(100, 4, 1);
-        ExecutorService executorService = Executors.newCachedThreadPool();  
-        Future<String> future = executorService.submit(new MailServer("lingkai.xu@gmail.com","中文","<h1>测试</h1>"));  
+        //ExecutorService executorService = Executors.newCachedThreadPool();  
+        //Future<String> future = executorService.submit(new MailServer("lingkai.xu@gmail.com","中文","<h1>测试</h1>"));  
 
-		/*boolean res = MailServer.sendServiceMailAuto("lingkai.xu@gmail.com","中文","<h1>测试</h1>");
-		if (res == true) {
-			logger.info("t");
-		} else if (res == false) {
-			logger.info("f");
-		}else{
-			logger.info("n");
-		}*/
+        //从连接池获得一个连接
+		Jedis jedis = RedisServerPool.getResource();
+		//set数据
+		jedis.set("akey", "this is value");
+		//根据key来get数据
+		System.out.println("Redis:" + jedis.get("akey"));
+		//使用后把资源归还连接池
+		RedisServerPool.returnResource(jedis);
+
 		return null;
 	}
 }

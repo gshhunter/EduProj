@@ -5,6 +5,22 @@ import java.util.List;
 import redis.clients.jedis.Jedis;
 
 public class RedisServer {
+	
+	public static void main(String args[]) {
+		for(int i=0;i<5;i++){
+
+		Jedis jedis = RedisServerPool.getResource();
+		jedis.set("w3ckey", String.valueOf(i));
+
+		System.out.println("Server is running: " + jedis.get("w3ckey"));
+		
+		RedisServerPool.returnResource(jedis);
+		System.out.println("Server is running: " + jedis.get("123"));
+		}
+
+	}
+	
+	
 	public void test() {
 		// 连接本地的 Redis 服务
 		Jedis jedis = new Jedis("localhost");
