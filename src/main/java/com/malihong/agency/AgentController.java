@@ -76,11 +76,25 @@ public class AgentController {
 			String[] parts = mingwen.split("&");
 			String uid = parts[0];
 			Account account = accountService.findUserById(Integer.parseInt(uid));
-			if (null != account) {
-				model.addAttribute("loginUser", account);
-				model.addAttribute("login_email", parts[1]);
+			
+			//Applying agent：已经申请，还没有审核通过
+			if (account.getType() == 2) {
+				return "agent_apply";
 			}
-		
+
+			//agent：已审核通过的agent
+			if (account.getType() == 3) {
+				
+			}
+			
+			//无效用户，跳转错误页面
+			if (account.getType() == 1) {
+				
+			}
+			
+			model.addAttribute("loginUser", account);
+			model.addAttribute("login_email", account.getEmail());
+			
 			//个人信息
 			String firstname = beAgentBean.getFirstname();
 			String surname = beAgentBean.getSurname();
@@ -153,6 +167,8 @@ public class AgentController {
 			p.setSurname(surname);
 			
 			account.setProfile(p);
+			//2: applying
+			account.setType(2);
 			accountService.update(account);
 			
 			return "agent_apply";

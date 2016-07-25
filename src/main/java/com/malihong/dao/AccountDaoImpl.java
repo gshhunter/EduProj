@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.malihong.entity.Account;
+import com.malihong.entity.ResetPwd;
 
 @Component
 public class AccountDaoImpl implements AccountDao {
@@ -61,6 +62,46 @@ public class AccountDaoImpl implements AccountDao {
 			return list.get(0);
 		}
 	}
+
+	/**
+	 * 创建一个密码重置的链接
+	 */
+	@Override
+	@Transactional
+	public void addResetCode(ResetPwd resetPwd) {
+		em.persist(resetPwd);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public ResetPwd findResetByCode(String code) {
+		String str = "SELECT r FROM ResetPwd r WHERE r.code = ?1";
+		Query query = em.createQuery(str);
+		query.setParameter(1, code);
+		List<ResetPwd> list = query.getResultList(); 
+		if (list.isEmpty()){
+			return null;
+		} else {
+			return list.get(0);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<ResetPwd> findResetListByEmail(String email) {
+		String str = "SELECT r FROM ResetPwd r WHERE r.email = ?1";
+		Query query = em.createQuery(str);
+		query.setParameter(1, email);
+		List<ResetPwd> list = query.getResultList();
+		if (list.isEmpty()){
+			return null;
+		} else {
+			return list;
+		}
+	}
+	
 	
 	
 }
