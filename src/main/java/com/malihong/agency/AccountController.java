@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -257,8 +260,9 @@ public class AccountController {
 				accountService.addResetCode(reset);
 				
 				//发送邮件接口
-//				boolean res = MailServer.sendServiceMailAuto(email,"密码重置","<h1>" + url + "</h1>");
-
+				ExecutorService executorService = Executors.newCachedThreadPool();  
+		        Future<String> future = executorService.submit(new MailServer("lingkai.xu@gmail.com","密码重置","<h1>" + url + "</h1>"));
+		        
 				root.put("status", 1);
 				return root.toString();
 			}
