@@ -261,7 +261,7 @@ public class AccountController {
 				
 				//发送邮件接口
 				ExecutorService executorService = Executors.newCachedThreadPool();  
-		        Future<String> future = executorService.submit(new MailServer("lingkai.xu@gmail.com","密码重置","<h1>" + url + "</h1>"));
+		        Future<String> future = executorService.submit(new MailServer(email,"密码重置","<h1>" + url + "</h1>"));
 		        
 				root.put("status", 1);
 				return root.toString();

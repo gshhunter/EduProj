@@ -120,10 +120,9 @@
 		
 		$("#forwardEmail").prop("disabled", true);
 		$("#error").text("");
-		var countdown = 60;
 		
 		$("#sendEmail").click(function(){
-			$("#forwardEmail").prop("disabled", true);
+			
 			var email = $("#email").val();
 			console.log("---------" + email);
 			if (email == "" || email == "undefined" || email == null) {
@@ -139,9 +138,7 @@
 			$("#error").text("");
 			
 			$.get('http://localhost:8080/agency/account/api/sendResetMail?email=' + email, function(sback){
-				
-				//var data = JSON.parse(sback);
-				//alert(status);
+	
 				if (sback.status == -1) {
 					$("#error").css("color", "red");
 					$("#error").text("该电子邮箱还未被注册,请重新输入");
@@ -155,6 +152,8 @@
 				}
 				
 				if (sback.status == 1) {
+					var sendEmail = $("#sendEmail");
+					settime(sendEmail);
 					$("#error").css("color", "green");
 					$("#error").text("成功发送，请登录邮箱查看");
 					$("#forwardEmail").prop("disabled", false);
@@ -198,16 +197,18 @@
 		}
 	}
 	
+	var countdown = 60
+	
 	function settime(obj) {
 		if (countdown == 0) {
-			obj.removeAttribute("disabled");
-			obj.value="发送邮件";
+			obj.prop("disabled", false);
+			obj.val("发送邮件");
 			countdown = 60;
 			return;
 			
 		} else {
-			obj.setAttribute("disabled", true);
-			obj.value = "重新发送（" + countdown + "）";
+			obj.prop("disabled", true);
+			obj.val("重新发送（" + countdown + "）");
 			countdown--;
 		}
 		
