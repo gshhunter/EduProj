@@ -197,7 +197,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="/reset_password", method=RequestMethod.GET)
-	public String toResetPwd(@RequestParam(value="sid", required=false) String sid , @RequestParam(value="email", required=false) String email, ModelMap model) {
+	public String toResetPwd(@RequestParam(value="sid", required=false) String sid , @RequestParam(value="email", required=false) String email, ModelMap model, HttpServletResponse response) {
 		if (sid == null || "".equals(sid.trim()) || email ==null || "".equals(email.trim())) {
 			return "error_mail";
 		}
@@ -211,14 +211,46 @@ public class AccountController {
 		for (ResetPwd reset : list) {
 			String md5 = MD5Encript.crypt(reset.getEmail() + "&" + reset.getCode() + "&" + reset.getSendTime());
 			if (md5.equals(sid.trim())) {
+				CookieHelper.saveCookie("EDUEMAIL", email, false, response);
 				model.addAttribute("resetPasswordBean", new ResetPasswordBean());
 				return "reset_pwd";
 			}
 		}
-		
 		return "error_mail";
+	}
+	
+	@RequestMapping(value="/resetPassword", method=RequestMethod.POST)
+	public String resetPassword(Model model, @ModelAttribute("resetPasswordBean") ResetPasswordBean resetPasswordBean, BindingResult result, HttpServletRequest request, HttpServletResponse response) {
 		
+		String email = getResetEmail(request, response);
+		String newPass = resetPasswordBean.getNew_pass();
+		String confirmPass = resetPasswordBean.getConfirm_pass();
 		
+		if (newPass == null || "".equals(newPass.trim())) {
+			result.rejectValue("new_pass", "请输入您的新密码", "请输入您的新密码");
+			return "reset_pwd";
+		}
+		
+		if (confirmPass == null || "".equals(confirmPass.trim())) {
+			result.rejectValue("confirm_pwd", "请输入您的确认密码", "请输入您的确认密码");
+			return "reset_pwd";
+		}
+		
+		if (!ValidationUtil.isPassword(newPass)) {
+			result.rejectValue("new_pass", "请输入正确的密码格式", "请输入正确的密码格式");
+			return "reset_pwd";
+		}
+		
+		if (!confirmPass.equals(newPass)) {
+			result.rejectValue("confirm_pwd", "两次输入密码不一致", "两次输入密码不一致");
+			return "reset_pwd";
+		}
+		
+		Account account = accountService.findUserByEmail(email);
+		account.setPassword(MD5Encript.crypt(newPass));
+		accountService.update(account);
+		
+		return "home";
 	}
 	
 	@RequestMapping(value="/api/sendResetMail", method=RequestMethod.GET)
@@ -268,13 +300,13 @@ public class AccountController {
 			}
 		}
 		
-		
-		
-		
-		
-		
-		
-		
+	}
+	
+	//
+	public String getResetEmail(HttpServletRequest request, HttpServletResponse response) {
+		String miwen = CookieHelper.getCookieValue("EDUEMAIL", request);
+
+		return miwen;
 	}
 	
 }

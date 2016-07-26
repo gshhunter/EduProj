@@ -68,7 +68,7 @@
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                         <form:label path="new_pass">*新密码</form:label>
-                        <form:input path="new_pass" class="pure-input-1" type="email" placeHolder="新密码"/>
+                        <form:password path="new_pass" class="pure-input-1" placeHolder="新密码"/>
                     	<form:errors path="new_pass" cssClass="error" />
                     </div>
                     
@@ -82,7 +82,7 @@
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                         <form:label path="confirm_pass">*确认密码</form:label>
-                        <form:password path="confirm_pass" class="pure-input-1" placeHolder="再次输入新密码"/>
+                        <form:password path="confirm_pass" class="pure-input-1" placeHolder="再次输入"/>
                     	<form:errors path="confirm_pass" cssClass="error" />
                     </div>
                     
