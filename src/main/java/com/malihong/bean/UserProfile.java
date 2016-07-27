@@ -1,5 +1,7 @@
 package com.malihong.bean;
 
+import java.util.Date;
+
 public class UserProfile {
 
 	private int id;
@@ -22,6 +24,7 @@ public class UserProfile {
 	
 	private int postcode;
 	
+	//0: invalid 1: normal user 2: applying agent 3: agent
 	private int userType;
 	
 	private int isEmail;
@@ -29,7 +32,9 @@ public class UserProfile {
 	private int isCellphone;
 	
 	private int isPassport;
-
+	
+	private Date regTime;
+	
 	public int getId() {
 		return id;
 	}
@@ -141,5 +146,14 @@ public class UserProfile {
 	public void setIsPassport(int isPassport) {
 		this.isPassport = isPassport;
 	}
+
+	public Date getRegTime() {
+		return regTime;
+	}
+
+	public void setRegTime(Date regTime) {
+		this.regTime = regTime;
+	}
+	
 	
 }

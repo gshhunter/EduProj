@@ -35,6 +35,7 @@ import com.malihong.bean.EmailBean;
 import com.malihong.bean.EmailLoginBean;
 import com.malihong.bean.MailServer;
 import com.malihong.bean.ResetPasswordBean;
+import com.malihong.bean.UserProfile;
 import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
@@ -253,6 +254,22 @@ public class AccountController {
 		return "home";
 	}
 	
+	//获取重置用户的邮箱
+	public String getResetEmail(HttpServletRequest request, HttpServletResponse response) {
+		String miwen = CookieHelper.getCookieValue("EDUEMAIL", request);
+
+		return miwen;
+	}
+	
+	/**
+	 * 发送密码重置邮件的API
+	 * @param reset
+	 * @param email
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/api/sendResetMail", method=RequestMethod.GET)
 	public @ResponseBody String sendResetMail (@ModelAttribute("reset") ResetPwd reset, @RequestParam(value="email", required=true) String email) throws JsonParseException, JsonMappingException, IOException {
 		
@@ -299,14 +316,43 @@ public class AccountController {
 				return root.toString();
 			}
 		}
+	}
+	
+	@RequestMapping(value="/toViewProfile", method=RequestMethod.GET)
+	public String toStudentProfile(Model model) {
 		
+		return "student_profile";
 	}
 	
-	//
-	public String getResetEmail(HttpServletRequest request, HttpServletResponse response) {
-		String miwen = CookieHelper.getCookieValue("EDUEMAIL", request);
-
-		return miwen;
+	@RequestMapping(value="/api/viewProfile", method=RequestMethod.POST)
+	public @ResponseBody String viewProfile(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		String mingwen = Base64Encript.decode(miwen);
+		String[] array = mingwen.split("&");
+		String email = array[1];
+		
+		Account account = accountService.findUserByEmail(email);
+		Profile p = account.getProfile();
+		Identification ident = account.getIdentification();
+		
+		UserProfile up  = new UserProfile();
+		up.setId(account.getIdAccount());
+		up.setEmail(account.getEmail());
+		up.setCellphone(account.getCellphone());
+		up.setCountry(p.getCountry());
+		up.setState(p.getState());
+		up.setCity(p.getCityName());
+		up.setAddress(p.getHomeAddress());
+		up.setPostcode(p.getPostcode());
+		up.setFirstname(account.getFirstname());
+		up.setLastname(account.getLastname());
+		up.setRegTime(account.getRegTime());
+		up.setIsEmail(ident.getIsEmail());
+		up.setIsCellphone(ident.getIsCellphone());
+		up.setIsPassport(ident.getIsPassport());
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(up);
+		return json.toString();
 	}
-	
 }
