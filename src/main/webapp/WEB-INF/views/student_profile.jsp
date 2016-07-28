@@ -54,10 +54,13 @@
             padding:2px;
         }
         
-        .iconStyle{
+        .iconYes{
             color:#00897B;
         }
         
+        .iconNo {
+        	color: #958F8F;
+        }
         
     </style>
 </head>
@@ -93,28 +96,24 @@
             <div class="pure-u-2-24"></div>
             <div class="pure-u-3-24 userInfoBox">
                 <i class="fa fa-user fa-5x iconStyle" aria-hidden="true"></i><br>
-                <span class="textStyle">小明</span><br><br>
-                <i class="fa fa-check-square iconStyle" aria-hidden="true"></i><label>身份验证</label><br>
-                <i class="fa fa-check-square iconStyle" aria-hidden="true"></i><label>邮箱验证</label><br>
-                <i class="fa fa-check-square iconStyle" aria-hidden="true"></i><label>手机验证</label><br>
+                <span id="fname" class="textStyle"></span><br><br>
+                <i id="isPassport" class="fa fa-check-square" aria-hidden="true"></i><label>身份验证</label><br>
+                <i id="isEmail" class="fa fa-check-square" aria-hidden="true"></i><label>邮箱验证</label><br>
+                <i id="isCellphone" class="fa fa-check-square" aria-hidden="true"></i><label>手机验证</label><br>
                 <br>
                 <br>
                 <br>
                 <a href="file:///Users/Chenxue/Documents/EduFont/studentProfileEdit.html" style="color:#0D47A1;">编辑我的信息</a>
             </div>
            <div class="pure-u-16-24 insidePageContent">
-               <h1>Hi 我是小明！</h1>
-               <h3>中国 山东 济南</h3>
+               <h1 id="name">你好，我是</h1>
+               <h3 id="address"></h3>
                <pre>
-                  Malihong Malihong Malihong Malihong Malihong Malihong Malihong<br>
-                  Malihong Malihong Malihong  Malihong<br>
-                  Malihong Malihong Malihong Malihong Malihong Malihong<br>
-                  Malihong Malihong Malihong Malihong Malihong<br>
-                  Malihong Malihong 
+                  
                </pre>
                 
-               <label style="padding-right:25px;"><i class="fa fa-comments fa-2x" aria-hidden="true" style="color:#00796B;"></i> 评价(1)</label>
-               <label><i class="fa fa-certificate fa-2x" aria-hidden="true" style="color:#FFC400;"></i> 认证用户</label>
+               <!-- <label style="padding-right:25px;"><i class="fa fa-comments fa-2x" aria-hidden="true" style="color:#00796B;"></i> 评价(1)</label>
+               <label><i class="fa fa-certificate fa-2x" aria-hidden="true" style="color:#FFC400;"></i> 认证用户</label> -->
                  
            </div>
            
@@ -140,7 +139,48 @@
      
     </div>
     <div class="footer">Malimaligong.com ®</div>
+    <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$.post("http://localhost:8080/agency/account/api/viewProfile", function(data){
+			if (data.isCellphone == 1) {
+				$("#isCellphone").addClass("iconYes");
+			} else {
+				$("#isCellphone").addClass("iconNo");
+			}
+			
+			if (data.isEmail == 1) {
+				$("#isEmail").addClass("iconYes");
+			} else {
+				$("#isEmail").addClass("iconNo");
+			}
+			
+			if (data.isPassport == 1) {
+				$("#isPassport").addClass("iconYes");
+			} else {
+				$("#isPassport").addClass("iconNo");
+			}
+			
+			if (data.firstname != null) {
+				$("#fname").text(data.firstname);
+				$("#name").append(data.firstname);
+			}
+			
+			if (data.country != null) {
+				$("#address").append(data.country);
+			}
+			
+			if (data.state != null) {
+				$("#address").append(data.state);
+			}
+			
+			if (data.city != null) {
+				$("#address").append(data.city);
+			}
+			
+		});
+	});
+	</script>
 </body>
-
-
 </html>

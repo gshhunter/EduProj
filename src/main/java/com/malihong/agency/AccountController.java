@@ -346,13 +346,19 @@ public class AccountController {
 		up.setPostcode(p.getPostcode());
 		up.setFirstname(account.getFirstname());
 		up.setLastname(account.getLastname());
+		up.setUserType(account.getType());
 		up.setRegTime(account.getRegTime());
 		up.setIsEmail(ident.getIsEmail());
 		up.setIsCellphone(ident.getIsCellphone());
 		up.setIsPassport(ident.getIsPassport());
+		up.setGender(p.getGender());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(up);
+		logger.info("View Profile: " + json);
+		
 		return json.toString();
+		
+		
 	}
 }

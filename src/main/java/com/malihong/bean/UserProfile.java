@@ -35,6 +35,8 @@ public class UserProfile {
 	
 	private Date regTime;
 	
+	private int gender;
+	
 	public int getId() {
 		return id;
 	}
@@ -154,6 +156,13 @@ public class UserProfile {
 	public void setRegTime(Date regTime) {
 		this.regTime = regTime;
 	}
-	
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
 	
 }

@@ -36,7 +36,7 @@ public class Profile implements Serializable {
 
 	private String firstname;
 
-	private String gender;
+	private int gender;
 
 	@Column(name="home_address")
 	private String homeAddress;
@@ -109,11 +109,11 @@ public class Profile implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public String getGender() {
-		return this.gender;
+	public int getGender() {
+		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(int gender) {
 		this.gender = gender;
 	}
 
