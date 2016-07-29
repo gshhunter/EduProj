@@ -12,7 +12,7 @@ public class RedisServerPool {
 		config.setMaxIdle(100);
 		config.setMaxWaitMillis(1000 * 100);
 		config.setTestOnBorrow(true);
-		pool = new JedisPool(config, "45.63.52.164", 6379);
+		pool = new JedisPool(config, "45.63.52.164", 6379, 100*1000,"Redis@XLK910728");
 	}
 
 	public static Jedis getResource(){
