@@ -27,12 +27,18 @@ public class LoginCookieUtil {
 		}
 		
 		//从Cookie获取用户账号Id
-		public static int getAccountIdByCookie(HttpServletRequest request) {
+		public static Integer getAccountIdByCookie(HttpServletRequest request) {
 			String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
-			String mingwen = Base64Encript.decode(miwen);
-			String[] array = mingwen.split("&");
-			int accountId = Integer.parseInt(array[0]);
-			return accountId;
+			if(miwen==null){
+				System.out.println("NULL!");
+				return null;
+			}else{
+				String mingwen = Base64Encript.decode(miwen);
+				String[] array = mingwen.split("&");
+				Integer accountId = Integer.parseInt(array[0]);
+				return accountId;
+			}
+
 		}
 		
 		//从Cookie获取用户邮箱

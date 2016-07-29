@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.bean.LoginCookieUtil;
 import com.malihong.bean.MailServer;
 import com.malihong.bean.RedisServerPool;
 import com.malihong.entity.Option;
@@ -34,6 +35,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -164,20 +167,22 @@ public class StudentRequestController {
 	
 	//For Test
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public @ResponseBody Plan newtest() throws JsonProcessingException, UnsupportedEncodingException {
+	public @ResponseBody Plan newtest(HttpServletRequest request,@RequestParam(value="id") int id) throws JsonProcessingException, UnsupportedEncodingException {
 		logger.info("test!");
-
+		Integer acc=LoginCookieUtil.getAccountIdByCookie(request);
+		logger.info(String.valueOf(acc));
+		logger.info(String.valueOf(id));
         //ExecutorService executorService = Executors.newCachedThreadPool();  
         //Future<String> future = executorService.submit(new MailServer("lingkai.xu@gmail.com","中文","<h1>测试</h1>"));  
 
         //从连接池获得一个连接
-		Jedis jedis = RedisServerPool.getResource();
+		//Jedis jedis = RedisServerPool.getResource();
 		//set数据
-		jedis.set("akey", "this is value");
+		//jedis.set("akey", "this is value");
 		//根据key来get数据
-		System.out.println("Redis:" + jedis.get("akey"));
+		//System.out.println("Redis:" + jedis.get("akey"));
 		//使用后把资源归还连接池
-		RedisServerPool.returnResource(jedis);
+		//RedisServerPool.returnResource(jedis);
 
 		return null;
 	}
