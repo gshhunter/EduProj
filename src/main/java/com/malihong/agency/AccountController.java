@@ -1,10 +1,11 @@
 package com.malihong.agency;
 
 import java.io.IOException;
-
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -22,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +45,7 @@ import com.malihong.entity.ResetPwd;
 import com.malihong.service.AccountService;
 import com.malihong.service.CookieHelper;
 import com.malihong.util.Base64Encript;
+import com.malihong.util.CountryList;
 import com.malihong.util.MD5Encript;
 import com.malihong.validation.ValidationUtil;
 
@@ -324,8 +327,14 @@ public class AccountController {
 		return "student_profile";
 	}
 	
-	@RequestMapping(value="/api/viewProfile", method=RequestMethod.POST)
-	public @ResponseBody String viewProfile(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+	@RequestMapping(value="/toEditProfile", method=RequestMethod.GET)
+	public String toEditProfile(Model model) {
+		
+		return "edit_profile";
+	}
+	
+	@RequestMapping(value="/api/getProfile", method=RequestMethod.POST)
+	public @ResponseBody String getProfile(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 		String mingwen = Base64Encript.decode(miwen);
 		String[] array = mingwen.split("&");
@@ -335,11 +344,17 @@ public class AccountController {
 		Profile p = account.getProfile();
 		Identification ident = account.getIdentification();
 		
+		String chinese_name = null;
+		if (p.getCountry() != null) {
+			Map<String, String> map = CountryList.getCountryList(Locale.CHINESE);
+			chinese_name = map.get(p.getCountry());
+		}
+		
 		UserProfile up  = new UserProfile();
 		up.setId(account.getIdAccount());
 		up.setEmail(account.getEmail());
 		up.setCellphone(account.getCellphone());
-		up.setCountry(p.getCountry());
+		up.setCountry(chinese_name);
 		up.setState(p.getState());
 		up.setCity(p.getCityName());
 		up.setAddress(p.getHomeAddress());
@@ -358,7 +373,13 @@ public class AccountController {
 		logger.info("View Profile: " + json);
 		
 		return json.toString();
+
+	}
+	
+	@RequestMapping(value="/api/editProfile", method=RequestMethod.POST)
+	public @ResponseBody String editProfile(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
+		r = URLDecoder.decode(r, "UTF-8");
 		
-		
+		return "";
 	}
 }

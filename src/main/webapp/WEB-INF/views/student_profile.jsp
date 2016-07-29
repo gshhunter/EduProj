@@ -76,10 +76,10 @@
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">
-                    <li class="highlightBorderMcx"><a href="#">成为中介</a></li>
-                    <li><a href="#">收件箱</a></li>
-                    <li><lable>Amy</label></li>
-                    <li><a href="#">退出</a></li>                   
+                    <li id="hightlightbox" class="highlightBorderMcx"><a id="beagent" href="#"></a></li>
+                    <!--<li><a href="#">收件箱</a></li>-->
+                    <li><a id="email"></a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/logout">注销</a></li>                   
                     
                 </ul>
             </div>
@@ -103,7 +103,7 @@
                 <br>
                 <br>
                 <br>
-                <a href="file:///Users/Chenxue/Documents/EduFont/studentProfileEdit.html" style="color:#0D47A1;">编辑我的信息</a>
+                <a href="<%=request.getContextPath() %>/account/toEditProfile" style="color:#0D47A1;">编辑我的信息</a>
             </div>
            <div class="pure-u-16-24 insidePageContent">
                <h1 id="name">你好，我是</h1>
@@ -131,19 +131,19 @@
               
            </div>
         </div>
-
-       
-
         <br>
         
-     
     </div>
     <div class="footer">Malimaligong.com ®</div>
     <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
-		$.post("http://localhost:8080/agency/account/api/viewProfile", function(data){
+		$.post("http://localhost:8080/agency/account/api/getProfile", function(data){
+			$("#hightlightbox").prop("disabled", true);
+			$("#email").text(data.email);
+			$("#email").attr("href", "<%=request.getContextPath() %>/account/toViewProfile");
+			
 			if (data.isCellphone == 1) {
 				$("#isCellphone").addClass("iconYes");
 			} else {
@@ -168,17 +168,25 @@
 			}
 			
 			if (data.country != null) {
-				$("#address").append(data.country);
+				$("#address").append(data.country + " ");
 			}
 			
 			if (data.state != null) {
-				$("#address").append(data.state);
+				$("#address").append(data.state + " ");
 			}
 			
 			if (data.city != null) {
 				$("#address").append(data.city);
 			}
 			
+			if (data.userType == 3) {
+				$("#name").append(" (留学顾问)");
+				$("#hightlightbox").prop("disabled", true);
+			} else {
+				$("#beagent").text("成为中介");
+				$("#beagent").attr("href", "<%=request.getContextPath() %>/agent/toBeAgent");
+				$("#hightlightbox").prop("disabled", false);
+			}
 		});
 	});
 	</script>
