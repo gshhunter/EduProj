@@ -42,7 +42,7 @@ public class AgentController {
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 		
 		if (null == miwen) {
-			
+			return "email_login";
 		} else {
 			String mingwen = Base64Encript.decode(miwen);
 			if (mingwen.contains("&")) {
@@ -52,6 +52,9 @@ public class AgentController {
 				if (null != account) {
 					model.addAttribute("loginUser", account);
 					model.addAttribute("login_email", parts[1]);
+					if (account.getType() == 2) {
+						return "agent_apply";
+					}
 				}
 			}
 		}
@@ -166,6 +169,9 @@ public class AgentController {
 			p.setFirstname(firstname);
 			p.setSurname(surname);
 			
+			logger.info("--------------------");
+			logger.info("country：" + country);
+			logger.info("--------------------");
 			account.setProfile(p);
 			//2: applying
 			account.setType(2);

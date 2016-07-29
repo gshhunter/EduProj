@@ -1,11 +1,15 @@
 package com.malihong.agency;
 
 import java.io.IOException;
-
+import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +37,7 @@ import com.malihong.bean.EmailBean;
 import com.malihong.bean.EmailLoginBean;
 import com.malihong.bean.MailServer;
 import com.malihong.bean.ResetPasswordBean;
+import com.malihong.bean.UserProfile;
 import com.malihong.entity.Account;
 import com.malihong.entity.Identification;
 import com.malihong.entity.Profile;
@@ -39,6 +45,7 @@ import com.malihong.entity.ResetPwd;
 import com.malihong.service.AccountService;
 import com.malihong.service.CookieHelper;
 import com.malihong.util.Base64Encript;
+import com.malihong.util.CountryList;
 import com.malihong.util.MD5Encript;
 import com.malihong.validation.ValidationUtil;
 
@@ -194,7 +201,7 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="/reset_password", method=RequestMethod.GET)
-	public String toResetPwd(@RequestParam(value="sid", required=false) String sid , @RequestParam(value="email", required=false) String email, ModelMap model) {
+	public String toResetPwd(@RequestParam(value="sid", required=false) String sid , @RequestParam(value="email", required=false) String email, ModelMap model, HttpServletResponse response) {
 		if (sid == null || "".equals(sid.trim()) || email ==null || "".equals(email.trim())) {
 			return "error_mail";
 		}
@@ -208,16 +215,64 @@ public class AccountController {
 		for (ResetPwd reset : list) {
 			String md5 = MD5Encript.crypt(reset.getEmail() + "&" + reset.getCode() + "&" + reset.getSendTime());
 			if (md5.equals(sid.trim())) {
+				CookieHelper.saveCookie("EDUEMAIL", email, false, response);
 				model.addAttribute("resetPasswordBean", new ResetPasswordBean());
 				return "reset_pwd";
 			}
 		}
-		
 		return "error_mail";
-		
-		
 	}
 	
+	@RequestMapping(value="/resetPassword", method=RequestMethod.POST)
+	public String resetPassword(Model model, @ModelAttribute("resetPasswordBean") ResetPasswordBean resetPasswordBean, BindingResult result, HttpServletRequest request, HttpServletResponse response) {
+		
+		String email = getResetEmail(request, response);
+		String newPass = resetPasswordBean.getNew_pass();
+		String confirmPass = resetPasswordBean.getConfirm_pass();
+		
+		if (newPass == null || "".equals(newPass.trim())) {
+			result.rejectValue("new_pass", "请输入您的新密码", "请输入您的新密码");
+			return "reset_pwd";
+		}
+		
+		if (confirmPass == null || "".equals(confirmPass.trim())) {
+			result.rejectValue("confirm_pwd", "请输入您的确认密码", "请输入您的确认密码");
+			return "reset_pwd";
+		}
+		
+		if (!ValidationUtil.isPassword(newPass)) {
+			result.rejectValue("new_pass", "请输入正确的密码格式", "请输入正确的密码格式");
+			return "reset_pwd";
+		}
+		
+		if (!confirmPass.equals(newPass)) {
+			result.rejectValue("confirm_pwd", "两次输入密码不一致", "两次输入密码不一致");
+			return "reset_pwd";
+		}
+		
+		Account account = accountService.findUserByEmail(email);
+		account.setPassword(MD5Encript.crypt(newPass));
+		accountService.update(account);
+		
+		return "home";
+	}
+	
+	//获取重置用户的邮箱
+	public String getResetEmail(HttpServletRequest request, HttpServletResponse response) {
+		String miwen = CookieHelper.getCookieValue("EDUEMAIL", request);
+
+		return miwen;
+	}
+	
+	/**
+	 * 发送密码重置邮件的API
+	 * @param reset
+	 * @param email
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/api/sendResetMail", method=RequestMethod.GET)
 	public @ResponseBody String sendResetMail (@ModelAttribute("reset") ResetPwd reset, @RequestParam(value="email", required=true) String email) throws JsonParseException, JsonMappingException, IOException {
 		
@@ -257,20 +312,74 @@ public class AccountController {
 				accountService.addResetCode(reset);
 				
 				//发送邮件接口
-//				boolean res = MailServer.sendServiceMailAuto(email,"密码重置","<h1>" + url + "</h1>");
-
+				ExecutorService executorService = Executors.newCachedThreadPool();  
+		        Future<String> future = executorService.submit(new MailServer(email,"密码重置","<h1>" + url + "</h1>"));
+		        
 				root.put("status", 1);
 				return root.toString();
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 	
+	@RequestMapping(value="/toViewProfile", method=RequestMethod.GET)
+	public String toStudentProfile(Model model) {
+		
+		return "student_profile";
+	}
+	
+	@RequestMapping(value="/toEditProfile", method=RequestMethod.GET)
+	public String toEditProfile(Model model) {
+		
+		return "edit_profile";
+	}
+	
+	@RequestMapping(value="/api/getProfile", method=RequestMethod.POST)
+	public @ResponseBody String getProfile(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		String mingwen = Base64Encript.decode(miwen);
+		String[] array = mingwen.split("&");
+		String email = array[1];
+		
+		Account account = accountService.findUserByEmail(email);
+		Profile p = account.getProfile();
+		Identification ident = account.getIdentification();
+		
+		String chinese_name = null;
+		if (p.getCountry() != null) {
+			Map<String, String> map = CountryList.getCountryList(Locale.CHINESE);
+			chinese_name = map.get(p.getCountry());
+		}
+		
+		UserProfile up  = new UserProfile();
+		up.setId(account.getIdAccount());
+		up.setEmail(account.getEmail());
+		up.setCellphone(account.getCellphone());
+		up.setCountry(chinese_name);
+		up.setState(p.getState());
+		up.setCity(p.getCityName());
+		up.setAddress(p.getHomeAddress());
+		up.setPostcode(p.getPostcode());
+		up.setFirstname(account.getFirstname());
+		up.setLastname(account.getLastname());
+		up.setUserType(account.getType());
+		up.setRegTime(account.getRegTime());
+		up.setIsEmail(ident.getIsEmail());
+		up.setIsCellphone(ident.getIsCellphone());
+		up.setIsPassport(ident.getIsPassport());
+		up.setGender(p.getGender());
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(up);
+		logger.info("View Profile: " + json);
+		
+		return json.toString();
+
+	}
+	
+	@RequestMapping(value="/api/editProfile", method=RequestMethod.POST)
+	public @ResponseBody String editProfile(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
+		r = URLDecoder.decode(r, "UTF-8");
+		
+		return "";
+	}
 }

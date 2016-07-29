@@ -26,17 +26,17 @@ public class Profile implements Serializable {
 	@Column(name="city_name")
 	private String cityName;
 
-	@Column(name="contact_email")
+	@Column(name="work_email")
 	private String contactEmail;
 
-	@Column(name="contact_phone")
+	@Column(name="work_phone")
 	private String contactPhone;
 
 	private String country;
 
 	private String firstname;
 
-	private String gender;
+	private int gender;
 
 	@Column(name="home_address")
 	private String homeAddress;
@@ -109,11 +109,11 @@ public class Profile implements Serializable {
 		this.firstname = firstname;
 	}
 
-	public String getGender() {
-		return this.gender;
+	public int getGender() {
+		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(int gender) {
 		this.gender = gender;
 	}
 

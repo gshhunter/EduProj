@@ -45,6 +45,7 @@
 			<mvc:exclude-mapping path="/account/logout"/>
 			<mvc:exclude-mapping path="/account/forgetPwd"/>
 			<mvc:exclude-mapping path="/account/reset_password"/>
+			<mvc:exclude-mapping path="/account/resetPassword"/>
 			<mvc:exclude-mapping path="/1/*"/>
 			<mvc:exclude-mapping path="/apply/*"/>
 			<mvc:exclude-mapping path="/req/*"/>

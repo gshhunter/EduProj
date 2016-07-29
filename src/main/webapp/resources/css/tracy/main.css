@@ -1,0 +1,100 @@
+       html, 
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;/*页面背景颜色*/
+            color: #484848;
+        }
+        
+        .wrap {
+            height: auto;
+            min-height: 100%;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .header {
+            color: #00897B;/*malihong 的颜色*/
+            height: 50px;
+            vertical-align: middle;
+            font-size: 80%;
+        }
+       
+        
+        .content {
+            padding: 10px;
+            margin-bottom: 50px;
+        }
+        
+        .footer {
+            margin-top: -30px;
+            width: 100%;
+            height: 30px;
+            background: #BBEDEA;
+            text-align: center;
+        }
+        /*TestMenuMcx*/
+        /*去掉初始menu前面的点*/
+        .testMenuMcx ul {
+            list-style: none;
+        }
+        .testMenuMcx a:hover {
+            font-weight: bold;
+            color: #d9d9d9;
+        }
+        /*菜单每个组成部分的style，无下划线 灰色 padding5px*/
+        .testMenuMcx a:active {           
+        font-weight: bold;
+        font-size: 102%;
+        text-decoration: underline;
+        }
+        
+        
+    /*水平菜单的风格*/
+        /*menu横向左对齐，每个内容之间距离10px*/
+        .horizontalMenuMcx li {
+            float: left;
+            margin-right: 10px;
+        }
+        
+        /*menu link去掉下划线*/
+        .menuStyleMcx a {
+            padding: 5px;
+            color: #BDBDBD;
+            text-decoration: none;
+        }
+        .headerLinkStyleMcx a {
+            font-size: 120%;
+            font-weight: bold;
+            color:#595959;
+        }
+        .headerMenuBackgroundMcx {
+            background: #00897B;/*菜单条的颜色*/
+            padding-bottom: 5px;
+        }
+        .highlightBorderMcx {
+            border-style: solid;
+            border-width: 2px;
+            border-color:#404040;
+            padding:3px;
+            margin-top:-4px;
+        }
+        
+
+   /*垂直菜单每个组成部分的style*/
+       .menustyleVerMcx a{
+           border:1px black;
+           padding:5px;
+           color: #595959;
+           text-decoration: none;
+           margin-bottom:5px;
+           line-height:30px;
+           font-size:100%;
+       }
+       /*选中的菜单*/
+       .menuItemSelectedMcx {
+            font-weight: bold;
+            font-size: 100%;
+            border-bottom-width: 2px;   
+        }

@@ -1,9 +1,7 @@
 package com.malihong.bean;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import java.util.concurrent.Callable;
-
 import javax.mail.*;
 import javax.mail.internet.*;
 
@@ -43,7 +41,7 @@ public class MailServer implements Callable<String>{
 		});
 
 			// Create a default MimeMessage object.
-		MimeMessage message = new MimeMessage(session);
+			MimeMessage message = new MimeMessage(session);
 			// Set From: header field of the header.
 			message.setFrom(new InternetAddress(from, senderName));
 			// Set To: header field of the header.

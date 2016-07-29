@@ -44,7 +44,7 @@
             	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
             </c:if>
             <c:if test="${loginUser != null}">
-            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>" class="pure-menu-link">${loginUser.email}</a></li>
+            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toViewProfile" class="pure-menu-link">${loginUser.email}</a></li>
             	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/logout" class="pure-menu-link">注销</a></li>
             </c:if>
         </ul>
