@@ -34,6 +34,13 @@
             background: #BBEDEA;
             text-align: center;
         }
+        
+        .webTitleh1FontMcx{
+            font-size: 2.5em;
+            margin: 0.67em 0;
+            text-decoration: none;
+            color:#00897B;
+        }
         /*TestMenuMcx*/
         /*去掉初始menu前面的点*/
         .testMenuMcx ul {

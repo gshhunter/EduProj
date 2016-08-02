@@ -33,6 +33,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.bean.EditProfile;
 import com.malihong.bean.EmailBean;
 import com.malihong.bean.EmailLoginBean;
 import com.malihong.bean.MailServer;
@@ -329,7 +330,7 @@ public class AccountController {
 	
 	@RequestMapping(value="/toEditProfile", method=RequestMethod.GET)
 	public String toEditProfile(Model model) {
-		
+		model.addAttribute("editProfile", new EditProfile());
 		return "edit_profile";
 	}
 	
@@ -376,10 +377,41 @@ public class AccountController {
 
 	}
 	
-	@RequestMapping(value="/api/editProfile", method=RequestMethod.POST)
-	public @ResponseBody String editProfile(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
+	@RequestMapping(value="/editProfile", method=RequestMethod.POST)
+	public @ResponseBody String editProfile(@RequestBody String r, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");
+		ObjectMapper mapper = new ObjectMapper();
+		UserProfile up = new UserProfile();
+		ObjectNode root=mapper.createObjectNode();	
+
+		//从Cookie获取账号Id
+		int accountId = getAccountIdByCookie(request, response);
+		
+		try {
+			up = mapper.readValue(r, UserProfile.class);
+			up.setId(accountId);
+		} catch (Exception e) {
+			return "";
+		}
 		
 		return "";
+	}
+	
+	//从Cookie获取用户账号Id
+	public int getAccountIdByCookie(HttpServletRequest request, HttpServletResponse response) {
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		String mingwen = Base64Encript.decode(miwen);
+		String[] array = mingwen.split("&");
+		int accountId = Integer.parseInt(array[0]);
+		return accountId;
+	}
+	
+	//从Cookie获取用户邮箱
+	public String getEmailByCookie(HttpServletRequest request, HttpServletResponse response) {
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		String mingwen = Base64Encript.decode(miwen);
+		String[] array = mingwen.split("&");
+		String email = array[1];
+		return email;
 	}
 }
