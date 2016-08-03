@@ -11,8 +11,12 @@
   		<class>com.malihong.entity.Profile</class>
   		<class>com.malihong.entity.Request</class>
   		<class>com.malihong.entity.Transaction</class>
-  		<class>com.malihong.entity.University</class>
   		<class>com.malihong.entity.ResetPwd</class>
+  		
+  		<class>com.malihong.entity.BachelorCourse</class>
+  		<class>com.malihong.entity.DiplomaCourse</class>
+  		<class>com.malihong.entity.FoundationCourse</class>
+  		
     	<properties>
 	        <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
 	        <property name="hibernate.hbm2ddl.auto" value="update"/>

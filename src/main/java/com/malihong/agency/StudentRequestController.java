@@ -61,24 +61,30 @@ public class StudentRequestController {
 	//开发：学生ID：12345； 中介ID：67890
 	// 学生创建新的request
 	@RequestMapping(value = "/api/newrequest", method = RequestMethod.POST)
-	public @ResponseBody String newRequest(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
+	public @ResponseBody String newRequest(HttpServletRequest request,@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");
 		ObjectMapper mapper = new ObjectMapper();
 		Request re = new Request();		
 		ObjectNode root=mapper.createObjectNode();		
 		root.put("status", 0);
-		//TODO
-		int accountId=12345;
-		try {
-			re = mapper.readValue(r, Request.class);
-			re.setIdAccount(accountId);
-			re.setCreatedTime(new Date());
-			this.reqService.save(re);
-		} catch (Exception e) {
-			//应该把一场状态进一步细分
-			root.put("status", 1);
+		Integer accountId=LoginCookieUtil.getAccountIdByCookie(request);
+		if(accountId==null){
+			root.put("status", 2);
+		}else{
+			try {
+				re = mapper.readValue(r, Request.class);
+				re.setIdAccount(accountId);
+				re.setCreatedTime(new Date());
+				
+				re.setCurrentDegree(2);
+				re.setGaokaoYear(2016);
+				re.setInterestCity("MelBySys");
+				this.reqService.save(re);
+			} catch (Exception e) {
+				//应该把一场状态进一步细分
+				root.put("status", 2);
+			}
 		}
-		logger.info(root.toString());
 		return root.toString();
 	}
 
@@ -145,7 +151,23 @@ public class StudentRequestController {
 		List<Plan> list =this.planService.findPlansByRequestId(requestId);
 		return list;
 	}
+	
+	//检查登陆
+	@RequestMapping(value = "/api/getuserinfo", method = RequestMethod.GET)
+	public @ResponseBody String getUserInfo(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root=mapper.createObjectNode();	
+		Integer id=LoginCookieUtil.getAccountIdByCookie(request);
+		if(id==null){
+			root.put("err", "unlogged");
+			return root.toString();
+		}else{
+			root.put("id", id);
+			root.put("email", LoginCookieUtil.getEmailByCookie(request));
+			return root.toString();
+		}
 
+	}
 	//学生创建request页面
 	@RequestMapping(value = "/req", method = RequestMethod.GET)
 	public String applyRequestPage() throws JsonProcessingException {
@@ -167,7 +189,7 @@ public class StudentRequestController {
 	
 	//For Test
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public @ResponseBody Plan newtest(HttpServletRequest request,@RequestParam(value="id") int id) throws JsonProcessingException, UnsupportedEncodingException {
+	public @ResponseBody String newtest(HttpServletRequest request,@RequestParam(value="id") int id) throws JsonProcessingException, UnsupportedEncodingException {
 		logger.info("test!");
 		Integer acc=LoginCookieUtil.getAccountIdByCookie(request);
 		logger.info(String.valueOf(acc));
@@ -184,6 +206,9 @@ public class StudentRequestController {
 		//使用后把资源归还连接池
 		//RedisServerPool.returnResource(jedis);
 
-		return null;
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root=mapper.createObjectNode();		
+		root.put("status", "中文测试");
+		return root.toString();
 	}
 }
