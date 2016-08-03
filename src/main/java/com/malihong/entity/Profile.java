@@ -46,9 +46,13 @@ public class Profile implements Serializable {
 	private String state;
 
 	private String surname;
+	
+	@Column(name="description")
+	private String description;
 
 	@OneToOne(mappedBy="profile")
 	private Account account;
+	
 	
 	public Profile() {
 	}
@@ -157,5 +161,12 @@ public class Profile implements Serializable {
 		this.account = account;
 	}
 
-	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

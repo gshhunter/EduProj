@@ -33,6 +33,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.bean.EditProfile;
 import com.malihong.bean.EmailBean;
 import com.malihong.bean.EmailLoginBean;
 import com.malihong.bean.MailServer;
@@ -321,18 +322,37 @@ public class AccountController {
 		}
 	}
 	
+	/**
+	 * 跳转至ViewProfile页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/toViewProfile", method=RequestMethod.GET)
 	public String toStudentProfile(Model model) {
 		
 		return "student_profile";
 	}
 	
+	/**
+	 * 跳转至EditProfile页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/toEditProfile", method=RequestMethod.GET)
 	public String toEditProfile(Model model) {
-		
+		model.addAttribute("editProfile", new EditProfile());
 		return "edit_profile";
 	}
 	
+	/**
+	 * 获取用户的Profile的API
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/api/getProfile", method=RequestMethod.POST)
 	public @ResponseBody String getProfile(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
@@ -367,19 +387,51 @@ public class AccountController {
 		up.setIsCellphone(ident.getIsCellphone());
 		up.setIsPassport(ident.getIsPassport());
 		up.setGender(p.getGender());
+		up.setBirthday(p.getBirthday());
+		up.setDescription(p.getDescription());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(up);
 		logger.info("View Profile: " + json);
 		
 		return json.toString();
-
 	}
 	
-	@RequestMapping(value="/api/editProfile", method=RequestMethod.POST)
-	public @ResponseBody String editProfile(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
+	@RequestMapping(value="/editProfile", method=RequestMethod.POST)
+	public @ResponseBody String editProfile(@RequestBody String r, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");
+		ObjectMapper mapper = new ObjectMapper();
+		UserProfile up = new UserProfile();
+		ObjectNode root=mapper.createObjectNode();	
+
+		//从Cookie获取账号Id
+		int accountId = getAccountIdByCookie(request, response);
+		
+		try {
+			up = mapper.readValue(r, UserProfile.class);
+			up.setId(accountId);
+		} catch (Exception e) {
+			return "";
+		}
 		
 		return "";
+	}
+	
+	//从Cookie获取用户账号Id
+	public int getAccountIdByCookie(HttpServletRequest request, HttpServletResponse response) {
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		String mingwen = Base64Encript.decode(miwen);
+		String[] array = mingwen.split("&");
+		int accountId = Integer.parseInt(array[0]);
+		return accountId;
+	}
+	
+	//从Cookie获取用户邮箱
+	public String getEmailByCookie(HttpServletRequest request, HttpServletResponse response) {
+		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
+		String mingwen = Base64Encript.decode(miwen);
+		String[] array = mingwen.split("&");
+		String email = array[1];
+		return email;
 	}
 }

@@ -74,12 +74,15 @@ html, body {
 			<form class="pure-u-3-5 pure-form pure-form-aligned">
 				<fieldset>
 					<legend>学术成绩</legend>
-					<label for="currentDegree">我现在：</label> <select id="currentDegree">
+					<label for="currentDegree">我现在：</label> 
+					<select id="currentDegree">
 						<option value="middleThree">正在读高三</option>
 						<option value="afterMiddle">刚刚高考完</option>
 						<option value="UnivercityOne">正在读大一</option>
-					</select><br> <label for="gaokaoResult">我的高考成绩大约是总分的百分之：</label> <select
-						id="gaokaoResult">
+					</select>
+					<br/> 
+					<label for="gaokaoResult">我的高考成绩大约是总分的百分之：</label> 
+					<select id="gaokaoResult">
 							<option value="40">50以下</option>
 							<option value="50">50~60</option>
 							<option value="60">60~70</option>
@@ -90,19 +93,19 @@ html, body {
 				</fieldset>
 				<fieldset>
 					<legend>兴趣</legend>
-					<label for="interestCity">我感兴趣的城市：</label><br> <input
-						type="radio" name="interestCity" value="Melbourne" checked>
-							墨尔本<br> <input type="radio" name="interestCity"
-								value="Sydney"> 悉尼<br> <input type="radio"
-										name="interestCity" value="other"> 其他<br> <label
-												for="interestMajor">我感兴趣的专业方向：</label><br> <input
-													type="checkbox" name="interestMajor" value="accounting" />会计类<br>
-														<input type="checkbox" name="interestMajor" value="IT" />IT类<br>
-															<input type="checkbox" name="interestMajor" value="other" />其他<br>
+					<label for="interestCity">我感兴趣的城市：</label><br/> 
+					<input type="radio" name="interestCity" value="Melbourne" checked>墨尔本<br/> 
+					<input type="radio" name="interestCity" value="Sydney"> 悉尼<br/> 
+					<input type="radio" name="interestCity" value="other"> 其他<br/> 
+					<label for="interestMajor">我感兴趣的专业方向：</label><br/> 
+					<input type="checkbox" name="interestMajor" value="accounting" />会计类<br/>
+					<input type="checkbox" name="interestMajor" value="IT" />IT类<br/>
+					<input type="checkbox" name="interestMajor" value="other" />其他<br/>
 				</fieldset>
 				<fieldset>
 					<legend>雅思成绩</legend>
-					<label for="overallScore">总分：</label> <select id="overallScore">
+					<label for="overallScore">总分：</label> 
+					<select id="overallScore">
 						<option value="4.0">4分及以下</option>
 						<option value="4.5">4.5</option>
 						<option value="5.0">5</option>
@@ -112,8 +115,10 @@ html, body {
 						<option value="7.0">7</option>
 						<option value="7.5">7.5</option>
 						<option value="8.0">8分及以上</option>
-					</select><br> <label for="listeningScore">听力：</label> <select
-						id="listeningScore">
+					</select>
+					<br/> 
+					<label for="listeningScore">听力：</label> 
+					<select id="listeningScore">
 							<option value="4.0">4分及以下</option>
 							<option value="4.5">4.5</option>
 							<option value="5.0">5</option>
@@ -123,7 +128,9 @@ html, body {
 							<option value="7.0">7</option>
 							<option value="7.5">7.5</option>
 							<option value="8.0">8分及以上</option>
-					</select> <label for="speakingScore">口语：</label> <select id="speakingScore">
+					</select> 
+					<label for="speakingScore">口语：</label> 
+					<select id="speakingScore">
 							<option value="4.0">4分及以下</option>
 							<option value="4.5">4.5</option>
 							<option value="5.0">5</option>
@@ -133,7 +140,9 @@ html, body {
 							<option value="7.0">7</option>
 							<option value="7.5">7.5</option>
 							<option value="8.0">8分及以上</option>
-					</select> <label for="readingScore">阅读：</label> <select id="readingScore">
+					</select> 
+					<label for="readingScore">阅读：</label> 
+					<select id="readingScore">
 							<option value="4.0">4分及以下</option>
 							<option value="4.5">4.5</option>
 							<option value="5.0">5</option>
@@ -143,7 +152,9 @@ html, body {
 							<option value="7.0">7</option>
 							<option value="7.5">7.5</option>
 							<option value="8.0">8分及以上</option>
-					</select> <label for="writingScore">写作：</label> <select id="writingScore">
+					</select> 
+					<label for="writingScore">写作：</label> 
+					<select id="writingScore">
 							<option value="4.0">4分及以下</option>
 							<option value="4.5">4.5</option>
 							<option value="5.0">5</option>
@@ -156,13 +167,12 @@ html, body {
 					</select>
 				</fieldset>
 				<button type="submit" class="pure-button pure-button-primary">提交申请</button>
-				<span id="errorinfo"></apan>
+				<span id="errorinfo"></span>
 			</form>
 			<div class="pure-u-1-5"></div>
 		</div>
 	</div>
 	<div class="footer">Malimaligong.com ®</div>
-	</div>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
