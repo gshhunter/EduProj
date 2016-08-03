@@ -27,10 +27,10 @@ public class Profile implements Serializable {
 	private String cityName;
 
 	@Column(name="work_email")
-	private String contactEmail;
+	private String workEmail;
 
 	@Column(name="work_phone")
-	private String contactPhone;
+	private String workPhone;
 
 	private String country;
 
@@ -46,7 +46,7 @@ public class Profile implements Serializable {
 	private String state;
 
 	private String surname;
-	
+
 	@Column(name="description")
 	private String description;
 
@@ -81,20 +81,20 @@ public class Profile implements Serializable {
 		this.cityName = cityName;
 	}
 
-	public String getContactEmail() {
-		return this.contactEmail;
+	public String getWorkEmail() {
+		return workEmail;
 	}
 
-	public void setContactEmail(String contactEmail) {
-		this.contactEmail = contactEmail;
+	public void setWorkEmail(String workEmail) {
+		this.workEmail = workEmail;
 	}
 
-	public String getContactPhone() {
-		return this.contactPhone;
+	public String getWorkPhone() {
+		return workPhone;
 	}
 
-	public void setContactPhone(String contactPhone) {
-		this.contactPhone = contactPhone;
+	public void setWorkPhone(String workPhone) {
+		this.workPhone = workPhone;
 	}
 
 	public String getCountry() {

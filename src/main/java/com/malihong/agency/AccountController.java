@@ -174,7 +174,6 @@ public class AccountController {
 	
 	@RequestMapping(value="/forgetPwd", method=RequestMethod.GET)
 	public String toForgetPassword(ModelMap model) {
-
 		model.addAttribute("emailBean", new EmailBean());
 		return "forget_pwd";
 	}
@@ -375,6 +374,7 @@ public class AccountController {
 		up.setEmail(account.getEmail());
 		up.setCellphone(account.getCellphone());
 		up.setCountry(chinese_name);
+		up.setEng_country(p.getCountry());
 		up.setState(p.getState());
 		up.setCity(p.getCityName());
 		up.setAddress(p.getHomeAddress());
@@ -397,25 +397,41 @@ public class AccountController {
 		return json.toString();
 	}
 	
-	@RequestMapping(value="/editProfile", method=RequestMethod.POST)
-	public @ResponseBody String editProfile(@RequestBody String r, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+	@RequestMapping(value="/api/saveProfile", method=RequestMethod.POST)
+	public @ResponseBody String saveProfile(@RequestBody String r, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");
 		ObjectMapper mapper = new ObjectMapper();
-		UserProfile up = new UserProfile();
-		ObjectNode root=mapper.createObjectNode();	
-
-		//从Cookie获取账号Id
+		ObjectNode root=mapper.createObjectNode();
+		root.put("status", 1);
+		
+		//获取登录用户账户
 		int accountId = getAccountIdByCookie(request, response);
+		Account account = accountService.findUserById(accountId);
+		Profile p = account.getProfile();
+		Identification ident = account.getIdentification();
 		
+		//把传参转化为UserProfile对象
 		try {
-			up = mapper.readValue(r, UserProfile.class);
-			up.setId(accountId);
-		} catch (Exception e) {
-			return "";
+			UserProfile up = mapper.readValue(r, UserProfile.class);
+			account.setFirstname(up.getFirstname());
+			account.setLastname(up.getLastname());
+			account.setCellphone(up.getCellphone());
+			p.setBirthday(up.getBirthday());
+			p.setCountry(up.getCountry());
+			p.setGender(up.getGender());
+			p.setHomeAddress(up.getAddress());
+			p.setPostcode(up.getPostcode());
+			p.setDescription(up.getDescription());
+			logger.info("-------------------: " + up.getDescription());
+			account.setProfile(p);
+			accountService.update(account);
+		} catch (Exception ex) {
+			root.put("status", -1);
 		}
-		
-		return "";
+		return root.toString();
 	}
+	
+	
 	
 	//从Cookie获取用户账号Id
 	public int getAccountIdByCookie(HttpServletRequest request, HttpServletResponse response) {

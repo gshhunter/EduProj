@@ -16,6 +16,8 @@ public class UserProfile {
 	
 	private String country;
 	
+	private String eng_country;
+	
 	private String state;
 	
 	private String city;
@@ -87,6 +89,14 @@ public class UserProfile {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	
+	public String getEng_country() {
+		return eng_country;
+	}
+
+	public void setEng_country(String eng_country) {
+		this.eng_country = eng_country;
 	}
 
 	public String getState() {

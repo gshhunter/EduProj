@@ -79,7 +79,7 @@
                    	<br/>  
                 	<div class="pure-button">查看我的资料</div>
                 </ul>
-                 
+                
             </div>
             
             <div class="pure-u-16-24 insidePageContent">
@@ -87,6 +87,7 @@
                   
                 <fieldset>
                 	<legend>基本资料 (必填*)</legend>
+                	
                     <div class="pure-control-group">
                         <label for="lastname">姓 :</label>
                         <input id="lastname" class="pure-u-2-5" type="text" />
@@ -113,19 +114,23 @@
                         <input id="birthday" class="pure-u-2-5" type="date" />
                     </div>
 
-                    <div class="pure-control-group">
-                        <label for="cellphone">手机:</label>
-                        <input id="cellphone" class="pure-u-1" type="tel" style="margin-right:-8px;"/>
-                    </div>
+                    
 
                 </fieldset>
                 
                 <fieldset>
                 	<legend>个性化资料</legend>
+                	
+                	<div class="pure-control-group">
+                        <label for="cellphone">手机:</label>
+                        <input id="cellphone" class="pure-u-1" type="tel" style="margin-right:-8px;"/>
+                    </div>
+                    
                 	<div class="pure-control-group">
                 		<label>国家:</label>
                 		<select id="country" data-role="country-selector" class="pure-u-2-5"></select>
                 	</div>
+                	
                 	<div class="pure-control-group">
                 		<label>地址:</label>
                 		<input id="address" class="pure-u-2-5" type="text"></input>
@@ -136,12 +141,12 @@
                 	</div>
                 	<div class="pure-control-group">
                 		<label>个人简介:</label>
-                        <textarea id="descr" class="pure-u-2-5" rows="8" cols="50" ></textarea>
+                        <textarea id="description" class="pure-u-2-5" rows="8" cols="50" ></textarea>
                 	</div>
                 	<br/>
                 	<div class="pure-control-group">
                 		<label></label>
-                		<button type="submit" class="pure-button pure-button-primary pure-u-2-5">保存</button>
+                		<button id="saveProfile" type="submit" class="pure-button pure-button-primary pure-u-2-5">保存</button>
                 	</div>
                 </fieldset>
                 
@@ -169,24 +174,47 @@
 
 		$.post("http://localhost:8080/agency/account/api/getProfile", function(data){
 			
+			$("#email").text(data.email);
+			$("#email").attr("href", "<%=request.getContextPath() %>/account/toViewProfile");
 			$("#firstname").val(data.firstname);
 			$("#lastname").val(data.lastname);
 			$("#gender").val(data.gender);
-			$("#birthday").val(01312016);
+			$("#birthday").val(data.birthday);
 			console.log(data.birthday);
 			$("#cellphone").val(data.cellphone);
-			$("#country").val(data.country);
+			console.log(data.cellphone);
+			$("#country").val(data.eng_country);
+			console.log(data.eng_country);
 			$("#state").val(data.state);
 			$("#address").val(data.address);
+			$("#description").val(data.description)
 			if (data.postcode == 0) {
 				$("#postcode").val("");
 			} else {
 				$("#postcode").val(data.postcode);
 			}
 			$("#descr").val(data.description);
+			
 		});
 		
-		
+		$("#saveProfile").click(function(){
+			var profile = new Object();
+			profile.lastname = $("#lastname").val();
+			profile.firstname = $("#firstname").val();
+			profile.gender = $("#gender").val();
+			profile.birthday = $("#birthday").val();
+			profile.cellphone = $("#cellphone").val();
+			profile.country = $("#country").val();
+			profile.address = $("#address").val();
+			profile.postcode = $("#postcode").val();
+			profile.description = $("#description").val();
+			
+			var j = JSON.stringify(profile);
+			$.post("http://localhost:8080/agency/account/api/saveProfile", j, function(data) {
+				
+			});
+			return false;
+		});
 	});
 	  
 	</script>
