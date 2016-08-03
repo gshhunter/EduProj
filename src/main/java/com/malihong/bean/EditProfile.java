@@ -14,6 +14,8 @@ public class EditProfile {
 	
 	private int gender;
 
+	private String description;
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -53,4 +55,13 @@ public class EditProfile {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 }

@@ -322,18 +322,37 @@ public class AccountController {
 		}
 	}
 	
+	/**
+	 * 跳转至ViewProfile页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/toViewProfile", method=RequestMethod.GET)
 	public String toStudentProfile(Model model) {
 		
 		return "student_profile";
 	}
 	
+	/**
+	 * 跳转至EditProfile页面
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/toEditProfile", method=RequestMethod.GET)
 	public String toEditProfile(Model model) {
 		model.addAttribute("editProfile", new EditProfile());
 		return "edit_profile";
 	}
 	
+	/**
+	 * 获取用户的Profile的API
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/api/getProfile", method=RequestMethod.POST)
 	public @ResponseBody String getProfile(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
@@ -368,13 +387,14 @@ public class AccountController {
 		up.setIsCellphone(ident.getIsCellphone());
 		up.setIsPassport(ident.getIsPassport());
 		up.setGender(p.getGender());
+		up.setBirthday(p.getBirthday());
+		up.setDescription(p.getDescription());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(up);
 		logger.info("View Profile: " + json);
 		
 		return json.toString();
-
 	}
 	
 	@RequestMapping(value="/editProfile", method=RequestMethod.POST)

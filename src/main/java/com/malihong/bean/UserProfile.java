@@ -24,6 +24,10 @@ public class UserProfile {
 	
 	private int postcode;
 	
+	private String description;
+	
+	private Date birthday;
+	
 	//0: invalid 1: normal user 2: applying agent 3: agent
 	private int userType;
 	
@@ -164,5 +168,22 @@ public class UserProfile {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+	
 	
 }
