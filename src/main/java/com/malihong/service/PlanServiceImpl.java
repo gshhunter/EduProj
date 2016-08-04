@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.malihong.dao.OptionDao;
 import com.malihong.dao.PlanDao;
+import com.malihong.entity.Option;
 import com.malihong.entity.Plan;
+import com.malihong.entity.Request;
 
 @Service
 @Qualifier("planService")
@@ -48,6 +50,11 @@ public class PlanServiceImpl implements PlanService{
 	@Override
 	public Plan findPlanById(int pid) {
 		return this.planDao.findPlanById(pid);
+	}
+
+	@Override
+	public List<Option> generateOptionsByRequest(Request req) {
+		return null;
 	}
 
 }
