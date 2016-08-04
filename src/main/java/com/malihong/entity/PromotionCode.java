@@ -14,7 +14,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="promotion_code")
+@Table(name="e_promotion_code")
 @NamedQuery(name="PromotionCode.findAll", query="SELECT p FROM PromotionCode p")
 public class PromotionCode implements Serializable{
 	private static final long serialVersionUID = 1L;
