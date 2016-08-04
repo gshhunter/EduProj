@@ -30,6 +30,18 @@
             border-radius: 5px;
         }
        
+       .infoDefault {
+       		margin-top: 20px;
+       		color: white;
+       }
+       
+       .infoSuccess {
+       		background-color: #00cc99;
+       }
+       
+       .infoFail {
+       		background-color: #ff8080;
+       }
     </style>
 </head>
 
@@ -67,9 +79,10 @@
                 </ul>
             </div>  
         </div>
-          
+        
         <br>
         <div class="pure-g">
+          
           <div class="pure-u-2-24"></div>
           <div class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx " >
                 <ul>
@@ -174,26 +187,32 @@
 
 		$.post("http://localhost:8080/agency/account/api/getProfile", function(data){
 			
-			$("#email").text(data.email);
-			$("#email").attr("href", "<%=request.getContextPath() %>/account/toViewProfile");
-			$("#firstname").val(data.firstname);
-			$("#lastname").val(data.lastname);
-			$("#gender").val(data.gender);
-			$("#birthday").val(data.birthday);
-			console.log(data.birthday);
-			$("#cellphone").val(data.cellphone);
-			console.log(data.cellphone);
-			$("#country").val(data.eng_country);
-			console.log(data.eng_country);
-			$("#state").val(data.state);
-			$("#address").val(data.address);
-			$("#description").val(data.description)
-			if (data.postcode == 0) {
-				$("#postcode").val("");
+			if (data == null) {
+				$("#info").text("Fail: Cannot load data");
+				$("#info").addClass("infoFail");
 			} else {
-				$("#postcode").val(data.postcode);
+				$("#email").text(data.email);
+				$("#email").attr("href", "<%=request.getContextPath() %>/account/toViewProfile");
+				$("#firstname").val(data.firstname);
+				$("#lastname").val(data.lastname);
+				$("#gender").val(data.gender);
+				$("#birthday").val(data.birthday);
+				console.log(data.birthday);
+				$("#cellphone").val(data.cellphone);
+				console.log(data.cellphone);
+				$("#country").val(data.eng_country);
+				console.log(data.eng_country);
+				$("#state").val(data.state);
+				$("#address").val(data.address);
+				$("#description").val(data.description)
+				if (data.postcode == 0) {
+					$("#postcode").val("");
+				} else {
+					$("#postcode").val(data.postcode);
+				}
+				$("#descr").val(data.description);
 			}
-			$("#descr").val(data.description);
+			
 			
 		});
 		
@@ -211,7 +230,13 @@
 			
 			var j = JSON.stringify(profile);
 			$.post("http://localhost:8080/agency/account/api/saveProfile", j, function(data) {
-				
+				if (data.status == 1) {
+					$("#info").text("Success: Change saved");
+					$("#info").addClass("infoFail");
+				} else {
+					$("#info").text("Fail: Cannot save change");
+					$("#info").addClass("infoSuccess");
+				}
 			});
 			return false;
 		});

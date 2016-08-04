@@ -7,6 +7,10 @@
             color: #484848;
         }
         
+        .is-center {
+    		text-align: center;
+		}
+        
         .wrap {
             height: auto;
             min-height: 100%;
