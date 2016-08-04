@@ -109,3 +109,37 @@
             font-size: 100%;
             border-bottom-width: 2px;   
         }
+        
+        .pure-button {
+    		background-color: #1f8dd6;
+    		color: white;
+    		padding: 0.5em 2em;
+    		border-radius: 0px;
+		}
+		
+		a.pure-button-primary {
+    		background: white;
+    		color: #1f8dd6;
+    		border-radius: 0px;
+    		font-size: 120%;
+		}
+		
+		.successMcx {
+            color: #4F8A10;
+            background-color: #DFF2BF;
+            padding:18px 0px 0px 0px;
+            text-align: center;	 
+            padding-left:auto;
+            padding-right:auto;
+            height: 25px;
+        }
+		
+		.errorMcx {
+            color: #D8000C;
+            background-color: #FFBABA;
+            padding:18px 0px 0px 0px;
+            text-align: center;	 
+            padding-left:auto;
+            padding-right:auto;
+            height: 25px;
+        }

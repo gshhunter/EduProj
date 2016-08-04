@@ -431,11 +431,12 @@ public class AccountController {
 		return root.toString();
 	}
 	
-	@RequestMapping(value="/toVerification", method=RequestMethod.POST)
+	@RequestMapping(value="/toVerification", method=RequestMethod.GET)
 	public String toVerification(Model model) {
-		
 		return "trust_verification";
 	}
+	
+	
 	
 	//从Cookie获取用户账号Id
 	public int getAccountIdByCookie(HttpServletRequest request, HttpServletResponse response) {

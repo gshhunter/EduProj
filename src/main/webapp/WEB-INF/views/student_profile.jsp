@@ -80,16 +80,13 @@
                     <!--<li><a href="#">收件箱</a></li>-->
                     <li><a id="email"></a></li>
                     <li><a href="<%=request.getContextPath() %>/account/logout">注销</a></li>                   
-                    
                 </ul>
             </div>
                 
             </div>
         </div>
 
-
         <br>
-        
         
          <!--用户信息显示区-->
         <div class="pure-g">
