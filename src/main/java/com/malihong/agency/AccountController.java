@@ -321,6 +321,77 @@ public class AccountController {
 		}
 	}
 	
+	@RequestMapping(value="/verify_email", method=RequestMethod.GET)
+	public String toResetPwd(@RequestParam(value="vid", required=true) String vid, HttpServletRequest request, HttpServletResponse response, Model model){
+		if (vid == null || "".equals(vid.trim()) ) {
+			return "error_mail";
+		}
+		
+		int accountId = getAccountIdByCookie(request, response);
+		Account account = accountService.findUserById(accountId);
+		String email = account.getEmail();
+		
+		String mingwen = accountId + "&" + email;
+		String miwen = MD5Encript.crypt(mingwen);
+		
+		if (!vid.equals(miwen)) {
+			return "error_mail";
+		}
+		
+		Identification ident = account.getIdentification();
+		ident.setEmail(email);
+		ident.setIsEmail(1);
+		account.setIdentification(ident);
+		accountService.update(account);
+		
+		return "trust_verification";
+	}
+	
+//	@RequestMapping(value="/api/getLoginEmail", method=RequestMethod.GET)
+//	public @ResponseBody String getLoginEmail(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+//		String login_email = getLoginEmail(request, response);
+//		ObjectMapper mapper = new ObjectMapper();
+//		ObjectNode root = mapper.createObjectNode();
+//		
+//		return "";
+//	}
+//	
+	@RequestMapping(value="/api/sendVerificationMail", method=RequestMethod.GET)
+	public @ResponseBody String sendVerificationMail(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root = mapper.createObjectNode();
+		root.put("status", 0);
+		
+		String cookieEmail = getEmailByCookie(request, response);
+		if (cookieEmail == null || "".equals(cookieEmail.trim())) {
+			root.put("status", 0);
+			return root.toString();
+		}
+		
+		boolean isExist = accountService.checkAccountByEmail(cookieEmail);
+		
+		if (!isExist) {
+			root.put("status", -1);
+			logger.info("不存在： " + cookieEmail);
+			logger.info(root.toString());
+			return root.toString();
+		}
+		
+		int accountId = getAccountIdByCookie(request, response);
+		
+		String mingwen = accountId + "&" + cookieEmail;
+		String miwen = MD5Encript.crypt(mingwen);
+		
+		String url = "http://localhost:8080/agency/account/verify_email?vid=" + miwen;
+		
+		//发送邮件接口
+		ExecutorService executorService = Executors.newCachedThreadPool();  
+        Future<String> future = executorService.submit(new MailServer(cookieEmail,"邮箱账号验证","<h1>" + url + "</h1>"));
+        logger.info("邮箱账号验证邮件发送成功");
+        root.put("status", 1);
+		return root.toString();
+	}
+	
 	/**
 	 * 跳转至ViewProfile页面
 	 * @param model
@@ -386,6 +457,12 @@ public class AccountController {
 		up.setIsEmail(ident.getIsEmail());
 		up.setIsCellphone(ident.getIsCellphone());
 		up.setIsPassport(ident.getIsPassport());
+		up.setIsWeibo(ident.getIsWeibo());
+		up.setIsWechat(ident.getIsWechat());
+		up.setIsQq(ident.getIsQq());
+		up.setWeibo(ident.getWeibo());
+		up.setWechat(ident.getWechat());
+		up.setQq(ident.getQq());
 		up.setGender(p.getGender());
 		up.setBirthday(p.getBirthday());
 		up.setDescription(p.getDescription());

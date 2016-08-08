@@ -27,6 +27,7 @@
             border-style:solid;
             border-color:#C4C4C4;
         }
+        
         .blankStyle {
         	background:white;
         	padding:10px 0px 30px 10px;
@@ -35,13 +36,22 @@
             
             border: 1px solid #C4C4C4;
         }
+        
         .hideThis{
             display:none;
         }
+        
         .blank{
-		height:40px;
+			height:40px;
+		}
 		
-	}
+		.iconGrey {
+			color: #B0BEC5;
+		}
+		
+		.iconGreen {
+			color: green;
+		}
         
     </style>
 </head>
@@ -101,14 +111,14 @@
 		        
 		   		<div class="pure-g">
 		   			<!--验证护照信息框-->
-		   			<div id="verify_passport_label" class="pure-u-1-1 labelStyle">
-		   				<label class="">护照验证</label>
+		   			<div id="verify_passport_label" class="pure-u-1-1 labelStyle" style="display:none;">
+		   				<label id="passportTitle">护照验证</label>
 		   			</div>
-	            	<div id="verify_passport_box" class="pure-u-1-1 blankStyle">
+	            	<div id="verify_passport_box" class="pure-u-1-1 blankStyle" style="display:none;">
 	            		
 	            		<div class="pure-g">
 		                    <div class="pure-u-15-24">
-								<label>护照验证是最容易的一种方式帮助您建立信任在Malimalihong社区</label>
+								<label id="passportContent">护照验证是最容易的一种方式帮助您建立信任在Malimalihong社区</label>
 							</div>
 							<div class="pure-u-4-24"></div>
 							<div class="pure-u-5-24">
@@ -119,28 +129,28 @@
 	              	
 	              	<!-- 邮箱验证 -->
 	              	<div id="verify_email_label" class="pure-u-1-1 labelStyle">
-		   				<label class="">邮箱验证</label>
+		   				<label id="emailTitle">邮箱验证</label>
 		   			</div>
 	            	<div id="verify_email_box" class="pure-u-1-1 blankStyle">
 	            		<div class="pure-g">
 		                    <div class="pure-u-15-24">
-								<label>邮箱验证可以帮助您最大限度确保账号安全</label>
+								<label id="emailContent"></label>
 							</div>
 							<div class="pure-u-4-24"></div>
 							<div class="pure-u-5-24">
-			                	<div id="verify_email_btn" class="pure-button pure-button-primary">验证邮箱</div>
+			                	<button id="verify_email_btn" class="pure-button pure-button-primary">验证邮箱</button>
 			                </div>
 		                </div>
 	                </div>
 	              	
 	              	<!-- 手机验证 -->
 	              	<div id="verify_cellphone_label" class="pure-u-1-1 labelStyle">
-		   				<label class="">手机验证</label>
+		   				<label id="cellphoneTitle">手机验证</label>
 		   			</div>
 	            	<div id="verify_cellphone_box" class="pure-u-1-1 blankStyle">
 	            		<div class="pure-g">
 		                    <div class="pure-u-15-24">
-								<label>手机验证增加账号的安全等级</label>
+								<label id="cellphoneContent"></label>
 							</div>
 							<div class="pure-u-4-24"></div>
 							<div class="pure-u-5-24">
@@ -151,12 +161,12 @@
 	              	
 	              	<!-- 微博验证 -->
 	              	<div id="verify_weibo_label" class="pure-u-1-1 labelStyle">
-		   				<label class="">微博验证</label>
+		   				<label id="weiboTitle">微博验证</label>
 		   			</div>
 	            	<div id="verify_weibo_box" class="pure-u-1-1 blankStyle">
 	            		<div class="pure-g">
 		                    <div class="pure-u-15-24">
-								<label>微博验证可以帮助您最大限度确保账号安全</label>
+								<label id="weiboContent"></label>
 							</div>
 							<div class="pure-u-4-24"></div>
 							<div class="pure-u-5-24">
@@ -174,15 +184,115 @@
        
     <div class="footer">Malimaligong.com ®</div>
     <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
-    <!-- 
-    <script>
-		var str='<div id="suc"class="successMcx">操作成功哦！<i class="fa fa-check" aria-hidden="true"></i></div>';
-		$(document).ready(function(){
-			$("#blank").append(str);				
-			$("#suc").fadeOut(2000);					
-		});
-	</script>
-	 -->
+   	<script>
+   	
+   	$(document).ready(function(){
+   		
+   		var times = '<i class="fa fa-times" style="color:#B0BEC5" aria-hidden="true"></i>';
+   		
+   		var check = '<i class="fa fa-check" style="color:green" aria-hidden="true"></i>';
+   		
+   		$.post("http://localhost:8080/agency/account/api/getProfile", function(data){
+   			if (data == null) {
+   				
+   			} else {
+   
+   				
+   				//Passport 验证
+   				if (data.isPassport == 0) {
+   					$("#verify_passport_label").css("display", "block");
+   					$("#verify_passport_box").css("display", "block");
+   				} else {
+   					
+   				}
+   				
+   				//Email 验证
+   				if (data.isEmail == 0) {
+   					if (data.email == null) {
+   						$("#emailContent").text("添加验证邮箱可以最大限度确保账号安全");
+   					} else {
+   						$("#emailContent").text("未验证邮箱： " + data.email);
+   						$("#emailContent").append(" " + times);
+   						
+   					}
+   				} else {
+   					if (data.email == null) {
+   						$("#emailContent").text("添加验证邮箱可以最大限度确保账号安全");
+   					} else {
+   						$("#emailContent").text("验证邮箱： " + data.email);
+   						$("#emailContent").append(" " + check);
+   						$("#verify_email_btn").text("邮箱已验证");
+   						$("#verify_email_btn").attr("disabled", "disabled");
+   						
+   						
+   					}
+   				}
+   				
+   				//Cellphone 验证
+   				if (data.isCellphone == 0) {
+   					if (data.cellphone == null) {
+   						$("#cellphoneContent").text("手机验证增加账号的安全等级");
+   					} else {
+   						$("#cellphoneContent").text("未验证手机： " + data.cellphone);
+   						$("#cellphoneContent").append(" " + times);
+   					}
+   				} else {
+   					if (data.cellphone == null) {
+   						$("#cellphoneContent").text("手机验证增加账号的安全等级");
+   					} else {
+   						$("#cellphoneContent").text("验证手机： " + data.cellphone);
+   						$("#cellphoneContent").append(" " + check);
+   						$("#verify_cellphone_btn").text("手机已验证");
+   						$("#verify_cellphone_btn").attr("disabled", "disabled");
+   					}
+   				}
+   				
+   				//Weibo 验证
+   				if (data.isWeibo == 0) {
+   					$("#weiboContent").text("微博验证可以增加您的账号安全等级");
+   				} else {
+   					if (data.weibo == null) {
+   						$("#weiboContent").text("微博验证可以增加您的账号安全等级");
+   					} else {
+   						$("#weiboContent").text("验证微博： " + data.weibo);
+   						$("#weiboContent").append(" " + check);
+   						$("#verify_weibo_btn").text("微博已验证");
+   						$("#verify_weibo_btn").attr("disabled", "disabled");
+   					}
+   				}
+   			}
+   		});
+   		
+   		$("#verify_email_btn").click(function(){
+   			$.get('http://localhost:8080/agency/account/api/sendVerificationMail', function(sback){
+   					var sendEmail = $("#verify_email_btn");
+   					settime(sendEmail);
+   			});
+   		});
+   	});
+   	
+	var countdown = 60;
+	
+	function settime(obj) {
+		if (countdown == 0) {
+			obj.prop("disabled", false);
+			obj.text("验证邮箱");
+			
+			countdown = 60;
+			return;
+			
+		} else {
+			obj.prop("disabled", true);
+			obj.text("重新发送（" + countdown + "）");
+			countdown--;
+			console.log(countdown);
+		}
+		
+		setTimeout(function(){
+			settime(obj)
+		}, 1000)
+	}
+   	</script>
 </body>
 
 

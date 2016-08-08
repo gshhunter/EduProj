@@ -26,6 +26,12 @@ public class UserProfile {
 	
 	private int postcode;
 	
+	private String weibo;
+	
+	private String qq;
+	
+	private String wechat;
+	
 	private String description;
 	
 	private Date birthday;
@@ -38,6 +44,12 @@ public class UserProfile {
 	private int isCellphone;
 	
 	private int isPassport;
+	
+	private int isWeibo;
+	
+	private int isWechat;
+	
+	private int isQq;
 	
 	private Date regTime;
 	
@@ -193,6 +205,54 @@ public class UserProfile {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+
+	public String getWeibo() {
+		return weibo;
+	}
+
+	public void setWeibo(String weibo) {
+		this.weibo = weibo;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public int getIsWeibo() {
+		return isWeibo;
+	}
+
+	public void setIsWeibo(int isWeibo) {
+		this.isWeibo = isWeibo;
+	}
+
+	public int getIsWechat() {
+		return isWechat;
+	}
+
+	public void setIsWechat(int isWechat) {
+		this.isWechat = isWechat;
+	}
+
+	public int getIsQq() {
+		return isQq;
+	}
+
+	public void setIsQq(int isQq) {
+		this.isQq = isQq;
 	}
 	
 	
