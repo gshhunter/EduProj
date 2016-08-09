@@ -77,6 +77,15 @@ public class AccountController {
 		return "home";
 	}
 	
+	/**
+	 * 登录邮箱账号
+	 * @param emailLoginBean
+	 * @param result
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value="/loginEmail", method=RequestMethod.POST)
 	public String loginEmail(@ModelAttribute("emailLoginBean") EmailLoginBean emailLoginBean, BindingResult result, Model model,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -144,6 +153,13 @@ public class AccountController {
 		return "cellphone_register";
 	}
 	
+	/**
+	 * 注册邮箱
+	 * @param account
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/registerEmail", method=RequestMethod.POST)
 	public String registerEmail(@Valid Account account, BindingResult result, ModelMap model) {
 		
@@ -321,6 +337,14 @@ public class AccountController {
 		}
 	}
 	
+	/**
+	 * 去密码重置页面
+	 * @param vid
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/verify_email", method=RequestMethod.GET)
 	public String toResetPwd(@RequestParam(value="vid", required=true) String vid, HttpServletRequest request, HttpServletResponse response, Model model){
 		if (vid == null || "".equals(vid.trim()) ) {
@@ -347,15 +371,15 @@ public class AccountController {
 		return "trust_verification";
 	}
 	
-//	@RequestMapping(value="/api/getLoginEmail", method=RequestMethod.GET)
-//	public @ResponseBody String getLoginEmail(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
-//		String login_email = getLoginEmail(request, response);
-//		ObjectMapper mapper = new ObjectMapper();
-//		ObjectNode root = mapper.createObjectNode();
-//		
-//		return "";
-//	}
-//	
+	/**
+	 * 发送邮箱账号验证邮件
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
 	@RequestMapping(value="/api/sendVerificationMail", method=RequestMethod.GET)
 	public @ResponseBody String sendVerificationMail(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -512,8 +536,6 @@ public class AccountController {
 	public String toVerification(Model model) {
 		return "trust_verification";
 	}
-	
-	
 	
 	//从Cookie获取用户账号Id
 	public int getAccountIdByCookie(HttpServletRequest request, HttpServletResponse response) {

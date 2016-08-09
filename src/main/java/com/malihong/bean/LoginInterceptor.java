@@ -21,7 +21,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		 String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 		 String url = request.getRequestURI().replace(request.getContextPath(), "");
 		 logger.info("----------------- URI: " + url);
-		 if (null != miwen || url.equals("/account/toEmailLogin")) {
+		 if (null != miwen || url.equals("/account/toEmailLogin") || url.equals("/account/toEmailRegister")) {
 			return true; 
 		 }
 		 
