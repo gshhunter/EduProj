@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
     <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
 
-    <title>学生个人资料查看</title>
+    <title>个人资料查看</title>
 
 
     <style>

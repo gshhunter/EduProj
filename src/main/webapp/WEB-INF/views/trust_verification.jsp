@@ -208,7 +208,7 @@
    				
    				//Email 验证
    				if (data.isEmail == 0) {
-   					if (data.email == null) {
+   					if (data.email == null || data.email == "") {
    						$("#emailContent").text("添加验证邮箱可以最大限度确保账号安全");
    					} else {
    						$("#emailContent").text("未验证邮箱： " + data.email);
@@ -216,7 +216,7 @@
    						
    					}
    				} else {
-   					if (data.email == null) {
+   					if (data.email == null || data.email == "") {
    						$("#emailContent").text("添加验证邮箱可以最大限度确保账号安全");
    					} else {
    						$("#emailContent").text("验证邮箱： " + data.email);
@@ -230,14 +230,14 @@
    				
    				//Cellphone 验证
    				if (data.isCellphone == 0) {
-   					if (data.cellphone == null) {
+   					if (data.cellphone == null || data.cellphone == "") {
    						$("#cellphoneContent").text("手机验证增加账号的安全等级");
    					} else {
    						$("#cellphoneContent").text("未验证手机： " + data.cellphone);
    						$("#cellphoneContent").append(" " + times);
    					}
    				} else {
-   					if (data.cellphone == null) {
+   					if (data.cellphone == null || data.cellphone == "") {
    						$("#cellphoneContent").text("手机验证增加账号的安全等级");
    					} else {
    						$("#cellphoneContent").text("验证手机： " + data.cellphone);
@@ -251,7 +251,7 @@
    				if (data.isWeibo == 0) {
    					$("#weiboContent").text("微博验证可以增加您的账号安全等级");
    				} else {
-   					if (data.weibo == null) {
+   					if (data.weibo == null data.weibo == "") {
    						$("#weiboContent").text("微博验证可以增加您的账号安全等级");
    					} else {
    						$("#weiboContent").text("验证微博： " + data.weibo);
@@ -268,6 +268,10 @@
    					var sendEmail = $("#verify_email_btn");
    					settime(sendEmail);
    			});
+   		});
+   		
+   		$("#verify_passport_btn").click(function(){
+   			
    		});
    	});
    	

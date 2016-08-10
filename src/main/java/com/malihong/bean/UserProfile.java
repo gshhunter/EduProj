@@ -55,6 +55,10 @@ public class UserProfile {
 	
 	private int gender;
 	
+	private int privacy_setting;
+	
+	private int security_setting;
+	
 	public int getId() {
 		return id;
 	}
@@ -253,6 +257,22 @@ public class UserProfile {
 
 	public void setIsQq(int isQq) {
 		this.isQq = isQq;
+	}
+
+	public int getPrivacy_setting() {
+		return privacy_setting;
+	}
+
+	public void setPrivacy_setting(int privacy_setting) {
+		this.privacy_setting = privacy_setting;
+	}
+
+	public int getSecurity_setting() {
+		return security_setting;
+	}
+
+	public void setSecurity_setting(int security_setting) {
+		this.security_setting = security_setting;
 	}
 	
 	

@@ -490,6 +490,8 @@ public class AccountController {
 		up.setGender(p.getGender());
 		up.setBirthday(p.getBirthday());
 		up.setDescription(p.getDescription());
+		up.setPrivacy_setting(account.getPrivacy_setting());
+		up.setSecurity_setting(account.getSecurity_setting());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(up);
@@ -532,9 +534,58 @@ public class AccountController {
 		return root.toString();
 	}
 	
+	@RequestMapping(value="/api/setPrivacy", method=RequestMethod.GET)
+	public @ResponseBody String setPrivacy(@RequestParam(value="pid", required=true) String pid, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root=mapper.createObjectNode();
+		
+		if(pid == null || "".equals(pid.trim())) {
+			logger.info("-------------pid should not be null");
+			root.put("status", -1);
+			return root.toString();
+		}
+		
+		String email = getEmailByCookie(request, response);
+		
+		if (!accountService.checkAccountByEmail(email)) {
+			root.put("status", -2);
+			return root.toString();
+		}
+		
+		Account account = accountService.findUserByEmail(email);
+		
+		try {
+			int pcode = Integer.parseInt(pid);
+			
+			if (pcode == 0) {
+				account.setPrivacy_setting(0);
+				accountService.update(account);
+				root.put("status", 1);
+			} else if (pcode == 1) {
+				account.setPrivacy_setting(1);
+				accountService.update(account);
+				root.put("status", 1);
+			} else {
+				root.put("status", -3);
+			}
+		} catch (NumberFormatException e) {
+			logger.info("-------------pid is not a number");
+			root.put("status", -4);
+			return root.toString();
+		}
+
+		return root.toString();
+	}
+	
+	
 	@RequestMapping(value="/toVerification", method=RequestMethod.GET)
 	public String toVerification(Model model) {
 		return "trust_verification";
+	}
+	
+	@RequestMapping(value="/toPrivacySetting", method=RequestMethod.GET)
+	public String toPrivacySetting(Model model) {
+		return "privacy_setting";
 	}
 	
 	//从Cookie获取用户账号Id
