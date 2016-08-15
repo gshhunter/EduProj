@@ -77,6 +77,15 @@ public class AccountController {
 		return "home";
 	}
 	
+	/**
+	 * 登录邮箱账号
+	 * @param emailLoginBean
+	 * @param result
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	@RequestMapping(value="/loginEmail", method=RequestMethod.POST)
 	public String loginEmail(@ModelAttribute("emailLoginBean") EmailLoginBean emailLoginBean, BindingResult result, Model model,
 			HttpServletRequest request, HttpServletResponse response) {
@@ -144,6 +153,13 @@ public class AccountController {
 		return "cellphone_register";
 	}
 	
+	/**
+	 * 注册邮箱
+	 * @param account
+	 * @param result
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/registerEmail", method=RequestMethod.POST)
 	public String registerEmail(@Valid Account account, BindingResult result, ModelMap model) {
 		
@@ -322,6 +338,85 @@ public class AccountController {
 	}
 	
 	/**
+	 * 去密码重置页面
+	 * @param vid
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/verify_email", method=RequestMethod.GET)
+	public String toResetPwd(@RequestParam(value="vid", required=true) String vid, HttpServletRequest request, HttpServletResponse response, Model model){
+		if (vid == null || "".equals(vid.trim()) ) {
+			return "error_mail";
+		}
+		
+		int accountId = getAccountIdByCookie(request, response);
+		Account account = accountService.findUserById(accountId);
+		String email = account.getEmail();
+		
+		String mingwen = accountId + "&" + email;
+		String miwen = MD5Encript.crypt(mingwen);
+		
+		if (!vid.equals(miwen)) {
+			return "error_mail";
+		}
+		
+		Identification ident = account.getIdentification();
+		ident.setEmail(email);
+		ident.setIsEmail(1);
+		account.setIdentification(ident);
+		accountService.update(account);
+		
+		return "trust_verification";
+	}
+	
+	/**
+	 * 发送邮箱账号验证邮件
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 */
+	@RequestMapping(value="/api/sendVerificationMail", method=RequestMethod.GET)
+	public @ResponseBody String sendVerificationMail(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root = mapper.createObjectNode();
+		root.put("status", 0);
+		
+		String cookieEmail = getEmailByCookie(request, response);
+		if (cookieEmail == null || "".equals(cookieEmail.trim())) {
+			root.put("status", 0);
+			return root.toString();
+		}
+		
+		boolean isExist = accountService.checkAccountByEmail(cookieEmail);
+		
+		if (!isExist) {
+			root.put("status", -1);
+			logger.info("不存在： " + cookieEmail);
+			logger.info(root.toString());
+			return root.toString();
+		}
+		
+		int accountId = getAccountIdByCookie(request, response);
+		
+		String mingwen = accountId + "&" + cookieEmail;
+		String miwen = MD5Encript.crypt(mingwen);
+		
+		String url = "http://localhost:8080/agency/account/verify_email?vid=" + miwen;
+		
+		//发送邮件接口
+		ExecutorService executorService = Executors.newCachedThreadPool();  
+        Future<String> future = executorService.submit(new MailServer(cookieEmail,"邮箱账号验证","<h1>" + url + "</h1>"));
+        logger.info("邮箱账号验证邮件发送成功");
+        root.put("status", 1);
+		return root.toString();
+	}
+	
+	/**
 	 * 跳转至ViewProfile页面
 	 * @param model
 	 * @return
@@ -386,9 +481,17 @@ public class AccountController {
 		up.setIsEmail(ident.getIsEmail());
 		up.setIsCellphone(ident.getIsCellphone());
 		up.setIsPassport(ident.getIsPassport());
+		up.setIsWeibo(ident.getIsWeibo());
+		up.setIsWechat(ident.getIsWechat());
+		up.setIsQq(ident.getIsQq());
+		up.setWeibo(ident.getWeibo());
+		up.setWechat(ident.getWechat());
+		up.setQq(ident.getQq());
 		up.setGender(p.getGender());
 		up.setBirthday(p.getBirthday());
 		up.setDescription(p.getDescription());
+		up.setPrivacy_setting(account.getPrivacy_setting());
+		up.setSecurity_setting(account.getSecurity_setting());
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(up);
@@ -431,10 +534,58 @@ public class AccountController {
 		return root.toString();
 	}
 	
-	@RequestMapping(value="/toVerification", method=RequestMethod.POST)
-	public String toVerification(Model model) {
+	@RequestMapping(value="/api/setPrivacy", method=RequestMethod.GET)
+	public @ResponseBody String setPrivacy(@RequestParam(value="pid", required=true) String pid, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root=mapper.createObjectNode();
 		
+		if(pid == null || "".equals(pid.trim())) {
+			logger.info("-------------pid should not be null");
+			root.put("status", -1);
+			return root.toString();
+		}
+		
+		String email = getEmailByCookie(request, response);
+		
+		if (!accountService.checkAccountByEmail(email)) {
+			root.put("status", -2);
+			return root.toString();
+		}
+		
+		Account account = accountService.findUserByEmail(email);
+		
+		try {
+			int pcode = Integer.parseInt(pid);
+			
+			if (pcode == 0) {
+				account.setPrivacy_setting(0);
+				accountService.update(account);
+				root.put("status", 1);
+			} else if (pcode == 1) {
+				account.setPrivacy_setting(1);
+				accountService.update(account);
+				root.put("status", 1);
+			} else {
+				root.put("status", -3);
+			}
+		} catch (NumberFormatException e) {
+			logger.info("-------------pid is not a number");
+			root.put("status", -4);
+			return root.toString();
+		}
+
+		return root.toString();
+	}
+	
+	
+	@RequestMapping(value="/toVerification", method=RequestMethod.GET)
+	public String toVerification(Model model) {
 		return "trust_verification";
+	}
+	
+	@RequestMapping(value="/toPrivacySetting", method=RequestMethod.GET)
+	public String toPrivacySetting(Model model) {
+		return "privacy_setting";
 	}
 	
 	//从Cookie获取用户账号Id

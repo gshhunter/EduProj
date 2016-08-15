@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
     <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
 
-    <title>学生个人资料查看</title>
+    <title>个人资料查看</title>
 
 
     <style>
@@ -80,16 +80,13 @@
                     <!--<li><a href="#">收件箱</a></li>-->
                     <li><a id="email"></a></li>
                     <li><a href="<%=request.getContextPath() %>/account/logout">注销</a></li>                   
-                    
                 </ul>
             </div>
                 
             </div>
         </div>
 
-
         <br>
-        
         
          <!--用户信息显示区-->
         <div class="pure-g">

@@ -26,6 +26,12 @@ public class UserProfile {
 	
 	private int postcode;
 	
+	private String weibo;
+	
+	private String qq;
+	
+	private String wechat;
+	
 	private String description;
 	
 	private Date birthday;
@@ -39,9 +45,19 @@ public class UserProfile {
 	
 	private int isPassport;
 	
+	private int isWeibo;
+	
+	private int isWechat;
+	
+	private int isQq;
+	
 	private Date regTime;
 	
 	private int gender;
+	
+	private int privacy_setting;
+	
+	private int security_setting;
 	
 	public int getId() {
 		return id;
@@ -193,6 +209,70 @@ public class UserProfile {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+
+	public String getWeibo() {
+		return weibo;
+	}
+
+	public void setWeibo(String weibo) {
+		this.weibo = weibo;
+	}
+
+	public String getQq() {
+		return qq;
+	}
+
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public int getIsWeibo() {
+		return isWeibo;
+	}
+
+	public void setIsWeibo(int isWeibo) {
+		this.isWeibo = isWeibo;
+	}
+
+	public int getIsWechat() {
+		return isWechat;
+	}
+
+	public void setIsWechat(int isWechat) {
+		this.isWechat = isWechat;
+	}
+
+	public int getIsQq() {
+		return isQq;
+	}
+
+	public void setIsQq(int isQq) {
+		this.isQq = isQq;
+	}
+
+	public int getPrivacy_setting() {
+		return privacy_setting;
+	}
+
+	public void setPrivacy_setting(int privacy_setting) {
+		this.privacy_setting = privacy_setting;
+	}
+
+	public int getSecurity_setting() {
+		return security_setting;
+	}
+
+	public void setSecurity_setting(int security_setting) {
+		this.security_setting = security_setting;
 	}
 	
 	

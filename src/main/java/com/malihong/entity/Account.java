@@ -49,6 +49,12 @@ public class Account implements Serializable {
 	
 	private String lastname;
 	
+	@Column(name="security_setting")
+	private int security_setting;
+	
+	@Column(name="privacy_setting")
+	private int privacy_setting;
+	
 	@OneToOne(fetch=FetchType.EAGER, cascade= {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="id_profile")
 	private Profile profile;
@@ -148,6 +154,22 @@ public class Account implements Serializable {
 
 	public void setIdentification(Identification identification) {
 		this.identification = identification;
+	}
+
+	public int getSecurity_setting() {
+		return security_setting;
+	}
+
+	public void setSecurity_setting(int security_setting) {
+		this.security_setting = security_setting;
+	}
+
+	public int getPrivacy_setting() {
+		return privacy_setting;
+	}
+
+	public void setPrivacy_setting(int privacy_setting) {
+		this.privacy_setting = privacy_setting;
 	}
 
 	

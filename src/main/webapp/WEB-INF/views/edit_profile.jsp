@@ -80,14 +80,16 @@
             </div>  
         </div>
         
-        <br>
+        <!-- 信息提示 -->
+        <div id="blank" class="blank"></div>
+
         <div class="pure-g">
           
           <div class="pure-u-2-24"></div>
           <div class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx " >
                 <ul>
                     <li class="menuItemSelectedMcx"><i class="fa fa-caret-right" aria-hidden="true"></i><a href="#">编辑</a></li>
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileValidation.html">信任验证</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toVerification">信任验证</a></li>
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileComment.html#">评价</a></li>
                    	<br/>  
                 	<div class="pure-button">查看我的资料</div>
@@ -231,11 +233,17 @@
 			var j = JSON.stringify(profile);
 			$.post("http://localhost:8080/agency/account/api/saveProfile", j, function(data) {
 				if (data.status == 1) {
-					$("#info").text("Success: Change saved");
-					$("#info").addClass("infoFail");
+					var str='<div id="suc" class="successMcx">操作成功哦！<i class="fa fa-check" aria-hidden="true"></i></div>';
+					$("#blank").empty();
+					$("#blank").append(str);				
+					$("#suc").fadeOut(2000);
+					
 				} else {
-					$("#info").text("Fail: Cannot save change");
-					$("#info").addClass("infoSuccess");
+					var str='<div id="fail" class="errorMcx">操作失败哦！<i class="fa fa-times" aria-hidden="true"></i></div>';
+					$("#black").empty();
+					$("#blank").append(str);				
+					$("#fail").fadeOut(2000);
+					
 				}
 			});
 			return false;
