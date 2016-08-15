@@ -210,12 +210,12 @@
 					$("#blank").empty();
 					$("#blank").append(str);				
 					$("#suc").fadeOut(2000);
-					
 				} else {
 					var str='<div id="fail" class="errorMcx">操作失败哦！<i class="fa fa-times" aria-hidden="true"></i></div>';
 					$("#black").empty();
-					$("#blank").append(str);				
+					$("#blank").append(str);			
 					$("#fail").fadeOut(2000);
+					return false;
 				}
 			});
 		});					

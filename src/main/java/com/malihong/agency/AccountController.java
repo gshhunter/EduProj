@@ -1,6 +1,7 @@
 package com.malihong.agency;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.bean.ChangePwd;
 import com.malihong.bean.EditProfile;
 import com.malihong.bean.EmailBean;
 import com.malihong.bean.EmailLoginBean;
@@ -577,7 +579,6 @@ public class AccountController {
 		return root.toString();
 	}
 	
-	
 	@RequestMapping(value="/toVerification", method=RequestMethod.GET)
 	public String toVerification(Model model) {
 		return "trust_verification";
@@ -586,6 +587,72 @@ public class AccountController {
 	@RequestMapping(value="/toPrivacySetting", method=RequestMethod.GET)
 	public String toPrivacySetting(Model model) {
 		return "privacy_setting";
+	}
+	
+	@RequestMapping(value="/toSecuritySetting", method=RequestMethod.GET)
+	public String toSecuritySetting(Model model) {
+		return "security_setting";
+	}
+	
+	@RequestMapping(value="/api/changePassword", method=RequestMethod.POST)
+	public @ResponseBody String changePassword(@RequestBody String r, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		r = URLDecoder.decode(r, "UTF-8");
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root = mapper.createObjectNode();
+	    root.put("status", 0);
+	    
+		String cookieEmail = getEmailByCookie(request, response);
+		
+		//用户不是登陆状态,返回错误页面
+	    if (cookieEmail == null || "".equals(cookieEmail.trim())) {
+	    	root.put("status", -2);
+	    	return root.toString();
+	    }
+	    
+	    //不存在这个Email
+	    if (!accountService.checkAccountByEmail(cookieEmail)) {
+	    	root.put("status", -3);
+	    	return root.toString();
+	    }
+	    
+	    Account account = accountService.findUserByEmail(cookieEmail);
+	   
+		try {
+			ChangePwd cp = mapper.readValue(r, ChangePwd.class);
+			
+			String oldpwd = cp.getOldpwd();
+			String newpwd = cp.getNewpwd();
+			String againpwd = cp.getAgainpwd();
+			logger.info("---------------------- " + oldpwd);
+			//后台校验 不可为null
+			if (oldpwd == null || "".equals(oldpwd.trim()) || newpwd == null || "".equals(newpwd.trim()) || againpwd == null || "".equals(againpwd.trim())) {
+				root.put("status", -1);
+				return root.toString();
+			}
+			
+			//判断旧密码是否正确
+			String md5pass = MD5Encript.crypt(oldpwd);
+			if (!md5pass.equals(account.getPassword())) {
+				root.put("status", -4);
+				return root.toString();
+			}
+			
+			//两次输入密码不相同
+			if (!newpwd.equals(againpwd)) {
+				root.put("status", -5);
+				return root.toString();
+			}
+			
+			account.setPassword(MD5Encript.crypt(newpwd));
+			accountService.update(account);
+			root.put("status", 1);
+			
+		} catch (Exception e) {
+			root.put("status", -1);
+			return root.toString();
+		}
+		
+		return root.toString();
 	}
 	
 	//从Cookie获取用户账号Id
