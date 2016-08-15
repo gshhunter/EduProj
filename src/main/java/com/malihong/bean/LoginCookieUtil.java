@@ -30,7 +30,6 @@ public class LoginCookieUtil {
 		public static Integer getAccountIdByCookie(HttpServletRequest request) {
 			String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 			if(miwen==null){
-				System.out.println("NULL!");
 				return null;
 			}else{
 				String mingwen = Base64Encript.decode(miwen);

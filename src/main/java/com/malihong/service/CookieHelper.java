@@ -11,7 +11,7 @@ public class CookieHelper {
 		if (remember_me == true) {
 			cookie.setMaxAge(7*24*60*60);
 		}
-		cookie.setPath("/agency/");
+		cookie.setPath("/");
 	    response.addCookie(cookie);
 	}
 	
