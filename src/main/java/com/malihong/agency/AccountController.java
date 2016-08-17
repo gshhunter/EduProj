@@ -1,6 +1,7 @@
 package com.malihong.agency;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Date;
 import java.util.List;
@@ -33,10 +34,12 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.bean.ChangePwd;
 import com.malihong.bean.EditProfile;
 import com.malihong.bean.EmailBean;
 import com.malihong.bean.EmailLoginBean;
 import com.malihong.bean.MailServer;
+import com.malihong.bean.RegisterAccount;
 import com.malihong.bean.ResetPasswordBean;
 import com.malihong.bean.UserProfile;
 import com.malihong.entity.Account;
@@ -143,7 +146,7 @@ public class AccountController {
 	
 	@RequestMapping(value="/toEmailRegister", method=RequestMethod.GET)
 	public String toEmailRegister(ModelMap model) {
-		model.addAttribute("account", new Account());
+		model.addAttribute("account", new RegisterAccount());
 		return "email_register";
 	}
 	
@@ -161,31 +164,54 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value="/registerEmail", method=RequestMethod.POST)
-	public String registerEmail(@Valid Account account, BindingResult result, ModelMap model) {
+	public String registerEmail(@ModelAttribute("account") RegisterAccount account, BindingResult result, ModelMap model) {
+
+		String email = account.getEmail();
+		String password = account.getPassword();
+		String firstname = account.getFirstname();
+		String lastname = account.getLastname();
+		String passwordmd5 = MD5Encript.crypt(password);
 		
-		if (result.hasErrors()) {
+		Account a = new Account();
+		Profile p = new Profile();
+		Identification ident = new Identification();
+		
+		if (!ValidationUtil.isEmail(email)) {
+			result.rejectValue("email", "请输入正确的电子邮箱", "请输入正确的电子邮箱");
 			return "email_register";
-		} else {
-			String email = account.getEmail();
-			String password = account.getPassword();
-			String passwordmd5 = MD5Encript.crypt(password);
-			
-			Profile p = new Profile();
-			Identification ident = new Identification();
-			
-			boolean isEmailExist = this.accountService.checkAccountByEmail(email);
-			if (isEmailExist) {
-				result.rejectValue("email", "该电子邮件已经存在", "该电子邮件已经存在");
-				return "email_register";
-			}
-			
-			account.setPassword(passwordmd5);
-			accountService.addNewUser(account, p, ident);
-			
-			logger.info("Email: " + email + " Password: " + password + " MD5: " + passwordmd5);
-			
-			return "register_success";
 		}
+		
+		if (!ValidationUtil.isPassword(password)) {
+			result.rejectValue("password", "请输入6-24位密码，密码只能包含大小写字母、数字和下划线", "请输入6-24位密码，密码只能包含大小写字母、数字和下划线");
+			return "email_register";
+		}
+		
+		if (firstname == null || "".equals(firstname.trim())) {
+			result.rejectValue("firstname", "请输入你的名称", "请输入你的名称");
+			return "email_register";
+		}
+		
+		if (lastname == null || "".equals(lastname.trim())) {
+			result.rejectValue("lastname", "请输入你的姓氏", "请输入你的姓氏");
+			return "email_register";
+		}
+		
+		boolean isEmailExist = this.accountService.checkAccountByEmail(email);
+		if (isEmailExist) {
+			result.rejectValue("email", "该电子邮件已经存在", "该电子邮件已经存在");
+			return "email_register";
+		}
+		
+		a.setEmail(email);
+		a.setPassword(passwordmd5);
+		a.setLastname(lastname);
+		a.setFirstname(firstname);
+		accountService.addNewUser(a, p, ident);
+		
+		logger.info("Email: " + email + " Password: " + password + " MD5: " + passwordmd5);
+		
+		return "register_success";
+		
 	}
 	
 	@RequestMapping(value="/forgetPwd", method=RequestMethod.GET)
@@ -577,7 +603,6 @@ public class AccountController {
 		return root.toString();
 	}
 	
-	
 	@RequestMapping(value="/toVerification", method=RequestMethod.GET)
 	public String toVerification(Model model) {
 		return "trust_verification";
@@ -586,6 +611,72 @@ public class AccountController {
 	@RequestMapping(value="/toPrivacySetting", method=RequestMethod.GET)
 	public String toPrivacySetting(Model model) {
 		return "privacy_setting";
+	}
+	
+	@RequestMapping(value="/toSecuritySetting", method=RequestMethod.GET)
+	public String toSecuritySetting(Model model) {
+		return "security_setting";
+	}
+	
+	@RequestMapping(value="/api/changePassword", method=RequestMethod.POST)
+	public @ResponseBody String changePassword(@RequestBody String r, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		r = URLDecoder.decode(r, "UTF-8");
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root = mapper.createObjectNode();
+	    root.put("status", 0);
+	    
+		String cookieEmail = getEmailByCookie(request, response);
+		
+		//用户不是登陆状态,返回错误页面
+	    if (cookieEmail == null || "".equals(cookieEmail.trim())) {
+	    	root.put("status", -2);
+	    	return root.toString();
+	    }
+	    
+	    //不存在这个Email
+	    if (!accountService.checkAccountByEmail(cookieEmail)) {
+	    	root.put("status", -3);
+	    	return root.toString();
+	    }
+	    
+	    Account account = accountService.findUserByEmail(cookieEmail);
+	   
+		try {
+			ChangePwd cp = mapper.readValue(r, ChangePwd.class);
+			
+			String oldpwd = cp.getOldpwd();
+			String newpwd = cp.getNewpwd();
+			String againpwd = cp.getAgainpwd();
+			logger.info("---------------------- " + oldpwd);
+			//后台校验 不可为null
+			if (oldpwd == null || "".equals(oldpwd.trim()) || newpwd == null || "".equals(newpwd.trim()) || againpwd == null || "".equals(againpwd.trim())) {
+				root.put("status", -1);
+				return root.toString();
+			}
+			
+			//判断旧密码是否正确
+			String md5pass = MD5Encript.crypt(oldpwd);
+			if (!md5pass.equals(account.getPassword())) {
+				root.put("status", -4);
+				return root.toString();
+			}
+			
+			//两次输入密码不相同
+			if (!newpwd.equals(againpwd)) {
+				root.put("status", -5);
+				return root.toString();
+			}
+			
+			account.setPassword(MD5Encript.crypt(newpwd));
+			accountService.update(account);
+			root.put("status", 1);
+			
+		} catch (Exception e) {
+			root.put("status", -1);
+			return root.toString();
+		}
+		
+		return root.toString();
 	}
 	
 	//从Cookie获取用户账号Id

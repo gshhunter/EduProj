@@ -9,7 +9,7 @@ public class ValidationUtil {
 			Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 	
 	public static final Pattern VALID_PASSWORD_REGEX = 
-			Pattern.compile("^[a-zA-Z]\\w{5,32}$", Pattern.CASE_INSENSITIVE);
+			Pattern.compile("^[a-zA-Z0-9_-]{6,24}$", Pattern.CASE_INSENSITIVE);
 	
 	public static boolean isEmail(String email) {
 		Matcher matcher = VALID_EMAIL_REGEX.matcher(email);

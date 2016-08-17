@@ -144,7 +144,7 @@
 	                </div>
 	              	
 	              	<!-- 手机验证 -->
-	              	<div id="verify_cellphone_label" class="pure-u-1-1 labelStyle">
+	              	<!--<div id="verify_cellphone_label" class="pure-u-1-1 labelStyle">
 		   				<label id="cellphoneTitle">手机验证</label>
 		   			</div>
 	            	<div id="verify_cellphone_box" class="pure-u-1-1 blankStyle">
@@ -157,7 +157,7 @@
 			                	<div id="verify_cellphone_btn" class="pure-button pure-button-primary">验证手机</div>
 			                </div>
 		                </div>
-	                </div>
+	                </div> -->
 	              	
 	              	<!-- 微博验证 -->
 	              	<div id="verify_weibo_label" class="pure-u-1-1 labelStyle">
@@ -224,7 +224,6 @@
    						$("#verify_email_btn").text("邮箱已验证");
    						$("#verify_email_btn").attr("disabled", "disabled");
    						
-   						
    					}
    				}
    				
@@ -251,7 +250,7 @@
    				if (data.isWeibo == 0) {
    					$("#weiboContent").text("微博验证可以增加您的账号安全等级");
    				} else {
-   					if (data.weibo == null data.weibo == "") {
+   					if (data.weibo == null || data.weibo == "") {
    						$("#weiboContent").text("微博验证可以增加您的账号安全等级");
    					} else {
    						$("#weiboContent").text("验证微博： " + data.weibo);
@@ -271,8 +270,9 @@
    		});
    		
    		$("#verify_passport_btn").click(function(){
-   			
+   			alert("请联系后台工作人员帮您完成验证");
    		});
+   		
    	});
    	
 	var countdown = 60;
