@@ -2,7 +2,7 @@ package com.malihong.service;
 
 import java.util.List;
 
-import com.malihong.entity.Option;
+import com.malihong.bean.sysOption;
 import com.malihong.entity.Plan;
 import com.malihong.entity.Request;
 
@@ -16,5 +16,5 @@ public interface PlanService {
 	
 	public List<Plan> findPlansByAgencyId(int aid);
 	
-	public List<Option> generateOptionsByRequest(Request req);
+	public List<sysOption> generateOptionsByRequest(Request req);
 }

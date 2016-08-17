@@ -39,4 +39,14 @@ public class GaokaoInfo {
 			put("Zhejiang",810);		//浙江
 		}
 	};
+	
+	public static int percentageMark(String province, double mark){
+		int pmark=0;
+		Integer total=totalScoreByLocation.get(province);
+		if(total!=null){
+			pmark=Integer.valueOf((int) Math.round((mark/total)*100));
+		}
+		
+		return pmark;
+	}
 }

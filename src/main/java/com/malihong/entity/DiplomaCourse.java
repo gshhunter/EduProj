@@ -28,7 +28,9 @@ public class DiplomaCourse implements Serializable {
 	private String collegeName;
 	@Column(name="id_pre_foundation")
 	private int foundationId;
-	private double tuition;
+	private int tuition;
+	@Column(name="tuition_p2")
+	private int p2tuition;
 	private int semesters;
 	private String field;
 
@@ -92,12 +94,20 @@ public class DiplomaCourse implements Serializable {
 		this.foundationId = foundationId;
 	}
 	
-	public double getTuition() {
+	public int getTuition() {
 		return this.tuition;
 	}
 
-	public void setTuition(double tuition) {
+	public void setTuition(int tuition) {
 		this.tuition = tuition;
+	}
+	
+	public int getP2Tuition() {
+		return this.p2tuition;
+	}
+
+	public void setP2Tuition(int p2tuition) {
+		this.p2tuition = p2tuition;
 	}
 	
 	public int getSemesters() {

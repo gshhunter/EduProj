@@ -58,6 +58,13 @@ public class StudentRequestController {
 	@Autowired
 	private PromotionCodeService codeService;
 	
+	//....................................
+	@RequestMapping(value = "/api/sysoptions", method = RequestMethod.POST)
+	public @ResponseBody String getSysOptions(HttpServletRequest request,@RequestBody String r) {
+		
+		
+		return null;
+	}
 	
 	//开发：学生ID：12345； 中介ID：67890
 	// 学生创建新的request
@@ -77,13 +84,15 @@ public class StudentRequestController {
 			re = mapper.readValue(r, Request.class);
 		} catch (Exception e) {
 			//应该把一场状态进一步细分
-			root.put("status", 2);
+			root.put("status", 2); //request解析失败
+			logger.info(e.getMessage());
+
 			return root.toString();
 		}
-		if(re.getIdAccount()==0){
-			root.put("status", 3);
-			return root.toString();
-		}
+//		if(re.getIdAccount()==0){
+//			root.put("status", 3); //??
+//			return root.toString();
+//		}
 			//re.setIdAccount(accountId);
 			re.setCreatedTime(new Date());
 			
@@ -91,14 +100,15 @@ public class StudentRequestController {
 			re.setGaokaoYear(2016);
 			re.setInterestCity("MelBySys");
 			//this.reqService.save(re);
-			List<Option> ops=new ArrayList<Option>();
-			Option op=new Option();
-			op.setIdOption(123);
-			ops.add(op);
-			op.setIdOption(123456);
-			ops.add(op);
 			
-			JsonNode node= mapper.convertValue(ops, JsonNode.class);
+//			List<Option> ops=new ArrayList<Option>();
+//			Option op=new Option();
+//			op.setIdOption(123);
+//			ops.add(op);
+//			op.setIdOption(123456);
+//			ops.add(op);
+			
+			JsonNode node= mapper.convertValue(this.planService.generateOptionsByRequest(re), JsonNode.class);
 			root.put("options", node);
 			return root.toString();
 	}
