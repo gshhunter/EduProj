@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.malihong.bean.LoginCookieUtil;
@@ -68,24 +69,38 @@ public class StudentRequestController {
 		ObjectNode root=mapper.createObjectNode();		
 		root.put("status", 0);
 		Integer accountId=LoginCookieUtil.getAccountIdByCookie(request);
-		if(accountId==null){
-			root.put("status", 1);
-		}else{
-			try {
-				re = mapper.readValue(r, Request.class);
-				re.setIdAccount(accountId);
-				re.setCreatedTime(new Date());
-				
-				re.setCurrentDegree(2);
-				re.setGaokaoYear(2016);
-				re.setInterestCity("MelBySys");
-				this.reqService.save(re);
-			} catch (Exception e) {
-				//应该把一场状态进一步细分
-				root.put("status", 2);
-			}
+//		if(accountId==null){
+//			root.put("status", 1);
+//			return root.toString();
+//		}
+		try {
+			re = mapper.readValue(r, Request.class);
+		} catch (Exception e) {
+			//应该把一场状态进一步细分
+			root.put("status", 2);
+			return root.toString();
 		}
-		return root.toString();
+		if(re.getIdAccount()==0){
+			root.put("status", 3);
+			return root.toString();
+		}
+			//re.setIdAccount(accountId);
+			re.setCreatedTime(new Date());
+			
+			re.setCurrentDegree(2);
+			re.setGaokaoYear(2016);
+			re.setInterestCity("MelBySys");
+			//this.reqService.save(re);
+			List<Option> ops=new ArrayList<Option>();
+			Option op=new Option();
+			op.setIdOption(123);
+			ops.add(op);
+			op.setIdOption(123456);
+			ops.add(op);
+			
+			JsonNode node= mapper.convertValue(ops, JsonNode.class);
+			root.put("options", node);
+			return root.toString();
 	}
 
 	// 中介查看待回应的requests（中介未回应，未过期，isCancel状态正常）
@@ -205,10 +220,21 @@ public class StudentRequestController {
 		//System.out.println("Redis:" + jedis.get("akey"));
 		//使用后把资源归还连接池
 		//RedisServerPool.returnResource(jedis);
-
+		List<Request> reqs = new ArrayList<Request>();
+		Request req=new Request();
+		req.setIdAccount(123);
+		reqs.add(req);
+		req.setIdAccount(123456);
+		reqs.add(req);
 		ObjectMapper mapper = new ObjectMapper();
+
+
 		ObjectNode root=mapper.createObjectNode();		
-		root.put("status", "中文测试");
+		root.put("status", acc);
+		//String json=mapper.writeValueAsString(reqs);
+		//JsonNode node = mapper.convertValue(reqs, JsonNode.class);
+
+		//root.put("options", node);
 		return root.toString();
 	}
 }
