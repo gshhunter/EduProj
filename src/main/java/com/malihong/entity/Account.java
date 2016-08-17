@@ -27,15 +27,12 @@ public class Account implements Serializable {
 
 	private String cellphone;
 	
-	@NotEmpty
-	@Email 
 	private String email;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="last_login_time")
 	private Date lastLoginTime;
 	
-	@Size(min=6, max=32)
 	@Column(name="passwordmd5")
 	private String password;
 

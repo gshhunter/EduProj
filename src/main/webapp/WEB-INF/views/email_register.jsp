@@ -97,11 +97,13 @@
                     <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
                         <form:label path="firstname">*名称</form:label>
                         <form:input path="firstname" class="pure-input-1" placeHolder="名称"/>
+                        <form:errors path="firstname" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
                     	<form:label path="lastname">*姓氏</form:label>
                     	<form:input id="lastname" path="lastname" class="pure-input-1" placeHolder="姓氏"/>
+                    	<form:errors path="lastname" cssClass="error" />
                     </div>
                     
                     <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
