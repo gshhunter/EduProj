@@ -2,7 +2,9 @@ package com.malihong.agency;
 
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -18,58 +20,65 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.entity.BachelorCourse;
+import com.malihong.entity.College;
+import com.malihong.entity.DiplomaCourse;
+import com.malihong.entity.FoundationCourse;
 import com.malihong.entity.Request;
+import com.malihong.service.CollegeService;
 import com.malihong.service.StudentRequestService;
 
 @Controller
-@RequestMapping(value = "/1")
+@RequestMapping(value = "/api/v1")
 public class PageResourceController {
 	private static final Logger logger = LoggerFactory.getLogger(PageResourceController.class);
 
 	@Autowired
 	private StudentRequestService reqService;
+	@Autowired
+	private CollegeService collegeService;
 	
-	//开发：学生ID：12345； 中介ID：67890
-	// 学生创建新的request
-	@RequestMapping(value = "/api/2", method = RequestMethod.POST)
-	public @ResponseBody String newRequest(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
-		r = URLDecoder.decode(r, "UTF-8");
-		ObjectMapper mapper = new ObjectMapper();
-		Request re = new Request();		
-		ObjectNode root=mapper.createObjectNode();		
-		root.put("status", 0);
-		//TODO
-		int accountId=12345;
-		try {
-			re = mapper.readValue(r, Request.class);
-			re.setIdAccount(accountId);
-			re.setCreatedTime(new Date());
-			this.reqService.save(re);
-		} catch (Exception e) {
-			//应该把一场状态进一步细分
-			root.put("status", 1);
-		}
-		logger.info(root.toString());
-		return root.toString();
-	}
-
-	// 中介查看待回应的requests（中介未回应，未过期，isCancel状态正常）
-	@RequestMapping(value = "/api/3", method = RequestMethod.GET)
-	public @ResponseBody List<Request> getActiveRequestList(@RequestParam(value="page",required=false) Integer page){
-		logger.info("get");
-		ObjectMapper mapper = new ObjectMapper();
-		//TODO
-		int agentID=67890;
-		List<Request> list=this.reqService.findUnresponsedActiveRequestsByAgentID(agentID);
-		logger.info("get list");
-		return list;
+	//University list
+	//college list
+	@RequestMapping(value = "/collegelistbytype", method = RequestMethod.GET)
+	public @ResponseBody List<College> getUniList(@RequestParam(value="type",required=true) Integer type){
+//		class uni{
+//			public int id;
+//			public String name;
+//			public uni(int id, String name){
+//				this.id=id;
+//				this.name=name;
+//			}
+//		}
+//		ObjectMapper mapper = new ObjectMapper();
+//		ObjectNode root=mapper.createObjectNode();
+//		List<College> list =this.collegeService.findCollegesByType(1);
+//		JsonNode node= mapper.convertValue(list, JsonNode.class);
+//		root.put("result", node);
+		return this.collegeService.findCollegesByType(type);
 	}
 	
-	//学生创建request页面
-	@RequestMapping(value = "/4", method = RequestMethod.GET)
-	public String applyRequestPage() throws JsonProcessingException {
-		return "applyrequest";
+	//Bachelor list by university id
+	//Bachelor info
+	@RequestMapping(value = "bachelorlistbyuniversity", method = RequestMethod.GET)
+	public @ResponseBody List<BachelorCourse> getBachelorList(@RequestParam(value="uid",required=true) Integer uid){
+		return this.collegeService.findBachelorCourseByUniversityId(uid);
+	}
+	
+	//diploma list by college id
+	//diploma info 
+	@RequestMapping(value = "diplomalistbycollege", method = RequestMethod.GET)
+	public @ResponseBody List<DiplomaCourse> getDiplomaList(@RequestParam(value="cid",required=true) Integer cid){
+		return this.collegeService.findDiplomaCourseByCollegeId(cid);
+	}
+	
+	//foundation by college id
+	//foundation info
+	@RequestMapping(value = "foundationlistbycollege", method = RequestMethod.GET)
+	public @ResponseBody List<FoundationCourse> getFoundationList(@RequestParam(value="cid",required=true) Integer cid){
+		return this.collegeService.findFoundationCourseByCollegeId(cid);
 	}
 }

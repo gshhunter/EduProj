@@ -16,5 +16,5 @@ public interface PlanService {
 	
 	public List<Plan> findPlansByAgencyId(int aid);
 	
-	public List<sysOption> generateOptionsByRequest(Request req);
+	public Object[] generateOptionsByRequest(Request req);
 }

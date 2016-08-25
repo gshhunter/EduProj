@@ -31,7 +31,7 @@ public class BachelorCourseDaoImpl implements BachelorCourseDao{
 		query.setParameter(1, did);
 		query.setParameter(2, "%&"+field+"&%");
 		List<BachelorCourse> list = query.getResultList();
-		if (list.isEmpty() == true) {
+		if (list.isEmpty()) {
 			return null;
 		} else {
 			Object[] objs=new Object[3];
@@ -43,6 +43,20 @@ public class BachelorCourseDaoImpl implements BachelorCourseDao{
 			objs[1]=list.get(0).getUniversityId();
 			objs[2]=list.get(0).getUniversityName();
 			return objs;
+		}
+	}
+
+	@Override
+	@Transactional
+	public List<BachelorCourse> findCourseByUniversityId(int uid) {
+		String str = "SELECT bc FROM BachelorCourse bc WHERE bc.universityId = ?1";
+		Query query = em.createQuery(str, BachelorCourse.class);
+		query.setParameter(1, uid);
+		List<BachelorCourse> list = query.getResultList();
+		if (list.isEmpty()) {
+			return null;
+		} else {
+			return list;
 		}
 	}
 

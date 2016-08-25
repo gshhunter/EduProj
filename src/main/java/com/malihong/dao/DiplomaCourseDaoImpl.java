@@ -24,13 +24,28 @@ public class DiplomaCourseDaoImpl implements DiplomaCourseDao {
 	}
 
 	@Override
+	@Transactional
 	public List<DiplomaCourse> findCoursesByField(String field) {
 		String str = "SELECT dc FROM DiplomaCourse dc WHERE dc.field like ?1";
 		Query query = em.createQuery(str, DiplomaCourse.class);
 		String s="%&"+field+"&%";
 		query.setParameter(1, s);
 		List<DiplomaCourse> list = query.getResultList();
-		if (list.isEmpty() == true) {
+		if (list.isEmpty()) {
+			return null;
+		} else {
+			return list;
+		}	
+	}
+
+	@Override
+	@Transactional
+	public List<DiplomaCourse> findCourseByCollegeId(int cid) {
+		String str = "SELECT dc FROM DiplomaCourse dc WHERE dc.collegeId like ?1";
+		Query query = em.createQuery(str, DiplomaCourse.class);
+		query.setParameter(1, cid);
+		List<DiplomaCourse> list = query.getResultList();
+		if (list.isEmpty()) {
 			return null;
 		} else {
 			return list;

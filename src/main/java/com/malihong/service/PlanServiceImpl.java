@@ -68,27 +68,42 @@ public class PlanServiceImpl implements PlanService{
 	}
 
 	@Override
-	public List<sysOption> generateOptionsByRequest(Request req) {
+	public Object[] generateOptionsByRequest(Request req) {
 		int percentage=GaokaoInfo.percentageMark(req.getGaokaoLocation(), req.getGaokaoResult());
 		List<sysOption> sysOptions=new ArrayList<sysOption>();
+		Object[] result=new Object[3];
 		if(percentage<50){
-			
+			result[0]=3; //成绩低于百分之50，联系中介
+			result[1]="成绩低于百分之50，联系中介";
 		}else if(percentage<=85){
 			List<DiplomaCourse> dcs=this.dcDao.findCoursesByField(req.getInterestMajor1());
-			for(DiplomaCourse dc :dcs){
-				sysOption o=new sysOption();
-				o.setDiplomaInfo(dc);
-				Object[] objs=this.bcDao.findCoursesByDiplomaIdAndField(dc.getCourseId(), req.getInterestMajor1());
-				o.bechelors=(HashMap<Integer, String>) objs[0];
-				o.universityId=(int) objs[1];
-				o.universityName=(String) objs[2];
-				sysOptions.add(o);
+			if(dcs!=null){
+				for(DiplomaCourse dc :dcs){
+					Object[] objs=this.bcDao.findCoursesByDiplomaIdAndField(dc.getCourseId(), req.getInterestMajor1());
+					if(objs!=null){
+						sysOption o=new sysOption();
+						o.setDiplomaInfo(dc);
+						o.bechelors=(HashMap<Integer, String>) objs[0];
+						o.universityId=(int) objs[1];
+						o.universityName=(String) objs[2];
+						sysOptions.add(o);
+					}
+				}
+			}
+			if(sysOptions.isEmpty()){
+				result[0]=2; //成绩在百分之50与百分之85之间，但是没有找到合适的留学建议
+				result[1]="成绩在百分之50与百分之85之间，但是没有找到合适的留学建议";
+			}else{
+				result[0]=1; //成绩在百分之50与百分之85之间
+				result[1]="成绩在百分之50与百分之85之间";
+				result[2]=sysOptions;
 			}
 		}else{
-			
+			result[0]=4; //成绩高于百分之85，联系中介
+			result[1]="成绩高于百分之85，联系中介";
 		}
 		
-		return sysOptions;
+		return result;
 	}
 
 }

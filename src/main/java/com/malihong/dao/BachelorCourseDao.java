@@ -6,4 +6,5 @@ import com.malihong.entity.BachelorCourse;
 public interface BachelorCourseDao {
 	public BachelorCourse findCourseById(int cid);
 	public Object[] findCoursesByDiplomaIdAndField(int did, String field);
+	public List<BachelorCourse> findCourseByUniversityId(int uid);
 }

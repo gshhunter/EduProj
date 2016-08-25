@@ -17,13 +17,17 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.malihong.bean.LoginCookieUtil;
 import com.malihong.bean.MailServer;
 import com.malihong.bean.RedisServerPool;
+import com.malihong.entity.Account;
 import com.malihong.entity.Option;
 import com.malihong.entity.Plan;
 import com.malihong.entity.Request;
+import com.malihong.service.AccountService;
+import com.malihong.service.CookieHelper;
 import com.malihong.service.OptionService;
 import com.malihong.service.PlanService;
 import com.malihong.service.PromotionCodeService;
 import com.malihong.service.StudentRequestService;
+import com.malihong.util.Base64Encript;
 
 import redis.clients.jedis.Jedis;
 
@@ -32,19 +36,21 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.mapping.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 @Controller
-@RequestMapping(value = "/req")
 public class StudentRequestController {
 
 	private static final Logger logger = LoggerFactory.getLogger(StudentRequestController.class);
@@ -57,9 +63,10 @@ public class StudentRequestController {
 	private OptionService optionService;
 	@Autowired
 	private PromotionCodeService codeService;
-	
+	@Autowired
+	private AccountService accountService;
 	//....................................
-	@RequestMapping(value = "/api/sysoptions", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/v1/sysoptions", method = RequestMethod.POST)
 	public @ResponseBody String getSysOptions(HttpServletRequest request,@RequestBody String r) {
 		
 		
@@ -68,53 +75,70 @@ public class StudentRequestController {
 	
 	//开发：学生ID：12345； 中介ID：67890
 	// 学生创建新的request
-	@RequestMapping(value = "/api/newrequest", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/v1/newrequest", method = RequestMethod.POST)
 	public @ResponseBody String newRequest(HttpServletRequest request,@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
-		r = URLDecoder.decode(r, "UTF-8");
 		ObjectMapper mapper = new ObjectMapper();
-		Request re = new Request();		
 		ObjectNode root=mapper.createObjectNode();		
 		root.put("status", 0);
 		Integer accountId=LoginCookieUtil.getAccountIdByCookie(request);
-//		if(accountId==null){
-//			root.put("status", 1);
-//			return root.toString();
-//		}
+		if(accountId==null){
+			root.put("status", 1); //未登录
+			return root.toString();
+		}
+		
+		r = URLDecoder.decode(r, "UTF-8");
+		Request re = new Request();		
 		try {
 			re = mapper.readValue(r, Request.class);
 		} catch (Exception e) {
-			//应该把一场状态进一步细分
 			root.put("status", 2); //request解析失败
+			root.put("info", e.getMessage());
 			logger.info(e.getMessage());
-
+			return root.toString();
+		}
+		
+		if(re.getGaokaoLocation()==null||re.getGaokaoResult()==0||re.getInterestMajor1()==null){
+			root.put("status", 3); //request解析失败
+			root.put("info", "非法数据请求");
 			return root.toString();
 		}
 //		if(re.getIdAccount()==0){
-//			root.put("status", 3); //??
+//			root.put("status", 4); //未知用户
 //			return root.toString();
 //		}
-			//re.setIdAccount(accountId);
-			re.setCreatedTime(new Date());
-			
+			re.setIdAccount(accountId);
+			re.setCreatedTime(new Date());		
 			re.setCurrentDegree(2);
 			re.setGaokaoYear(2016);
 			re.setInterestCity("MelBySys");
-			//this.reqService.save(re);
+			this.reqService.save(re);
 			
-//			List<Option> ops=new ArrayList<Option>();
-//			Option op=new Option();
-//			op.setIdOption(123);
-//			ops.add(op);
-//			op.setIdOption(123456);
-//			ops.add(op);
-			
-			JsonNode node= mapper.convertValue(this.planService.generateOptionsByRequest(re), JsonNode.class);
-			root.put("options", node);
+			root.put("requestId", re.getIdRequest());
 			return root.toString();
+	}
+	
+	@RequestMapping(value = "/api/v1/systemplan", method = RequestMethod.GET)
+	public @ResponseBody String getPlanByRequestId(@RequestParam(value="rid",required=true) Integer rid){
+		Request re=this.reqService.findRequestById(rid);
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root=mapper.createObjectNode();		
+		root.put("status", 0);
+		if(re==null){
+			root.put("status", 1); //未找到对应的request
+			return root.toString();
+		}
+		Object[] objs=this.planService.generateOptionsByRequest(re);
+		if((Integer)objs[0]==1){
+			JsonNode node= mapper.convertValue(objs[2], JsonNode.class);
+			root.put("options", node);
+		}
+		root.put("result", (Integer)objs[0]);
+		root.put("info", (String)objs[1]);
+		return root.toString();
 	}
 
 	// 中介查看待回应的requests（中介未回应，未过期，isCancel状态正常）
-	@RequestMapping(value = "/api/getactiverequestlist", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/v1/getactiverequestlist", method = RequestMethod.GET)
 	public @ResponseBody List<Request> getActiveRequestList(@RequestParam(value="page",required=false) Integer page){
 		logger.info("get");
 		ObjectMapper mapper = new ObjectMapper();
@@ -126,7 +150,7 @@ public class StudentRequestController {
 	}
 
 	// 中介为request创建plan
-	@RequestMapping(value = "/api/newplan", method = RequestMethod.POST)
+	@RequestMapping(value = "/api/v1/newplan", method = RequestMethod.POST)
 	public @ResponseBody String newPlan(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");		
 		ObjectMapper mapper = new ObjectMapper();
@@ -161,7 +185,7 @@ public class StudentRequestController {
 	}
 
 	// 学生查看正在进行中的request
-	@RequestMapping(value = "/api/getactiverquest", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/v1/getactiverquest", method = RequestMethod.GET)
 	public @ResponseBody Request getActiveRequest() throws JsonParseException, JsonMappingException, IOException {
 		//TODO
 		int accountId=12345;
@@ -170,7 +194,7 @@ public class StudentRequestController {
 	}
 
 	// 学生查看与request对应的plans
-	@RequestMapping(value = "/api/getplanlist", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/v1/getplanlist", method = RequestMethod.GET)
 	public @ResponseBody List<Plan> getPlanList(@RequestParam(value="requestid") int requestId) throws JsonParseException, JsonMappingException, IOException {
 		logger.info("get");
 		List<Plan> list =this.planService.findPlansByRequestId(requestId);
@@ -178,20 +202,69 @@ public class StudentRequestController {
 	}
 	
 	//检查登陆
-	@RequestMapping(value = "/api/getuserinfo", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/v1/userinfo", method = RequestMethod.GET)
 	public @ResponseBody String getUserInfo(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode root=mapper.createObjectNode();	
 		Integer id=LoginCookieUtil.getAccountIdByCookie(request);
 		if(id==null){
+			root.put("login", "false");
 			root.put("err", "unlogged");
 			return root.toString();
 		}else{
+			root.put("login", "true");
 			root.put("id", id);
 			root.put("email", LoginCookieUtil.getEmailByCookie(request));
 			return root.toString();
 		}
 
+	}
+
+	@RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
+	public @ResponseBody String login(HttpServletResponse response,@RequestBody String r){
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root=mapper.createObjectNode();
+		String email,password;
+		
+		try {
+			r = URLDecoder.decode(r, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			root.put("status", 3); //request解析失败
+			root.put("info", e.getMessage());
+			return root.toString();
+		}
+		try {
+			HashMap userinfo=mapper.readValue(r, HashMap.class);
+			email=(String)userinfo.get("email");
+			password=(String)userinfo.get("password");
+		} catch (Exception e) {
+			root.put("status", 3); //request解析失败
+			root.put("info", e.getMessage());
+			logger.info(e.getMessage());
+			return root.toString();
+		}
+		System.out.println(email);
+		Account a = this.accountService.findUserByEmail(email);
+		if(a==null){
+			root.put("status", 1);
+			root.put("info", "no such user");
+			return root.toString();
+		}else if(!a.getPassword().equals(password)){
+			root.put("status", 2);
+			root.put("info", "incorrect password");
+			return root.toString();
+		}else{
+			root.put("status", 0);
+			root.put("info", "log in");
+			Date currentDate = new Date();
+			long time = currentDate.getTime();
+			String mingwen = a.getIdAccount() + "&" + email + "&" + time;
+			String miwen = Base64Encript.encode(mingwen);
+			CookieHelper.saveCookie("EDUJSESSION", miwen, true, response);
+			return root.toString();
+		}
 	}
 	//学生创建request页面
 	@RequestMapping(value = "/req", method = RequestMethod.GET)
@@ -211,7 +284,10 @@ public class StudentRequestController {
 	
 	//学生查看request页面（可能包括收到的plans）
 	
-	
+	@RequestMapping(value = "/testpage", method = RequestMethod.GET)
+	public String testPage() throws JsonProcessingException {
+		return "testpage";
+	}
 	//For Test
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public @ResponseBody String newtest(HttpServletRequest request,@RequestParam(value="id") int id) throws JsonProcessingException, UnsupportedEncodingException {
