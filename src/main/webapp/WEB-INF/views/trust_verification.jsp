@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
+    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
 
 	<title>学生个人资料信任与验证</title>
     

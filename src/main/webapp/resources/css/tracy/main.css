@@ -27,6 +27,17 @@
             margin-bottom: 50px;
         }
         
+        hr {
+            display: block;
+            margin-top: 0.2em;
+            margin-bottom: 1em;
+            margin-left: auto;
+            margin-right: auto;
+            border: none;
+            height: 1px;
+            background-color: #b3b3b3;
+        }
+        
         .footer {
             margin-top: -30px;
             padding:20px 0px 0px 0px;
@@ -36,6 +47,7 @@
             color:white;
             text-align: center;
         }
+        
         /*footer word style*/
         .labelStyleF1Mcx{
             margin-left:25px;
@@ -63,8 +75,9 @@
             border-width: 1px 1px 0px 1px;
             border-color: #C4C4C4;
             border-style: solid;
-            padding: 12px 20px 12px 20px;
-            margin-top:16px;        
+            padding: 12px 5px 12px 15px;
+            margin-top:16px; 
+            margin-left:16px;  
         }
         /*footer link style*/
         .footerLinkSyMcx a{
@@ -101,7 +114,6 @@
         .testMenuMcx a:active {           
         font-weight: bold;
         font-size: 102%;
-        text-decoration: underline;
         }
         
         
@@ -109,7 +121,7 @@
         /*menu横向左对齐，每个内容之间距离10px*/
         .horizontalMenuMcx li {
             float: left;
-            margin-right: 10px;
+            margin-right: 1px;
         }
         
         /*menu link去掉下划线*/
@@ -187,7 +199,8 @@
             background: white;           
             margin-bottom:10px;
             border: 1px solid #C4C4C4;
-            padding:5px 5px 20px 15px;            
+            padding:12px 5px 20px 15px;    
+            margin-left:16px;        
         }
         
         .creditcardBoxMcx{
@@ -199,4 +212,20 @@
             padding:20px 10px 20px 10px;
             margin:5px 0px 3px 0px;
             
+        }
+        
+        /*hide function*/
+        .hideThisMcx{
+            display: none;
+        }
+        
+        .alignCenterMcx{
+            text-align: center;
+        }
+        .alignRightMcx{
+            text-align: right;
+        }
+        
+        .themeGreenMcx{
+            color:#00796B;
         }

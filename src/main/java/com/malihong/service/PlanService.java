@@ -17,4 +17,16 @@ public interface PlanService {
 	public List<Plan> findPlansByAgencyId(int aid);
 	
 	public List<Option> generateOptionsByRequest(Request req);
+	
+	public List<Plan> findUnprocessedPlanListByPage(int agentId, int pageNum, int listNum);
+	
+	public int countUnprocessedPlan(int agentId);
+	
+	public List<Plan> findProcessedPlanListByPage(int agentId, int pageNum, int listNum);
+	
+	public int countProcessedPlan(int agentId);
+	
+	public List<Plan> findUnprocessedPlanListByAgentId(int agentId);
+	
+	public List<Plan> findProcessedPlanListByAgentId(int agentId);
 }

@@ -1,8 +1,12 @@
 package com.malihong.agency;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -18,12 +22,22 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.bean.AgentCaseBean;
 import com.malihong.bean.BeAgentBean;
 import com.malihong.entity.Account;
+import com.malihong.entity.Option;
+import com.malihong.entity.Plan;
 import com.malihong.entity.Profile;
 import com.malihong.service.AccountService;
 import com.malihong.service.CookieHelper;
+import com.malihong.service.PlanService;
 import com.malihong.util.Base64Encript;
 import com.malihong.util.CountryList;
 
@@ -35,6 +49,9 @@ public class AgentController {
 	
 	@Autowired
 	private AccountService accountService;
+	
+	@Autowired
+	private PlanService planService;
 	
 	@RequestMapping(value="/toBeAgent", method=RequestMethod.GET)
 	public String toBeAgent(Model model, HttpServletRequest request, HttpServletResponse response) {
@@ -180,4 +197,56 @@ public class AgentController {
 			return "agent_apply";
 		}
 	}
+	
+	@RequestMapping(value="/toCaseList", method=RequestMethod.GET)
+	public String toCaseList(Model model, HttpServletRequest request, HttpServletResponse response) {
+		int uid = AccountController.getAccountIdByCookie(request, response);
+		Account account = accountService.findUserById(uid);
+		if (account.getType() != 3) {
+			return "redirect:/account/toBeAgent";
+		}
+		return "caselist-ing";
+	}
+	
+	@RequestMapping(value="/api/getUnprocessedPlan", method=RequestMethod.GET)
+	public @ResponseBody List<AgentCaseBean> getUnprocessedPlan(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		
+//		int accountid = AccountController.getAccountIdByCookie(request, response);
+		
+		int accountid = 32;
+		
+		Account account = accountService.findUserById(accountid);
+		
+		List<Plan> plans = planService.findUnprocessedPlanListByAgentId(accountid);
+
+		Iterator<Plan> iter = plans.iterator();
+		List<AgentCaseBean> caselist = new ArrayList<AgentCaseBean>();
+		while(iter.hasNext()) {
+			Plan plan = (Plan)iter.next();
+			AgentCaseBean casebean = new AgentCaseBean();
+			List<Option> options = plan.getOptions();
+			casebean.setPid(plan.getIdPlan());
+			if (options != null && options.size() > 0) {
+				casebean.setUni1(options.get(0).getUnivercityName());
+				casebean.setUni2(options.get(1).getUnivercityName());
+				casebean.setUni3(options.get(2).getUnivercityName());
+			}
+			casebean.setCreatedTime(plan.getCreatedTime());
+			casebean.setUsername(account.getLastname() + " " + account.getFirstname());
+			caselist.add(casebean);
+		}
+		return caselist;
+	}
+	
+	@RequestMapping(value="/api/countUnprocessedPlan", method=RequestMethod.GET)
+	public @ResponseBody Integer countUnprocessedPlan(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		int accountid = AccountController.getAccountIdByCookie(request, response);
+		
+		int num = planService.countUnprocessedPlan(accountid);
+		
+		return num;
+	}
 }
+
