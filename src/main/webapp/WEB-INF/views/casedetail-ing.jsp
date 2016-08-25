@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html;charset=utf-8"
-	isELIgnored="false"%>
+<%@ page language="java" contentType="text/html;charset=utf-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
@@ -62,7 +61,9 @@
             padding:2px;
             writing-mode: vertical-rl;
         }
-        
+        .is-center{
+        	text-align: center;
+        }
     </style>
 </head>
 
@@ -111,8 +112,8 @@
                 <div class="testMenuMcx horizontalMenuMcx labelTitleStyleMcx">
                     <div class="menuStyleMcx pure-g">
                         <label class="pure-u-2-5"></label>
-                        <label class="pure-u-1-5">Abby 同学的申请
-                            <i class="fa fa-hourglass-half" aria-hidden="true"></i></label>
+                        <label class="pure-u-1-5 is-center">学生申请详情</label>
+                            <!-- <i class="fa fa-hourglass-half" aria-hidden="true"></i> -->
                         <div class="pure-u-2-5"></div>
                     </div>
                 </div>
@@ -148,11 +149,11 @@
                                         <legend class="textStyle">2 学生意愿</legend><br>
                                         <div class="pure-g">
                                             <label class="pure-u-7-24">学 历:</label>
-                                            <label class="pure-u-17-24">高中毕业</label>
+                                            <label class="pure-u-17-24">${degree}</label>
                                             <label class="pure-u-7-24">高考信息:</label>
-                                            <label class="pure-u-17-24">550分／江苏／2016</label>
+                                            <label class="pure-u-17-24">${request.gaokaoResult}／${request.gaokaoLocation}／${request.gaokaoYear}</label>
                                             <label class="pure-u-7-24">意愿方向:</label>
-                                            <label class="pure-u-17-24">商科，会计</label>
+                                            <label class="pure-u-17-24">${request.interestMajor1}</label>
                                             
                                         </div>
                                     </div>
@@ -170,78 +171,99 @@
                                                 <div class="pure-u-7-24">
                                                     <h4>学校一</h4>
                                                     <div class="pure-g">
-                                                        <label class="pure-u-1-5">预科:</label>
-                                                        <label class="pure-u-4-5">Monash College</label>
+                                                        <label class="pure-u-1-5">大学:</label>
+                                                        <label class="pure-u-4-5">${plan.options[0].univercityName}</label>
                                                         <label class="pure-u-1-5">课程:</label>
-                                                        <label class="pure-u-4-5">Diploma of Business</label>
+                                                        <label class="pure-u-4-5">${plan.options[0].bachelorCourseName}</label>
                                                         <label class="pure-u-1-5">学制:</label>
-                                                        <label class="pure-u-4-5">1 学年</label>
+                                                        <label class="pure-u-4-5">${plan.options[0].bachelorSemesters} 学期 （${plan.options[0].bachelorSemesters/2.0} 学年）</label>
                                                         <label class="pure-u-1-5">学费:</label>
-                                                        <label class="pure-u-4-5">10，300澳元每年</label>
+                                                        <label class="pure-u-4-5">${plan.options[0].bachelorTuition} 澳元/每年</label>
+                                                        <label class="pure-u-1-5">预科:</label>
+                                                        <label class="pure-u-4-5">
+                                                        	<c:if test="${plan.options[0].diplomaSemesters > 0 }">是</c:if>
+                                                        	<c:if test="${plan.options[0].diplomaSemesters <= 0 }">否</c:if>
+                                                        </label>
                                                     </div>
                                                     <br>
+                                                    <c:if test="${plan.options[0].diplomaSemesters > 0 }">
                                                     <div class="pure-g">
-                                                        <label class="pure-u-1-5">大学:</label>
-                                                        <label class="pure-u-4-5">Monash University</label>
+                                                        <label class="pure-u-1-5">预科:</label>
+                                                        <label class="pure-u-4-5">${plan.options[0].collegeName}</label>
                                                         <label class="pure-u-1-5">课程:</label>
-                                                        <label class="pure-u-4-5">Bachelor of Business</label>
+                                                        <label class="pure-u-4-5">${plan.options[0].diplomaCourseName}</label>
                                                         <label class="pure-u-1-5">学制:</label>
-                                                        <label class="pure-u-4-5">1 学年</label>
+                                                        <label class="pure-u-4-5">3 学期 （1 学年）</label>
                                                         <label class="pure-u-1-5">学费:</label>
-                                                        <label class="pure-u-4-5">31，000澳元每年</label>
+                                                        <label class="pure-u-4-5">${plan.options[0].diplomaTuition} 澳元/每年</label>
                                                     </div>
+                                                    </c:if>
                                                 </div>
                                                 <div class="pure-u-1-24"></div>
                                                 <!--学校二-->
                                                 <div class="pure-u-7-24">
                                                     <h4>学校二</h4>
                                                     <div class="pure-g">
-                                                        <label class="pure-u-1-5">预科:</label>
-                                                        <label class="pure-u-4-5">Monash College</label>
+                                                        <label class="pure-u-1-5">大学:</label>
+                                                        <label class="pure-u-4-5">${plan.options[1].univercityName}</label>
                                                         <label class="pure-u-1-5">课程:</label>
-                                                        <label class="pure-u-4-5">Diploma of Business</label>
+                                                        <label class="pure-u-4-5">${plan.options[1].bachelorCourseName}</label>
                                                         <label class="pure-u-1-5">学制:</label>
-                                                        <label class="pure-u-4-5">1 学年</label>
+                                                        <label class="pure-u-4-5">${plan.options[1].bachelorSemesters} 学期 （${plan.options[1].bachelorSemesters/2.0} 学年）</label>
                                                         <label class="pure-u-1-5">学费:</label>
-                                                        <label class="pure-u-4-5">10，300澳元每年</label>
+                                                        <label class="pure-u-4-5">${plan.options[1].bachelorTuition} 澳元/每年</label>
+                                                        <label class="pure-u-1-5">预科:</label>
+                                                        <label class="pure-u-4-5">
+                                                        	<c:if test="${plan.options[1].diplomaSemesters > 0 }">是</c:if>
+                                                        	<c:if test="${plan.options[1].diplomaSemesters <= 0 }">否</c:if>
+                                                        </label>
                                                     </div>
                                                     <br>
+                                                    <c:if test="${plan.options[1].diplomaSemesters > 0 }">
                                                     <div class="pure-g">
-                                                        <label class="pure-u-1-5">大学:</label>
-                                                        <label class="pure-u-4-5">Monash University</label>
+                                                        <label class="pure-u-1-5">预科:</label>
+                                                        <label class="pure-u-4-5">${plan.options[1].collegeName}</label>
                                                         <label class="pure-u-1-5">课程:</label>
-                                                        <label class="pure-u-4-5">Bachelor of Business</label>
+                                                        <label class="pure-u-4-5">${plan.options[1].diplomaCourseName}</label>
                                                         <label class="pure-u-1-5">学制:</label>
-                                                        <label class="pure-u-4-5">1 学年</label>
+                                                        <label class="pure-u-4-5">3 学期 （1 学年）</label>
                                                         <label class="pure-u-1-5">学费:</label>
-                                                        <label class="pure-u-4-5">31，000澳元每年</label>
+                                                        <label class="pure-u-4-5">${plan.options[1].diplomaTuition} 澳元/每年</label>
                                                     </div>
+                                                    </c:if>
                                                 </div>
                                                 <div class="pure-u-1-24"></div>
                                                 <!--学校三-->
                                                 <div class="pure-u-7-24">
                                                     <h4>学校三</h4>
                                                     <div class="pure-g">
-                                                        <label class="pure-u-1-5">预科:</label>
-                                                        <label class="pure-u-4-5">Monash College</label>
+                                                        <label class="pure-u-1-5">大学:</label>
+                                                        <label class="pure-u-4-5">${plan.options[2].univercityName}</label>
                                                         <label class="pure-u-1-5">课程:</label>
-                                                        <label class="pure-u-4-5">Diploma of Business</label>
+                                                        <label class="pure-u-4-5">${plan.options[2].bachelorCourseName}</label>
                                                         <label class="pure-u-1-5">学制:</label>
-                                                        <label class="pure-u-4-5">1 学年</label>
+                                                        <label class="pure-u-4-5">${plan.options[2].bachelorSemesters} 学期 （${plan.options[2].bachelorSemesters/2.0} 学年）</label>
                                                         <label class="pure-u-1-5">学费:</label>
-                                                        <label class="pure-u-4-5">10，300澳元每年</label>
+                                                        <label class="pure-u-4-5">${plan.options[2].bachelorTuition} 澳元/每年</label>
+                                                        <label class="pure-u-1-5">预科:</label>
+                                                        <label class="pure-u-4-5">
+                                                        	<c:if test="${plan.options[2].diplomaSemesters > 0 }">是</c:if>
+                                                        	<c:if test="${plan.options[2].diplomaSemesters <= 0 }">否</c:if>
+                                                        </label>
                                                     </div>
                                                     <br>
+                                                    <c:if test="${plan.options[2].diplomaSemesters > 0 }">
                                                     <div class="pure-g">
-                                                        <label class="pure-u-1-5">大学:</label>
-                                                        <label class="pure-u-4-5">Monash University</label>
+                                                        <label class="pure-u-1-5">预科:</label>
+                                                        <label class="pure-u-4-5">${plan.options[2].collegeName}</label>
                                                         <label class="pure-u-1-5">课程:</label>
-                                                        <label class="pure-u-4-5">Bachelor of Business</label>
+                                                        <label class="pure-u-4-5">${plan.options[2].diplomaCourseName}</label>
                                                         <label class="pure-u-1-5">学制:</label>
-                                                        <label class="pure-u-4-5">1 学年</label>
+                                                        <label class="pure-u-4-5">3 学期 （1 学年）</label>
                                                         <label class="pure-u-1-5">学费:</label>
-                                                        <label class="pure-u-4-5">31，000澳元每年</label>
+                                                        <label class="pure-u-4-5">${plan.options[2].diplomaTuition} 澳元/每年</label>
                                                     </div>
+                                                    </c:if>
                                                 </div>
                                             </div>
                                             <br><br>
@@ -249,8 +271,8 @@
                                             <div class="pure-g">
                                                 <div class="pure-u-1-24"></div>
                                                 <div class="pure-u-20-24">
-                                                    <p>申请状态：<span>正在等待学生递交材料</span></p>
-                                                    <p>申请开始时间：<span>2016年7月20日</span></p>
+                                                    <p>申请状态：<span>申请中</span></p>
+                                                    <p>申请开始时间：<span>${plan.createdTime}</span></p>
                                                     <div class="pure-g">
                                                         <label class="pure-u-16-24"></label>
                                                         <a class="pure-u-8-24 pure-button pure-button-primary" href="file:///Users/Chenxue/Documents/EduFont/agent2CaseDetailRefNo.html">附上签证号码并完成申请</a>
