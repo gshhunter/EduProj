@@ -1,5 +1,7 @@
 package com.malihong.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,8 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.malihong.bean.GaokaoInfo;
+import com.malihong.bean.sysOption;
+import com.malihong.dao.BachelorCourseDao;
+import com.malihong.dao.DiplomaCourseDao;
+import com.malihong.dao.FoundationCourseDao;
 import com.malihong.dao.OptionDao;
 import com.malihong.dao.PlanDao;
+import com.malihong.entity.DiplomaCourse;
 import com.malihong.entity.Option;
 import com.malihong.entity.Plan;
 import com.malihong.entity.Request;
@@ -23,6 +31,13 @@ public class PlanServiceImpl implements PlanService{
 	private PlanDao planDao;
 	@Autowired
 	private OptionDao optionDao;
+	@Autowired
+	private BachelorCourseDao bcDao;
+	@Autowired
+	private DiplomaCourseDao dcDao;
+	@Autowired
+	private FoundationCourseDao fcDao;
+	
 	
 	@Override
 	public void add(Plan p) {
@@ -53,8 +68,42 @@ public class PlanServiceImpl implements PlanService{
 	}
 
 	@Override
-	public List<Option> generateOptionsByRequest(Request req) {
-		return null;
+	public Object[] generateOptionsByRequest(Request req) {
+		int percentage=GaokaoInfo.percentageMark(req.getGaokaoLocation(), req.getGaokaoResult());
+		List<sysOption> sysOptions=new ArrayList<sysOption>();
+		Object[] result=new Object[3];
+		if(percentage<50){
+			result[0]=3; //成绩低于百分之50，联系中介
+			result[1]="成绩低于百分之50，联系中介";
+		}else if(percentage<=85){
+			List<DiplomaCourse> dcs=this.dcDao.findCoursesByField(req.getInterestMajor1());
+			if(dcs!=null){
+				for(DiplomaCourse dc :dcs){
+					Object[] objs=this.bcDao.findCoursesByDiplomaIdAndField(dc.getCourseId(), req.getInterestMajor1());
+					if(objs!=null){
+						sysOption o=new sysOption();
+						o.setDiplomaInfo(dc);
+						o.bechelors=(HashMap<Integer, String>) objs[0];
+						o.universityId=(int) objs[1];
+						o.universityName=(String) objs[2];
+						sysOptions.add(o);
+					}
+				}
+			}
+			if(sysOptions.isEmpty()){
+				result[0]=2; //成绩在百分之50与百分之85之间，但是没有找到合适的留学建议
+				result[1]="成绩在百分之50与百分之85之间，但是没有找到合适的留学建议";
+			}else{
+				result[0]=1; //成绩在百分之50与百分之85之间
+				result[1]="成绩在百分之50与百分之85之间";
+				result[2]=sysOptions;
+			}
+		}else{
+			result[0]=4; //成绩高于百分之85，联系中介
+			result[1]="成绩高于百分之85，联系中介";
+		}
+		
+		return result;
 	}
 
 	@Override

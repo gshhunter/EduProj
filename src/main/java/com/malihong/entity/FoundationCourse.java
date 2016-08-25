@@ -26,7 +26,7 @@ public class FoundationCourse implements Serializable {
 	private int collegeId;
 	@Column(name="college_name")
 	private String collegeName;
-	private double tuition;
+	private int tuition;
 	private int semesters;
 	private String field;
 	
@@ -81,11 +81,11 @@ public class FoundationCourse implements Serializable {
 		this.collegeName = collegeName;
 	}
 	
-	public double getTuition() {
+	public int getTuition() {
 		return this.tuition;
 	}
 
-	public void setTuition(double tuition) {
+	public void setTuition(int tuition) {
 		this.tuition = tuition;
 	}
 	

@@ -41,7 +41,7 @@ public class Option implements Serializable {
 	private int foundationSemesters;
 	
 	@Column(name="foundation_tuition")
-	private double foundationTuition;
+	private int foundationTuition;
 	
 	@Column(name="id_foundation_course")
 	private int idFoundationCourse;
@@ -53,7 +53,10 @@ public class Option implements Serializable {
 	private int diplomaSemesters;
 	
 	@Column(name="diploma_tuition")
-	private double diplomaTuition;
+	private int diplomaTuition;
+	
+	@Column(name="diploma_p2_tuition")
+	private int diplomaP2Tuition;
 	
 	@Column(name="id_diploma_course")
 	private int idDiplomaCourse;
@@ -71,7 +74,7 @@ public class Option implements Serializable {
 	private int bachelorSemesters;
 	
 	@Column(name="bachelor_tuition")
-	private double bachelorTuition;
+	private int bachelorTuition;
 	
 	@Column(name="id_bachelor_course")
 	private int idBachelorCourse;
@@ -138,11 +141,11 @@ public class Option implements Serializable {
 		this.foundationSemesters = foundationSemesters;
 	}
 
-	public double getFoundationTuition() {
+	public int getFoundationTuition() {
 		return this.foundationTuition;
 	}
 
-	public void setFoundationTuition(double foundationTuition) {
+	public void setFoundationTuition(int foundationTuition) {
 		this.foundationTuition = foundationTuition;
 	}
 
@@ -170,14 +173,22 @@ public class Option implements Serializable {
 		this.diplomaSemesters = diplomaSemesters;
 	}
 
-	public double getDiplomaTuition() {
+	public int getDiplomaTuition() {
 		return this.diplomaTuition;
 	}
 
-	public void setDiplomaTuition(double diplomaTuition) {
+	public void setDiplomaTuition(int diplomaTuition) {
 		this.diplomaTuition = diplomaTuition;
 	}
 
+	public int getDiplomaP2Tuition() {
+		return this.diplomaP2Tuition;
+	}
+
+	public void setDiplomaP2Tuition(int diplomaP2Tuition) {
+		this.diplomaP2Tuition = diplomaP2Tuition;
+	}
+	
 	public int getIdDiplomaCourse() {
 		return this.idDiplomaCourse;
 	}
@@ -217,11 +228,11 @@ public class Option implements Serializable {
 		this.bachelorSemesters = bachelorSemesters;
 	}
 
-	public double getBachelorTuitionn() {
+	public int getBachelorTuitionn() {
 		return this.bachelorTuition;
 	}
 
-	public void setBachelorTuition(double bachelorTuition) {
+	public void setBachelorTuition(int bachelorTuition) {
 		this.bachelorTuition = bachelorTuition;
 	}
 
