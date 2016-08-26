@@ -1,7 +1,14 @@
 package com.malihong.agency;
 
+import java.net.URLDecoder;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,10 +25,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.malihong.bean.LoginCookieUtil;
+import com.malihong.bean.MailServer;
+import com.malihong.entity.Account;
 import com.malihong.entity.Order;
 import com.malihong.entity.Plan;
 import com.malihong.entity.PromotionCode;
 import com.malihong.entity.Request;
+import com.malihong.service.AccountService;
 import com.malihong.service.OrderService;
 import com.malihong.service.PlanService;
 import com.malihong.service.PromotionCodeService;
@@ -40,48 +51,78 @@ public class PayThenApplyController {
 	private StudentRequestService reqService;
 	@Autowired
 	private OrderService orderService;
-	
+	@Autowired
+	private AccountService accountService;
 	// 验证邀请码
 	@RequestMapping(value = "/api/v1/codevalidation", method = RequestMethod.POST)
-	public @ResponseBody String getCodeValidation(@RequestParam(value="code",required=true) String code,@RequestParam(value="planid",required=true) int pid,@RequestParam(value="type",required=true) int type){
+	public @ResponseBody String getCodeValidation(HttpServletRequest request,@RequestBody String r){
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode root=mapper.createObjectNode();		
 		root.put("status", 0);
-		
+		Integer accountId=LoginCookieUtil.getAccountIdByCookie(request);
+		if(accountId==null){
+			root.put("status", 1); //未登录
+			return root.toString();
+		}	
+		String code;
+		int type, rid;
+		try {
+			r = URLDecoder.decode(r, "UTF-8");
+			HashMap userinfo=mapper.readValue(r, HashMap.class);
+			code=(String)userinfo.get("code");
+			type=(Integer)userinfo.get("type");
+			rid=(Integer)userinfo.get("requestId");
+		} catch (Exception e) {
+			root.put("status", 2); //request解析失败
+			root.put("info", e.getMessage());
+			logger.info(e.getMessage());
+			return root.toString();
+		}
+		//验证邀请码
+		System.out.println(code);
+		System.out.println(String.valueOf(rid));
+		System.out.println(String.valueOf(type));
 		PromotionCode pc=this.codeService.validateCode(type, code);
 		if(pc==null){
-			root.put("status", 1);
-		}else{
-			pc.setStatus(1);
-			Plan plan=this.planService.findPlanById(pid);
-			if(plan==null){
-				root.put("status", 2);
-			}else{
-				plan.setStatus(1);
-				Request req=this.reqService.findRequestById(plan.getIdRequest());
-				if(req==null){
-					root.put("status", 3);
-				}else{
-					//update plan status, request status, create order, update code status
-					this.planService.update(plan);
-
-					req.setIsCancel(2);
-					this.reqService.update(req);
-					
-					Order order=new Order();
-					order.setCreateTime(new Date());
-					order.setStatus(2);
-					order.setIdPlan(plan.getIdPlan());
-					order.setIdAgency(plan.getIdAgency());
-					order.setIdStudent(plan.getIdStudent());
-					this.orderService.add(order);
-					
-					this.codeService.upadte(pc);
-					
-					//想中介发送邮件，提醒尽快联系学生
-				}
-			}
+			root.put("status", 3);
+			root.put("info", "bad code:(");
+			return root.toString();
 		}
+		//寻找中介, 开发使用id： 32
+		root.put("agentId", 32);
+		//创建plan ->planId
+		Plan plan =new Plan();
+		plan.setCreatedTime(new Date());
+		plan.setStatus(4);
+		plan.setIdRequest(rid);
+		plan.setIdStudent(accountId);
+		plan.setIdAgency(32);
+		this.planService.add(plan);
+		int pid=plan.getIdPlan();
+		//create order, update request status, update code status
+		Order order=new Order();
+		order.setCreateTime(new Date());
+		order.setStatus(2);
+		order.setIdPlan(plan.getIdPlan());
+		order.setIdAgency(plan.getIdAgency());
+		order.setIdStudent(plan.getIdStudent());
+		this.orderService.add(order);
+		
+		Request req=this.reqService.findRequestById(plan.getIdRequest());
+		req.setIsCancel(2);
+		this.reqService.update(req);
+		
+		pc.setStatus(1);
+		this.codeService.upadte(pc);		
+		//向中介发送邮件，提醒尽快联系学生
+		String email, title, content;
+		Account agent=this.accountService.findUserById(32);
+		email=agent.getEmail();
+		title="有新的留学申请需要处理";
+		content=agent.getFirstname()+"， 你好！<br><br>";
+		content+="我们推荐了一个新的留学申请给你，请尽快登陆网站处理。<br><br>还没想好名字的网站团队 留";
+		ExecutorService executorService = Executors.newCachedThreadPool();  
+        Future<String> future = executorService.submit(new MailServer(email,title,content));
 		return root.toString();
 	}
 	
