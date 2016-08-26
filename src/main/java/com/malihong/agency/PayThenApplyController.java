@@ -28,7 +28,6 @@ import com.malihong.service.PromotionCodeService;
 import com.malihong.service.StudentRequestService;
 
 @Controller
-@RequestMapping(value = "/apply")
 public class PayThenApplyController {
 
 	private static final Logger logger = LoggerFactory.getLogger(PayThenApplyController.class);
@@ -43,11 +42,12 @@ public class PayThenApplyController {
 	private OrderService orderService;
 	
 	// 验证邀请码
-	@RequestMapping(value = "/api/codevalidation", method = RequestMethod.GET)
+	@RequestMapping(value = "/api/v1/codevalidation", method = RequestMethod.POST)
 	public @ResponseBody String getCodeValidation(@RequestParam(value="code",required=true) String code,@RequestParam(value="planid",required=true) int pid,@RequestParam(value="type",required=true) int type){
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode root=mapper.createObjectNode();		
 		root.put("status", 0);
+		
 		PromotionCode pc=this.codeService.validateCode(type, code);
 		if(pc==null){
 			root.put("status", 1);
@@ -86,20 +86,22 @@ public class PayThenApplyController {
 	}
 	
 	// 返回plan所对应的中介的联系方式->改为向中介发送邮件，提示学生已付款，尽快联系学生
-	@RequestMapping(value = "/api/agentcommunication", method = RequestMethod.GET)
+	// TODO
+	// untapped in v1
+	@RequestMapping(value = "/api/v1/agentcommunication", method = RequestMethod.GET)
 	public @ResponseBody List<Request> getAgentCommunication(@RequestParam(value="planid",required=true) int pid){
 		ObjectMapper mapper = new ObjectMapper();
-		//TODO
 		//checks status(payment)
 		//return agent communication
 		return null;
 	}
 	
 	// 学生确认完结此order
-	@RequestMapping(value = "/api/finalizeorder", method = RequestMethod.GET)
+	// TODO
+	// untapped in v1
+	@RequestMapping(value = "/api/v1/finalizeorder", method = RequestMethod.GET)
 	public @ResponseBody List<Request> finalizeOrder(@RequestParam(value="planid",required=true) int pid){
 		ObjectMapper mapper = new ObjectMapper();
-		//TODO
 		//update plan
 		//update request
 		//update order
@@ -107,6 +109,9 @@ public class PayThenApplyController {
 		return null;
 	}
 	
+	/********************************PAGES**********************************************/
+	// untapped in v1
+	// TODO
 	//价格清单页面
 	@RequestMapping(value = "/price", method = RequestMethod.GET)
 	public String pricePage() throws JsonProcessingException {

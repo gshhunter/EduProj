@@ -65,16 +65,9 @@ public class StudentRequestController {
 	private PromotionCodeService codeService;
 	@Autowired
 	private AccountService accountService;
-	//....................................
-	@RequestMapping(value = "/api/v1/sysoptions", method = RequestMethod.POST)
-	public @ResponseBody String getSysOptions(HttpServletRequest request,@RequestBody String r) {
-		
-		
-		return null;
-	}
-	
-	//开发：学生ID：12345； 中介ID：67890
+
 	// 学生创建新的request
+	// v1 complete: 2016/08/26
 	@RequestMapping(value = "/api/v1/newrequest", method = RequestMethod.POST)
 	public @ResponseBody String newRequest(HttpServletRequest request,@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -117,6 +110,7 @@ public class StudentRequestController {
 			return root.toString();
 	}
 	
+	//
 	@RequestMapping(value = "/api/v1/systemplan", method = RequestMethod.GET)
 	public @ResponseBody String getPlanByRequestId(@RequestParam(value="rid",required=true) Integer rid){
 		Request re=this.reqService.findRequestById(rid);
@@ -138,11 +132,11 @@ public class StudentRequestController {
 	}
 
 	// 中介查看待回应的requests（中介未回应，未过期，isCancel状态正常）
+	// untapped in v1
 	@RequestMapping(value = "/api/v1/getactiverequestlist", method = RequestMethod.GET)
 	public @ResponseBody List<Request> getActiveRequestList(@RequestParam(value="page",required=false) Integer page){
 		logger.info("get");
 		ObjectMapper mapper = new ObjectMapper();
-		//TODO
 		int agentID=67890;
 		List<Request> list=this.reqService.findUnresponsedActiveRequestsByAgentID(agentID);
 		logger.info("get list");
@@ -150,6 +144,7 @@ public class StudentRequestController {
 	}
 
 	// 中介为request创建plan
+	// TODO
 	@RequestMapping(value = "/api/v1/newplan", method = RequestMethod.POST)
 	public @ResponseBody String newPlan(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");		
@@ -185,15 +180,16 @@ public class StudentRequestController {
 	}
 
 	// 学生查看正在进行中的request
+	// untapped in v1
 	@RequestMapping(value = "/api/v1/getactiverquest", method = RequestMethod.GET)
 	public @ResponseBody Request getActiveRequest() throws JsonParseException, JsonMappingException, IOException {
-		//TODO
 		int accountId=12345;
 		Request r=this.reqService.findValidRequestByUserId(accountId);
 		return r;
 	}
 
 	// 学生查看与request对应的plans
+	// untapped in v1
 	@RequestMapping(value = "/api/v1/getplanlist", method = RequestMethod.GET)
 	public @ResponseBody List<Plan> getPlanList(@RequestParam(value="requestid") int requestId) throws JsonParseException, JsonMappingException, IOException {
 		logger.info("get");
@@ -201,7 +197,8 @@ public class StudentRequestController {
 		return list;
 	}
 	
-	//检查登陆
+	// 检查登陆, 返回用户基本信息
+	// v1 complete: 2016/08/26
 	@RequestMapping(value = "/api/v1/userinfo", method = RequestMethod.GET)
 	public @ResponseBody String getUserInfo(HttpServletRequest request) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -220,22 +217,15 @@ public class StudentRequestController {
 
 	}
 
+	// 验证登录
+	// v1 complete: 2016/08/26
 	@RequestMapping(value = "/api/v1/login", method = RequestMethod.POST)
 	public @ResponseBody String login(HttpServletResponse response,@RequestBody String r){
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode root=mapper.createObjectNode();
-		String email,password;
-		
+		String email,password;		
 		try {
 			r = URLDecoder.decode(r, "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			root.put("status", 3); //request解析失败
-			root.put("info", e.getMessage());
-			return root.toString();
-		}
-		try {
 			HashMap userinfo=mapper.readValue(r, HashMap.class);
 			email=(String)userinfo.get("email");
 			password=(String)userinfo.get("password");
@@ -245,14 +235,13 @@ public class StudentRequestController {
 			logger.info(e.getMessage());
 			return root.toString();
 		}
-		System.out.println(email);
 		Account a = this.accountService.findUserByEmail(email);
 		if(a==null){
-			root.put("status", 1);
+			root.put("status", 1); //无此用户
 			root.put("info", "no such user");
 			return root.toString();
 		}else if(!a.getPassword().equals(password)){
-			root.put("status", 2);
+			root.put("status", 2); //密码错误
 			root.put("info", "incorrect password");
 			return root.toString();
 		}else{
@@ -266,6 +255,8 @@ public class StudentRequestController {
 			return root.toString();
 		}
 	}
+	
+	/********************************PAGES**********************************************/
 	//学生创建request页面
 	@RequestMapping(value = "/req", method = RequestMethod.GET)
 	public String applyRequestPage() throws JsonProcessingException {
