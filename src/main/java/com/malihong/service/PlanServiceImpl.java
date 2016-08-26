@@ -106,4 +106,34 @@ public class PlanServiceImpl implements PlanService{
 		return result;
 	}
 
+	@Override
+	public List<Plan> findUnprocessedPlanListByPage(int agentId, int pageNum, int listNum) {
+		return planDao.findUnprocessedPlanListByPage(agentId, pageNum, listNum);
+	}
+
+	@Override
+	public int countUnprocessedPlan(int agentId) {
+		return planDao.countUnprocessedPlan(agentId);
+	}
+
+	@Override
+	public List<Plan> findProcessedPlanListByPage(int agentId, int pageNum, int listNum) {
+		return planDao.findProcessedPlanListByPage(agentId, pageNum, listNum);
+	}
+
+	@Override
+	public int countProcessedPlan(int agentId) {
+		return planDao.countProcessedPlan(agentId);
+	}
+
+	@Override
+	public List<Plan> findUnprocessedPlanListByAgentId(int agentId) {
+		return planDao.findUnprocessedPlanListByAgentId(agentId);
+	}
+
+	@Override
+	public List<Plan> findProcessedPlanListByAgentId(int agentId) {
+		return planDao.findProcessedPlanListByAgentId(agentId);
+	}
+
 }

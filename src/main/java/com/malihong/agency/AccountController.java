@@ -680,7 +680,7 @@ public class AccountController {
 	}
 	
 	//从Cookie获取用户账号Id
-	public int getAccountIdByCookie(HttpServletRequest request, HttpServletResponse response) {
+	public static int getAccountIdByCookie(HttpServletRequest request, HttpServletResponse response) {
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 		String mingwen = Base64Encript.decode(miwen);
 		String[] array = mingwen.split("&");
@@ -689,7 +689,7 @@ public class AccountController {
 	}
 	
 	//从Cookie获取用户邮箱
-	public String getEmailByCookie(HttpServletRequest request, HttpServletResponse response) {
+	public static String getEmailByCookie(HttpServletRequest request, HttpServletResponse response) {
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 		String mingwen = Base64Encript.decode(miwen);
 		String[] array = mingwen.split("&");

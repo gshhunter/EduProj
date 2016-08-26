@@ -1,8 +1,6 @@
 package com.malihong.service;
 
 import java.util.List;
-
-import com.malihong.bean.sysOption;
 import com.malihong.entity.Plan;
 import com.malihong.entity.Request;
 
@@ -16,5 +14,18 @@ public interface PlanService {
 	
 	public List<Plan> findPlansByAgencyId(int aid);
 	
+	public List<Plan> findUnprocessedPlanListByPage(int agentId, int pageNum, int listNum);
+	
+	public int countUnprocessedPlan(int agentId);
+	
+	public List<Plan> findProcessedPlanListByPage(int agentId, int pageNum, int listNum);
+	
+	public int countProcessedPlan(int agentId);
+	
+	public List<Plan> findUnprocessedPlanListByAgentId(int agentId);
+	
+	public List<Plan> findProcessedPlanListByAgentId(int agentId);
+
 	public Object[] generateOptionsByRequest(Request req);
+
 }

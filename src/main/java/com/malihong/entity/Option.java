@@ -2,7 +2,6 @@ package com.malihong.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 
 
 /**
@@ -82,19 +81,16 @@ public class Option implements Serializable {
 	@Column(name="bachelor_course_name")
 	private String bachelorCourseName;
 
-	public Option() {
-	}
-
 	public int getIdOption() {
-		return this.idOption;
+		return idOption;
 	}
 
 	public void setIdOption(int idOption) {
 		this.idOption = idOption;
 	}
-	
+
 	public int getIdPlan() {
-		return this.idPlan;
+		return idPlan;
 	}
 
 	public void setIdPlan(int idPlan) {
@@ -102,15 +98,15 @@ public class Option implements Serializable {
 	}
 
 	public int getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	
+
 	public String getAdvice() {
-		return this.advice;
+		return advice;
 	}
 
 	public void setAdvice(String advice) {
@@ -118,7 +114,7 @@ public class Option implements Serializable {
 	}
 
 	public int getIdCollege() {
-		return this.idCollege;
+		return idCollege;
 	}
 
 	public void setIdCollege(int idCollege) {
@@ -126,7 +122,7 @@ public class Option implements Serializable {
 	}
 
 	public String getCollegeName() {
-		return this.collegeName;
+		return collegeName;
 	}
 
 	public void setCollegeName(String collegeName) {
@@ -134,7 +130,7 @@ public class Option implements Serializable {
 	}
 
 	public int getFoundationSemesters() {
-		return this.foundationSemesters;
+		return foundationSemesters;
 	}
 
 	public void setFoundationSemesters(int foundationSemesters) {
@@ -142,7 +138,7 @@ public class Option implements Serializable {
 	}
 
 	public int getFoundationTuition() {
-		return this.foundationTuition;
+		return foundationTuition;
 	}
 
 	public void setFoundationTuition(int foundationTuition) {
@@ -150,7 +146,7 @@ public class Option implements Serializable {
 	}
 
 	public int getIdFoundationCourse() {
-		return this.idFoundationCourse;
+		return idFoundationCourse;
 	}
 
 	public void setIdFoundationCourse(int idFoundationCourse) {
@@ -158,7 +154,7 @@ public class Option implements Serializable {
 	}
 
 	public String getFoundationCourseName() {
-		return this.foundationCourseName;
+		return foundationCourseName;
 	}
 
 	public void setFoundationCourseName(String foundationCourseName) {
@@ -166,7 +162,7 @@ public class Option implements Serializable {
 	}
 
 	public int getDiplomaSemesters() {
-		return this.diplomaSemesters;
+		return diplomaSemesters;
 	}
 
 	public void setDiplomaSemesters(int diplomaSemesters) {
@@ -174,7 +170,7 @@ public class Option implements Serializable {
 	}
 
 	public int getDiplomaTuition() {
-		return this.diplomaTuition;
+		return diplomaTuition;
 	}
 
 	public void setDiplomaTuition(int diplomaTuition) {
@@ -182,15 +178,15 @@ public class Option implements Serializable {
 	}
 
 	public int getDiplomaP2Tuition() {
-		return this.diplomaP2Tuition;
+		return diplomaP2Tuition;
 	}
 
 	public void setDiplomaP2Tuition(int diplomaP2Tuition) {
 		this.diplomaP2Tuition = diplomaP2Tuition;
 	}
-	
+
 	public int getIdDiplomaCourse() {
-		return this.idDiplomaCourse;
+		return idDiplomaCourse;
 	}
 
 	public void setIdDiplomaCourse(int idDiplomaCourse) {
@@ -198,14 +194,15 @@ public class Option implements Serializable {
 	}
 
 	public String getDiplomaCourseName() {
-		return this.diplomaCourseName;
+		return diplomaCourseName;
 	}
 
 	public void setDiplomaCourseName(String diplomaCourseName) {
 		this.diplomaCourseName = diplomaCourseName;
 	}
+
 	public int getIdUniversity() {
-		return this.idUniversity;
+		return idUniversity;
 	}
 
 	public void setIdUniversity(int idUniversity) {
@@ -213,7 +210,7 @@ public class Option implements Serializable {
 	}
 
 	public String getUnivercityName() {
-		return this.univercityName;
+		return univercityName;
 	}
 
 	public void setUnivercityName(String univercityName) {
@@ -221,15 +218,15 @@ public class Option implements Serializable {
 	}
 
 	public int getBachelorSemesters() {
-		return this.bachelorSemesters;
+		return bachelorSemesters;
 	}
 
 	public void setBachelorSemesters(int bachelorSemesters) {
 		this.bachelorSemesters = bachelorSemesters;
 	}
 
-	public int getBachelorTuitionn() {
-		return this.bachelorTuition;
+	public int getBachelorTuition() {
+		return bachelorTuition;
 	}
 
 	public void setBachelorTuition(int bachelorTuition) {
@@ -237,7 +234,7 @@ public class Option implements Serializable {
 	}
 
 	public int getIdBachelorCourse() {
-		return this.idBachelorCourse;
+		return idBachelorCourse;
 	}
 
 	public void setIdBachelorCourse(int idBachelorCourse) {
@@ -245,11 +242,12 @@ public class Option implements Serializable {
 	}
 
 	public String getBachelorCourseName() {
-		return this.bachelorCourseName;
+		return bachelorCourseName;
 	}
 
 	public void setBachelorCourseName(String bachelorCourseName) {
 		this.bachelorCourseName = bachelorCourseName;
 	}
 
+	
 }
