@@ -78,10 +78,16 @@ public class PayThenApplyController {
 			logger.info(e.getMessage());
 			return root.toString();
 		}
+		Request req=this.reqService.findRequestById(rid);
+		if(req==null){
+			root.put("status", 4); //request不存在
+			root.put("info", "no such request");
+			return root.toString();
+		}
 		//验证邀请码
-		System.out.println(code);
-		System.out.println(String.valueOf(rid));
-		System.out.println(String.valueOf(type));
+		//System.out.println(code);
+		//System.out.println(String.valueOf(rid));
+		//System.out.println(String.valueOf(type));
 		PromotionCode pc=this.codeService.validateCode(type, code);
 		if(pc==null){
 			root.put("status", 3);
@@ -108,7 +114,6 @@ public class PayThenApplyController {
 		order.setIdStudent(plan.getIdStudent());
 		this.orderService.add(order);
 		
-		Request req=this.reqService.findRequestById(plan.getIdRequest());
 		req.setIsCancel(2);
 		this.reqService.update(req);
 		
