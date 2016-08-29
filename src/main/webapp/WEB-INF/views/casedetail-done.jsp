@@ -106,6 +106,7 @@
             <div class="pure-u-4-24"></div>
             <!--垂直菜单-->
             
+            
             <div class="pure-u-16-24">
                 <div class="testMenuMcx horizontalMenuMcx labelTitleStyleMcx">
                     <div class="menuStyleMcx pure-g">
@@ -283,12 +284,12 @@
                                             <div class="pure-g">
                                                 <div class="pure-u-1-24"></div>
                                                 <div class="pure-u-20-24">
-                                                    <p>申请状态：<span>申请中</span></p>
+                                                    <p>申请状态：<span>完成申请</span></p>
                                                     <p>申请开始时间：<span>${plan.createdTime}</span></p>
-                                                    <div class="pure-g">
+                                                    <!-- <div class="pure-g">
                                                         <label class="pure-u-16-24"></label>
                                                         <a class="pure-u-8-24 pure-button pure-button-primary" href="file:///Users/Chenxue/Documents/EduFont/agent2CaseDetailRefNo.html">附上签证号码并完成申请</a>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                             </div>
                                         </div>

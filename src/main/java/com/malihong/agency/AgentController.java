@@ -1,6 +1,7 @@
 package com.malihong.agency;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -203,7 +204,7 @@ public class AgentController {
 		int uid = AccountController.getAccountIdByCookie(request, response);
 		Account account = accountService.findUserById(uid);
 		if (account.getType() != 3) {
-			return "redirect:/account/toBeAgent";
+			return "redirect:/agent/toBeAgent";
 		}
 		return "caselist-ing";
 	}
@@ -212,9 +213,7 @@ public class AgentController {
 	public @ResponseBody List<AgentCaseBean> getUnprocessedPlan(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		
-//		int accountid = AccountController.getAccountIdByCookie(request, response);
-		
-		int accountid = 32;
+		int accountid = AccountController.getAccountIdByCookie(request, response);
 		
 		Account account = accountService.findUserById(accountid);
 		
@@ -232,7 +231,46 @@ public class AgentController {
 				casebean.setUni2(options.get(1).getUnivercityName());
 				casebean.setUni3(options.get(2).getUnivercityName());
 			}
-			casebean.setCreatedTime(plan.getCreatedTime());
+			
+			Date created = plan.getCreatedTime();
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String date = df.format(created);
+			casebean.setCreatedTime(date);
+			
+			casebean.setUsername(account.getLastname() + " " + account.getFirstname());
+			caselist.add(casebean);
+		}
+		return caselist;
+	}
+	
+	@RequestMapping(value="/api/getProcessedPlan", method=RequestMethod.GET)
+	public @ResponseBody List<AgentCaseBean> getProcessedPlan(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		int accountid = AccountController.getAccountIdByCookie(request, response);
+		
+		Account account = accountService.findUserById(accountid);
+		
+		List<Plan> plans = planService.findProcessedPlanListByAgentId(accountid);
+
+		Iterator<Plan> iter = plans.iterator();
+		List<AgentCaseBean> caselist = new ArrayList<AgentCaseBean>();
+		while(iter.hasNext()) {
+			Plan plan = (Plan)iter.next();
+			AgentCaseBean casebean = new AgentCaseBean();
+			List<Option> options = plan.getOptions();
+			casebean.setPid(plan.getIdPlan());
+			if (options != null && options.size() > 0) {
+				casebean.setUni1(options.get(0).getUnivercityName());
+				casebean.setUni2(options.get(1).getUnivercityName());
+				casebean.setUni3(options.get(2).getUnivercityName());
+			}
+			
+			Date created = plan.getCreatedTime();
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			String date = df.format(created);
+			casebean.setCreatedTime(date);
+			
 			casebean.setUsername(account.getLastname() + " " + account.getFirstname());
 			caselist.add(casebean);
 		}
@@ -248,5 +286,16 @@ public class AgentController {
 		
 		return num;
 	}
+	
+	@RequestMapping(value="/toCaseList-done", method=RequestMethod.GET)
+	public String toCaseListDone(Model model, HttpServletRequest request, HttpServletResponse response) {
+		int uid = AccountController.getAccountIdByCookie(request, response);
+		Account account = accountService.findUserById(uid);
+		if (account.getType() != 3) {
+			return "redirect:/agent/toBeAgent";
+		}
+		return "caselist-done";
+	}
+	
 }
 

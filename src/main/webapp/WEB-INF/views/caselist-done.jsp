@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
     <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
 
-<title>中介工作列表当前申请</title>
+<title>中介工作列表-已完成申请</title>
 
 
 <style>
@@ -86,9 +86,9 @@ hr {
 					<li class="menuItemSelectedMcx"><a href="#"
 						style="color: #f2f2f2; border-bottom: 3px solid #f2f2f2; padding-bottom: 7px;">工作列表</a></li>
 					<li><a
-						href="file:///Users/Chenxue/Documents/EduFont/agentProfile2Edit.html">个人资料</a></li>
+						href="#">个人资料</a></li>
 					<li><a
-						href="file:///Users/Chenxue/Documents/EduFont/agentAcc1MsgSetting.html">账号管理</a></li>
+						href="#">账号管理</a></li>
 				</ul>
 			</div>
 		</div>
@@ -100,12 +100,12 @@ hr {
 			<div
 				class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx ">
 				<ul>
-					<li class="menuItemSelectedMcx" style="color: black !important;"><i
-						class="fa fa-caret-right" aria-hidden="true"></i><a href="#">处理中的申请</a></li>
-					<li><a style="font-size: 95%;"
-						href="file:///Users/Chenxue/Documents/EduFont/agent1CaseListPre2.html">未给出方案的申请</a></li>
 					<li><a
-						href="file:///Users/Chenxue/Documents/EduFont/agent1CaseListPast3.html">已完成的申请</a></li>
+						href="#">处理中的申请</a></li>
+					<li><a style="font-size: 95%;"
+						href="#">未给出方案的申请</a></li>
+					<li class="menuItemSelectedMcx" style="color: black !important;"><i
+					class="fa fa-caret-right" aria-hidden="true"></i><a href="#">已完成的申请</a></li>
 				</ul>
 			</div>
 			<!--垂直菜单-->
@@ -160,7 +160,7 @@ hr {
 <!-- <script type="text/javascript" src="<c:url value="https://cdn.datatables.net/plug-ins/1.10.12/sorting/chinese-string.js" />"></script> -->
 <script type="text/javascript">
 	$(document).ready(function(){
-		$.get('http://localhost:8080/agency/agent/api/getUnprocessedPlan', function(data){
+		$.get('http://localhost:8080/agency/agent/api/getProcessedPlan', function(data){
 			var table = $("#tableid").DataTable({
 				"data": data,
 	            "columns": [{"mData":"username"},
