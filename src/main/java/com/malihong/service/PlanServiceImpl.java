@@ -83,7 +83,7 @@ public class PlanServiceImpl implements PlanService{
 					if(objs!=null){
 						sysOption o=new sysOption();
 						o.setDiplomaInfo(dc);
-						o.bechelors=(HashMap<Integer, String>) objs[0];
+						o.bachelors=(HashMap<Integer, String>) objs[0];
 						o.universityId=(int) objs[1];
 						o.universityName=(String) objs[2];
 						sysOptions.add(o);

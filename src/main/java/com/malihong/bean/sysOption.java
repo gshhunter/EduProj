@@ -24,7 +24,7 @@ public class sysOption {
 	
 	public int universityId;
 	public String universityName;
-	public HashMap<Integer,String> bechelors;
+	public HashMap<Integer,String> bachelors;
 	
 	public String advice;
 	

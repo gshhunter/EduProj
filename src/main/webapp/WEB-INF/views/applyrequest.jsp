@@ -2,61 +2,89 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html lang="zh">
 
 <head>
 <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<link rel="stylesheet"
-			href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-			<link rel="stylesheet"
-				href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+<link rel="stylesheet"
+	href="http://edu.comeon.today/public/resources/pure.css">
+<link rel="stylesheet"
+	href="http://edu.comeon.today/public/css/side-menu.css">
+<link rel="stylesheet"
+	href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="http://edu.comeon.today/public/resources/grids-responsive.css">
+<link rel="stylesheet"
+	href="http://edu.comeon.today/public/css/main.css">
 
-				<script type="text/javascript"
-					src="<c:url value="/resources/js/lib/jquery.js" />"></script>
-				<script type="text/javascript">
-					$("p").click(function() {
-						$(this).hide();
-					});
-				</script>
+<script src="http://edu.comeon.today/public/resources/jquery.js"></script>
+<script src="http://edu.comeon.today/public/resources/jquery.cookie.js"></script>
+<script src="http://edu.comeon.today/public/resources/layer/layer.js"></script>
+<title>填写留学意愿</title>
 
-				<title>###</title>
-
-				<style>
-html, body {
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	background-color: #EEEEEE;
+<style>
+.backBox {
+	margin-top: 20px;
+	border: 2px dashed grey;
+	margin: 20px 15px 20px 0px;
 }
 
-.wrap {
-	height: auto;
-	min-height: 100%;
-	position: relative;
+.extrapadding1 {
+	padding-bottom: 36px;
+	padding-left: 6%;
+	padding-right: 6%;
 }
 
-.header {
-	background-color: #1464F6;
-	color: #FFFFFF;
-	height: 70px;
-	vertical-align: middle;
+.extrapadding2 {
+	padding-left: 2%;
+	padding-right: 2%;
 }
 
-.content {
-	padding: 10px;
-	padding-bottom: 50px;
+.legendStyle {
+	font-size: 110%;
+	font-weight: bold;
 }
 
-.footer {
-	margin-top: -30px;
-	width: 100%;
-	height: 30px;
-	background: #6cf;
+.paddingForm {
+	padding: 20px 5px 5px 20px;
+}
+
+.btnA {
+	float: right;
+	text-align: right;
+	text-decoration: none;
+	margin-right: 20px;
+}
+
+.boxBg {
+	background: #00ACC1;
 	text-align: center;
+	margin: 4px;
+	border-radius: 2px;
+}
+
+.boxBg:hover {
+	background: #FBC02D;
+}
+
+label {
+	padding: 5px 8px 5px 8px;
+}
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+.bannercolor {
+	background: #C8E6C9;
 }
 </style>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>	-->
+
 </head>
 
 <body>
@@ -64,212 +92,346 @@ html, body {
 		<div class="header">
 			<div class="pure-g">
 				<div class="pure-u-1-24"></div>
-				<div class="pure-u-10-24">
-					<h1>Malimalihong</h1>
+				<div class="pure-u-16-24" style="text-align: left;">
+					<a class="webTitleh1FontMcx" href="">Malimalihong</a>
+				</div>
+
+				<div
+					class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
+					<ul class="menuStyleMcx headerLinkStyleMcx">
+						<li><a href="#">登录</a></li>
+						<li><a href="#">注册</a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
-		<div class="pure-g content" style="padding-top: 20px">
-			<div class="pure-u-1-5"></div>
-			<form class="pure-u-3-5 pure-form pure-form-aligned">
-				<fieldset>
-					<legend>学术成绩</legend>
-					<label for="currentDegree">我现在：</label> 
-					<select id="currentDegree">
-						<option value="middleThree">正在读高三</option>
-						<option value="afterMiddle">刚刚高考完</option>
-						<option value="UnivercityOne">正在读大一</option>
-					</select>
-					<br/> 
-					<label for="gaokaoResult">我的高考成绩大约是总分的百分之：</label> 
-					<select id="gaokaoResult">
-							<option value="40">50以下</option>
-							<option value="50">50~60</option>
-							<option value="60">60~70</option>
-							<option value="70">70~80</option>
-							<option value="80">80~90</option>
-							<option value="90">90以上</option>
-					</select>
-				</fieldset>
-				<fieldset>
-					<legend>兴趣</legend>
-					<label for="interestCity">我感兴趣的城市：</label><br/> 
-					<input type="radio" name="interestCity" value="Melbourne" checked>墨尔本<br/> 
-					<input type="radio" name="interestCity" value="Sydney"> 悉尼<br/> 
-					<input type="radio" name="interestCity" value="other"> 其他<br/> 
-					<label for="interestMajor">我感兴趣的专业方向：</label><br/> 
-					<input type="checkbox" name="interestMajor" value="accounting" />会计类<br/>
-					<input type="checkbox" name="interestMajor" value="IT" />IT类<br/>
-					<input type="checkbox" name="interestMajor" value="other" />其他<br/>
-				</fieldset>
-				<fieldset>
-					<legend>雅思成绩</legend>
-					<label for="overallScore">总分：</label> 
-					<select id="overallScore">
-						<option value="4.0">4分及以下</option>
-						<option value="4.5">4.5</option>
-						<option value="5.0">5</option>
-						<option value="5.5">5.5</option>
-						<option value="6.0">6</option>
-						<option value="6.5">6.5</option>
-						<option value="7.0">7</option>
-						<option value="7.5">7.5</option>
-						<option value="8.0">8分及以上</option>
-					</select>
-					<br/> 
-					<label for="listeningScore">听力：</label> 
-					<select id="listeningScore">
-							<option value="4.0">4分及以下</option>
-							<option value="4.5">4.5</option>
-							<option value="5.0">5</option>
-							<option value="5.5">5.5</option>
-							<option value="6.0">6</option>
-							<option value="6.5">6.5</option>
-							<option value="7.0">7</option>
-							<option value="7.5">7.5</option>
-							<option value="8.0">8分及以上</option>
-					</select> 
-					<label for="speakingScore">口语：</label> 
-					<select id="speakingScore">
-							<option value="4.0">4分及以下</option>
-							<option value="4.5">4.5</option>
-							<option value="5.0">5</option>
-							<option value="5.5">5.5</option>
-							<option value="6.0">6</option>
-							<option value="6.5">6.5</option>
-							<option value="7.0">7</option>
-							<option value="7.5">7.5</option>
-							<option value="8.0">8分及以上</option>
-					</select> 
-					<label for="readingScore">阅读：</label> 
-					<select id="readingScore">
-							<option value="4.0">4分及以下</option>
-							<option value="4.5">4.5</option>
-							<option value="5.0">5</option>
-							<option value="5.5">5.5</option>
-							<option value="6.0">6</option>
-							<option value="6.5">6.5</option>
-							<option value="7.0">7</option>
-							<option value="7.5">7.5</option>
-							<option value="8.0">8分及以上</option>
-					</select> 
-					<label for="writingScore">写作：</label> 
-					<select id="writingScore">
-							<option value="4.0">4分及以下</option>
-							<option value="4.5">4.5</option>
-							<option value="5.0">5</option>
-							<option value="5.5">5.5</option>
-							<option value="6.0">6</option>
-							<option value="6.5">6.5</option>
-							<option value="7.0">7</option>
-							<option value="7.5">7.5</option>
-							<option value="8.0">8分及以上</option>
-					</select>
-				</fieldset>
-				<button type="submit" class="pure-button pure-button-primary">提交申请</button>
-				<span id="errorinfo"></span>
-			</form>
-			<div class="pure-u-1-5"></div>
+		<!--错误信息提示占位-->
+		<div id="blank" class="infoBlankMcx"></div>
+		<br>
+		<h1 class="alignCenterMcx">简单两步，找到最适合你的学校和专业</h1>
+		<div class="pure-g bannercolor">
+			<div class="pure-u-5-24"></div>
+			<div class="pure-u-4-24 backBox extrapadding1">
+				<form class="pure-form pure-form-stacked paddingForm">
+					<fieldset>
+						<label class="legendStyle">1.填写我的高考成绩</label> <label
+							for="gkprovince">高考省份</label> <select id="province">
+							<option value="" style="color: grey">选择省份</option>
+							<option value="Anhui">安徽</option>          
+							<option value="Beijing">北京</option>             
+							<option value="Chongqing">重庆</option>             
+							<option value="Fujian">福建</option>             
+							<option value="Gansu">甘肃</option>             
+							<option value="Guangxi">广西</option>             
+							<option value="Guangdong">广东</option>             
+							<option value="Guizhou">贵州</option>             
+							<option value="Hainan">海南</option>             
+							<option value="Hebei">河北</option>             
+							<option value="Heilongjiang">黑龙江</option>             
+							<option value="Henan">河南</option>             
+							<option value="Hubei">湖北</option>             
+							<option value="Hunan">湖南</option>             
+							<option value="Inner Mongolia">内蒙古</option>             
+							<option value="Jiangsu">江苏</option>             
+							<option value="Jiangxi">江西</option>             
+							<option value="Jilin">吉林</option>             
+							<option value="Liaoning">辽宁</option>             
+							<option value="Ningxia">宁夏</option>             
+							<option value="Qinghai">青海</option>             
+							<option value="Shandong">山东</option>             
+							<option value="Shanghai">上海</option>             
+							<option value="Shanxi">山西</option>             
+							<option value="Shaanxi">陕西</option>             
+							<option value="Sichuan">四川</option>             
+							<option value="Tianjin">天津</option>             
+							<option value="Tibet">西藏</option>             
+							<option value="Xinjiang">新疆</option>             
+							<option value="Yunnan">云南</option>             
+							<option value="Zhejiang">浙江</option>
+						</select> <br> <label for="gkscore">高考成绩:</label> <input id="score"
+							placeholder="高考分数"> <br>
+						<!--<a class="pure-button btnA pure-button-primary" id="showzy" >下一项</a>-->
+					</fieldset>
+				</form>
+			</div>
+
+			<div id="zy" class="pure-u-6-24 backBox extrapadding2">
+				<form class="pure-form pure-form-stacked paddingForm">
+					<fieldset>
+						<label class="legendStyle alignCenterMcx">2.选一个我喜欢的方向</label> <br>
+						<div class="pure-g" id="major">
+							<div class="boxBg pure-u-7-24" value="Business">
+								<a><label><i class="fa fa-line-chart"
+										aria-hidden="true"></i> 商科</label></a>
+							</div>
+							<div class="boxBg pure-u-7-24" value="IT">
+								<a value="it"><label><i class="fa fa-laptop"
+										aria-hidden="true"></i> IT</label></a>
+							</div>
+							<div class="boxBg pure-u-7-24" value="Engineering">
+								<a><label><i class="fa fa-cogs" aria-hidden="true"></i>
+										工程</label></a>
+							</div>
+							<div class="boxBg pure-u-7-24" value="Education">
+								<a><label><i class="fa fa-book" aria-hidden="true"></i>
+										教育</label></a>
+							</div>
+
+							<div class="boxBg pure-u-7-24" value="Design">
+								<a><label><i class="fa fa-paint-brush"
+										aria-hidden="true"></i> 设计</label></a>
+							</div>
+							<div class="boxBg pure-u-7-24" value="Arts">
+								<a value="aaa"><label><i
+										class="fa fa-universal-access" aria-hidden="true"></i> 人文</label></a>
+							</div>
+							<div class="boxBg pure-u-7-24" value="Science">
+								<a><label><i class="fa fa-flask" aria-hidden="true"></i>
+										科学</label></a>
+							</div>
+							<div class="boxBg pure-u-7-24" value="Law">
+								<a><label><i class="fa fa-gavel" aria-hidden="true"></i>法律</label></a>
+							</div>
+							<div class="boxBg pure-u-7-24" value="Medicine">
+								<a><label><i class="fa fa-heartbeat"
+										aria-hidden="true"></i>医学</label></a>
+							</div>
+						</div>
+						<br>
+						<br>
+						<br>
+						<br>
+					</fieldset>
+				</form>
+			</div>
+			<div class="pure-u-4-24"></div>
 		</div>
-	</div>
-	<div class="footer">Malimaligong.com ®</div>
-
-	<script type="text/javascript">
-		$(document).ready(function() {
+		<br>
+		<div class="pure-g">
+			<div class="pure-u-10-24"></div>
+			<div class="pure-u-4-24 paddingForm alignCenterMcx">
+				<a href="" id="sendRequest" class="btnMcx">查看结果</a>
+			</div>
+			<div class="pure-u-9-24"></div>
+		</div>
+		<script type="text/javascript">
 			var data = new Object();
+			//获取感兴趣的专业的方法	
+			$('#major div').click(function(e) {
+				data.interestMajor1 = $(e.currentTarget).attr('value');
+				console.log(data.interestMajor1);
+				$(e.currentTarget).css({
+					"background" : "#FBC02D",
+					"color" : "484848"
+				});
+				$('#major div').not($(e.currentTarget)).css({
+					"background" : "#00ACC1"
+				});
+				// $(e.currentTarget).append('<i class="fa fa-check" aria-hidden="true"></i>'); 
+			});
+			//获取省份
+			$('select').click(function() {
+				var optionSelected = $(this).find("option:selected");
+				data.gaokaoLocation = optionSelected.attr('value');
+			});
+			//获取高考分数
+			$('#score').blur(function() {
+				data.gaokaoResult = $('#score').val();
+				console.log(data.gaokaoResult);
+			});
+			$(document)
+					.ready(
+							function() { //判断是否登录
+								$("#sendRequest")
+										.click(
+												function(e) {
+													if (data.gaokaoLocation != null
+															&& data.gaokaoLocation != "") {
+														if (data.gaokaoResult != null) {
+															if (data.interestMajor1 != null) {
+																console
+																		.log('输入完成');
+																crossDomain(
+																		"GET",
+																		'http://edu.comeon.today/api/v1/userinfo',
+																		null,
+																		function(
+																				returnUserInfo) {
+																			console
+																					.log(returnUserInfo);
+																			if (returnUserInfo.login == 'true') {
+																				var stdRequest = JSON
+																						.stringify(data);
+																				console
+																						.log(
+																								'logined, print request',
+																								stdRequest);
+																				crossDomain(
+																						"POST",
+																						'http://edu.comeon.today/api/v1/newrequest',
+																						stdRequest,
+																						sendReq);
+																			} else {
+																				console
+																						.log('not login');
+																				//弹出登录窗口
+																				layer
+																						.open({
+																							type : 1,
+																							skin : 'layui-layer-rim', //加上边框
+																							area : [
+																									'420px',
+																									'240px' ], //宽高
+																							title : '登 录',
+																							content : '<div class="pure-form pure-form-aligned">'
+																									+ '<br>'
+																									+
 
-			$("form").submit(function(e) {
-				if (data.currentDegree == undefined) {
-					$("#errorinfo").text("请选择你的就读状况");
-					return false;
-				} else if (data.gaokaoResult == undefined) {
-					$("#errorinfo").text("请选择你的高考成绩");
-					return false;
-				} else if (data.overallScore == undefined) {
-					$("#errorinfo").text("请选择你的分数");
-					return false;
-				} else if (data.listeningScore == undefined) {
-					$("#errorinfo").text("请选择你的听力分数");
-					return false;
-				} else if (data.speakingScore == undefined) {
-					$("#errorinfo").text("请选择你的口语分数");
-					return false;
-				} else if (data.readingScore == undefined) {
-					$("#errorinfo").text("请选择你的阅读分数");
-					return false;
-				} else if (data.writingScore == undefined) {
-					$("#errorinfo").text("请选择你的写作分数");
-					return false;
+																									'<div class="pure-control-group">'
+																									+ '<label for="name">输入用户名</label>'
+																									+ '<input id="userName" type="text" placeholder="用户名">'
+																									+ '</div>'
+																									+
+
+																									'<div class="pure-control-group">'
+																									+ '<label for="password">输入密码</label>'
+																									+ '<input id="password" type="password" placeholder="密码">'
+																									+ '</div>'
+																									+
+
+																									'<div class="pure-controls">'
+																									+ '<button id="userLogin" class="pure-button pure-button-primary">登录</button>'
+																									+
+
+																									'</div>'
+																									+ '</div>'
+																						});
+
+																				//取出弹窗里的用户名和密码
+																				$(
+																						'#userLogin')
+																						.click(
+																								function(
+																										e) {
+																									var user = new Object();
+																									user.email = $(
+																											'#userName')
+																											.val();
+																									user.password = $(
+																											'#password')
+																											.val();
+																									var userLoginInfo = JSON
+																											.stringify(user);
+																									console
+																											.log(
+																													'1 print user detail input',
+																													user);
+																									crossDomain(
+																											"POST",
+																											'http://edu.comeon.today/api/v1/login',
+																											userLoginInfo,
+																											function(
+																													returnStatus) {
+																												// Handles the callback when the data returns
+																												console
+																														.log(
+																																'2 print user login status',
+																																returnStatus);
+
+																												if (returnStatus.status == 0) {//status 0:登录 
+																													var stdRequest = JSON
+																															.stringify(data);
+																													crossDomain(
+																															"POST",
+																															'http://edu.comeon.today/api/v1/newrequest',
+																															stdRequest,
+																															sendReq);
+																												} else {
+																													console
+																															.log('Unsuccessfully login');
+																												}
+																											});
+																									// return false;
+																								});
+
+																			} //end of else
+																		})// end of get userinfo
+
+															} else {
+																console
+																		.log('请选择感兴趣的专业');
+															}
+														} else {
+															console
+																	.log('请输入高考成绩');
+														}
+
+													} else {
+														console.log('请选择高考省份');
+													}
+													return false;
+
+												});//end of click sendrequest
+
+							});//end of ready function
+
+			//显示错误信息的方法
+
+			var str = '<div id="suc"class="successMcx">操作成功哦！<i class="fa fa-check" aria-hidden="true"></i></div>';
+			$(document).ready(function() {
+				$("#blank").append(str);
+				$("#suc").fadeOut(2000);
+			});
+
+			//跨域请求服务器 post 和 get 数据
+			function crossDomain(method, url, data, callback) {
+				$.ajax({
+					method : method,
+					url : url,
+					data : data,
+					xhrFields : {
+						withCredentials : true
+					}
+				}).done(callback);
+			}
+			function back(msg) {
+				console.log(msg);
+			}
+
+			//发送学生意愿请求信息并收取反馈 
+			function sendReq(returnData) {
+				console.log('3 print user request post status, 0 is success',
+						returnData);
+				if (returnData.status == 0) {//status 0: 请求已接受
+					var reqID = returnData.requestId;
+
+					crossDomain(
+							"GET",
+							'http://edu.comeon.today/api/v1/systemplan?rid='
+									+ reqID,
+							null,
+							function(returnPlan) {
+								console.log('4 print get plan', returnPlan);
+								//                        document.cookie = reqID; 解决这里的cookie问题
+								Cookies.set('requestID', reqID);
+								console.log(Cookies.get('requestID'));
+								window.location.href = "http://localhost:3000/studentUniPlanSuggest.1.html";
+								//                        
+							});
 				} else {
-					var j = JSON.stringify(data);
-					$.post('http://localhost:8080/agency/req/post/', j, function(data) {
-						// Handles the callback when the data returns
-					});
-					return false;
+					console.log('return plan not working');
 				}
-			});
-
-			$("#currentDegree").click(function() {
-				data.currentDegree = $(this).val();
-			});
-
-			$("#gaokaoResult").click(function() {
-				data.gaokaoResult = parseInt($(this).val());
-			});
-
-			$("input[name='interestMajor']").click(function() {
-				data.interestMajor1 = null;
-				data.interestMajor2 = null;
-				$("input[name='interestMajor']").attr("disabled", true);
-				if ($("input[name='interestMajor']:checked").length >= 2) {
-					$("input[name='interestMajor']:checked").attr("disabled", false);
-				} else {
-					$("input[name='interestMajor']").attr("disabled", false);
-				}
-
-				switch ($("input[name='interestMajor']:checked").length) {
-				case 0:
-					break;
-				case 1:
-					data.interestMajor1 = $("input[name='interestMajor']:checked").val();
-					break;
-				case 2:
-					var majors = $("input[name='interestMajor']:checked").map(function() {
-						return $(this).val();
-					}).get();
-					data.interestMajor1 = majors[0];
-					data.interestMajor2 = majors[1];
-					break;
-				}
-			});
-
-			$("input[name='interestCity']").change(function() {
-				data.interestCity = $("input[name='interestCity']:checked").val();
-				console.log(data.interestCity);
-			});
-
-			$("#overallScore").click(function() {
-				data.overallScore = parseFloat($(this).val());
-			});
-
-			$("#listeningScore").click(function() {
-				data.listeningScore = parseFloat($(this).val());
-			});
-
-			$("#speakingScore").click(function() {
-				data.speakingScore = parseFloat($(this).val());
-			});
-
-			$("#readingScore").click(function() {
-				data.readingScore = parseFloat($(this).val());
-			});
-
-			$("#writingScore").click(function() {
-				data.writingScore = parseFloat($(this).val());
-			});
-
-		});
-	</script>
+			}
+		</script>
+	</div>
+	<!--footer display here-->
+	<div>
+		<footerpage></footerpage>
+		<script src="http://edu.comeon.today/public/resources/riot.js"></script>
+		<script src="http://edu.comeon.today/public/tag/footerpage.tag" type="riot/tag"></script>
+		<script>
+			riot.mount('footerpage')
+		</script>
+	</div>
 </body>
-
 </html>

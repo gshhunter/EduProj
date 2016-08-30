@@ -258,7 +258,7 @@ public class StudentRequestController {
 	
 	/********************************PAGES**********************************************/
 	//学生创建request页面
-	@RequestMapping(value = "/req", method = RequestMethod.GET)
+	@RequestMapping(value = "/req/newrequest", method = RequestMethod.GET)
 	public String applyRequestPage() throws JsonProcessingException {
 		return "applyrequest";
 	}
