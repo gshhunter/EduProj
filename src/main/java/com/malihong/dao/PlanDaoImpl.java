@@ -149,10 +149,14 @@ public class PlanDaoImpl implements PlanDao{
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<Plan> findProcessedPlanListByAgentId(int agentId) {
-		// TODO Auto-generated method stub
-		return null;
+		String str = "SELECT p FROM Plan p WHERE p.idAgency =?1 AND p.status = 2";
+		Query query = em.createQuery(str, Plan.class);
+		query.setParameter(1, agentId);
+		return query.getResultList();
 	}
 
 

@@ -14,7 +14,7 @@ public class AgentCaseBean {
 	
 	private String uni3;
 	
-	private Date createdTime;
+	private String createdTime;
 
 	public int getPid() {
 		return pid;
@@ -56,13 +56,12 @@ public class AgentCaseBean {
 		this.uni3 = uni3;
 	}
 
-	public Date getCreatedTime() {
+	public String getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Date createdTime) {
+	public void setCreatedTime(String createdTime) {
 		this.createdTime = createdTime;
 	}
-	
-	
+
 }

@@ -1,7 +1,6 @@
 package com.malihong.bean;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class StaticBean {
 
