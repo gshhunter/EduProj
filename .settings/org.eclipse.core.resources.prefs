@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/WEB-INF/views/add_visa_ref.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/applyrequest.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/casedetail-ing.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/caselist-ing.jsp=UTF-8
