@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.malihong.bean.GaokaoInfo;
 import com.malihong.bean.StaticBean;
 import com.malihong.entity.Account;
@@ -76,5 +78,58 @@ public class PlanController {
 		}
 		
 		
+	}
+	
+	@RequestMapping(value="/toVisaRefNumber", method=RequestMethod.GET)
+	public String toVisaRefNumber(Model model) {
+
+		return "add_visa_ref";
+	}
+	
+	@RequestMapping(value="/api/saveTRN", method=RequestMethod.GET)
+	public @ResponseBody String saveTRN(@RequestParam(value="pid", required=true) Integer pid, @RequestParam(value="trn", required=true) String trn , HttpServletRequest request, HttpServletResponse response, Model model){
+		
+		ObjectMapper mapper = new ObjectMapper();
+		ObjectNode root = mapper.createObjectNode();
+		root.put("status", 0);
+		
+		Plan plan = planService.findPlanById(pid);
+		model.addAttribute("plan", plan);
+		
+		if (plan == null) {
+			root.put("status", -1);
+			return root.toString();
+		} else {
+			int status = plan.getStatus();
+			int studentid = plan.getIdStudent();
+			int requestid = plan.getIdRequest();
+			
+			Account account = accountService.findUserById(studentid);
+			Request req = requestService.findRequestById(requestid);
+			
+			String degree = StaticBean.chineseDegree.get(req.getCurrentDegree());
+			String province = GaokaoInfo.chineseLocation.get(req.getGaokaoLocation());
+			String requestMajor = StaticBean.chineseMajor.get(req.getInterestMajor1());
+			req.setGaokaoLocation(province);
+			req.setInterestMajor1(requestMajor);
+			
+			model.addAttribute("degree", degree);
+			model.addAttribute("account", account);
+			model.addAttribute("request", req);
+			
+			if (status == 1) {
+				plan.setStatus(2);
+				plan.setTrn(trn);
+				planService.update(plan);
+				root.put("status", 1);
+				return root.toString();
+			} 
+			
+			if (status == 2) {
+				root.put("status", 2);
+				return root.toString();
+			} 
+				return root.toString();
+		}
 	}
 }

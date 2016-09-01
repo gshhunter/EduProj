@@ -37,6 +37,9 @@ public class Plan implements Serializable {
 	@Column(name = "status")
 	private int status;
 
+	@Column(name = "trn")
+	private String trn;
+	
 	// bi-directional many-to-one association to
 	// Option/级联存储会直接把数据存储到Plan和Option表中
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
@@ -100,6 +103,14 @@ public class Plan implements Serializable {
 
 	public void setOptions(List<Option> Options) {
 		this.Options = Options;
+	}
+
+	public String getTrn() {
+		return trn;
+	}
+
+	public void setTrn(String trn) {
+		this.trn = trn;
 	}
 
 }

@@ -76,7 +76,7 @@
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">
-                    <li id="hightlightbox" class="highlightBorderMcx"><a id="beagent" href="#"></a></li>
+                    <li id="hightlightbox"><a id="beagent" href="#"></a></li>
                     <!--<li><a href="#">收件箱</a></li>-->
                     <li><a id="email"></a></li>
                     <li><a href="<%=request.getContextPath() %>/account/logout">注销</a></li>                   
@@ -179,10 +179,12 @@
 			if (data.userType == 3) {
 				$("#name").append(" (留学顾问)");
 				$("#hightlightbox").prop("disabled", true);
+				$("#hightlightbox").removeClass("highlightBorderMcx");
 			} else {
 				$("#beagent").text("成为中介");
 				$("#beagent").attr("href", "<%=request.getContextPath() %>/agent/toBeAgent");
 				$("#hightlightbox").prop("disabled", false);
+				$("#hightlightbox").addClass("highlightBorderMcx");
 			}
 		});
 	});

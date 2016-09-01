@@ -287,7 +287,7 @@
                                                     <p>申请开始时间：<span>${plan.createdTime}</span></p>
                                                     <div class="pure-g">
                                                         <label class="pure-u-16-24"></label>
-                                                        <a class="pure-u-8-24 pure-button pure-button-primary" href="file:///Users/Chenxue/Documents/EduFont/agent2CaseDetailRefNo.html">附上签证号码并完成申请</a>
+                                                        <a id="sendTRN" class="pure-u-8-24 pure-button pure-button-primary">附上签证号码并完成申请</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -304,8 +304,7 @@
             </div>
             <div class="pure-u-4-24"> 
                 <a class="alwaysRight linkStyle"
-                href="file:///Users/Chenxue/Documents/EduFont/agent1CaseListIng1.html">
-                返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
+                href="file:///Users/Chenxue/Documents/EduFont/agent1CaseListIng1.html">返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
             </div>
         </div>
 
@@ -323,10 +322,31 @@
          <script src="js/riot.js"></script>
 
         <script src="footerpage.tag" type="riot/tag"></script>
-
+		
         <script>riot.mount('footerpage')</script>
+        
     </div>
-  	
+  	<script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+  	<script type="text/javascript" src="<c:url value="/resources/js/layer/layer.js" />"></script>
+    <script>
+        $(document).ready(function() {
+        	var trn;
+            $("#sendTRN").click(function(e) {
+                layer.prompt({
+             		title: '输入TRN:',
+              		formType: 0 //prompt风格，支持0-2
+            	}, function(pass){
+            		
+                	layer.msg('TRN: '+ pass+' 输入成功！' );
+                	$.get('http://localhost:8080/agency/plan/api/saveTRN?pid='+${plan.idPlan}+'&trn='+pass, function(data){
+            			
+                		$(location).attr('href','http://localhost:8080/agency/plan/toCaseDetail?pid='+${plan.idPlan});
+                	});
+            	});
+                
+            });
+        });
+    </script>
 </body>
  
 
