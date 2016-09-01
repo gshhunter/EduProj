@@ -262,7 +262,13 @@ public class StudentRequestController {
 	public String applyRequestPage() throws JsonProcessingException {
 		return "applyrequest";
 	}
-
+	
+	//学生创建request页面
+	@RequestMapping(value = "req/sysoption", method = RequestMethod.GET)
+	public String sysOptionPage() throws JsonProcessingException {
+		return "sysoption";
+	}
+	
 	//学生创建request成功页面
 	@RequestMapping(value = "/reqcom", method = RequestMethod.GET)
 	public String requestCompletePage() throws JsonProcessingException {

@@ -101,6 +101,16 @@ public class AccountDaoImpl implements AccountDao {
 			return list;
 		}
 	}
+
+	@Override
+	@Transactional
+	public int findAgentIdByRandom() {
+		String str="SELECT a FROM Account a where a.type=3 order by rand()";
+		Query query = em.createQuery(str).setMaxResults(1);
+		List<Account> list = query.getResultList();
+		
+		return list.get(0).getIdAccount();
+	}
 	
 	
 	

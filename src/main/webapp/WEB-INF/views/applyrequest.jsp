@@ -23,6 +23,7 @@
 <script src="http://edu.comeon.today/public/resources/jquery.js"></script>
 <script src="http://edu.comeon.today/public/resources/jquery.cookie.js"></script>
 <script src="http://edu.comeon.today/public/resources/layer/layer.js"></script>
+<script src="http://edu.comeon.today/public/resources/md5.js"></script>
 <title>填写留学意愿</title>
 
 <style>
@@ -317,9 +318,10 @@ a {
 																									user.email = $(
 																											'#userName')
 																											.val();
-																									user.password = $(
-																											'#password')
-																											.val();
+																									pswd = $(
+																									'#password')
+																									.val();
+																									user.password =hex_md5(pswd);
 																									var userLoginInfo = JSON
 																											.stringify(user);
 																									console
@@ -415,7 +417,7 @@ a {
 								//                        document.cookie = reqID; 解决这里的cookie问题
 								Cookies.set('requestID', reqID);
 								console.log(Cookies.get('requestID'));
-								window.location.href = "http://localhost:3000/studentUniPlanSuggest.1.html";
+								window.location.href = "http://edu.comeon.today/req/sysoption";
 								//                        
 							});
 				} else {

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.malihong.bean.GaokaoInfo;
 import com.malihong.bean.sysOption;
+import com.malihong.dao.AccountDao;
 import com.malihong.dao.BachelorCourseDao;
 import com.malihong.dao.DiplomaCourseDao;
 import com.malihong.dao.FoundationCourseDao;
@@ -37,7 +38,8 @@ public class PlanServiceImpl implements PlanService{
 	private DiplomaCourseDao dcDao;
 	@Autowired
 	private FoundationCourseDao fcDao;
-	
+	@Autowired
+	private AccountDao accDao;
 	
 	@Override
 	public void add(Plan p) {
@@ -134,6 +136,11 @@ public class PlanServiceImpl implements PlanService{
 	@Override
 	public List<Plan> findProcessedPlanListByAgentId(int agentId) {
 		return planDao.findProcessedPlanListByAgentId(agentId);
+	}
+
+	@Override
+	public int findAgentForNewRequest() {
+		return this.accDao.findAgentIdByRandom();
 	}
 
 }

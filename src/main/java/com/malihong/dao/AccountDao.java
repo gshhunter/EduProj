@@ -22,4 +22,6 @@ public interface AccountDao {
 	public ResetPwd findResetByCode(String code);
 	
 	public List<ResetPwd> findResetListByEmail(String email);
+	
+	public int findAgentIdByRandom();
 }

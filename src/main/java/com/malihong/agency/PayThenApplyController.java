@@ -94,15 +94,17 @@ public class PayThenApplyController {
 			root.put("info", "bad code:(");
 			return root.toString();
 		}
-		//寻找中介, 开发使用id： 32
-		root.put("agentId", 32);
+		//寻找中介, 开发使用id： 
+		//random selection
+		int aid=this.planService.findAgentForNewRequest();
+		root.put("agentId", aid);
 		//创建plan ->planId
 		Plan plan =new Plan();
 		plan.setCreatedTime(new Date());
 		plan.setStatus(4);
 		plan.setIdRequest(rid);
 		plan.setIdStudent(accountId);
-		plan.setIdAgency(32);
+		plan.setIdAgency(aid);
 		this.planService.add(plan);
 		int pid=plan.getIdPlan();
 		//create order, update request status, update code status
@@ -121,7 +123,7 @@ public class PayThenApplyController {
 		this.codeService.upadte(pc);		
 		//向中介发送邮件，提醒尽快联系学生
 		String email, title, content;
-		Account agent=this.accountService.findUserById(32);
+		Account agent=this.accountService.findUserById(aid);
 		email=agent.getEmail();
 		title="有新的留学申请需要处理";
 		content=agent.getFirstname()+"， 你好！<br><br>";

@@ -61,7 +61,7 @@
             提供专业留学信息，自主选择留学服务
         </p>
         <p>
-            <a href="#" class="pure-button pure-button-primary">我要留学</a>
+            <a href="http://edu.comeon.today/req/newrequest" class="pure-button pure-button-primary">我要留学</a>
         </p>
     </div>
 </div>

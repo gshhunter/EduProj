@@ -27,5 +27,7 @@ public interface PlanService {
 	public List<Plan> findProcessedPlanListByAgentId(int agentId);
 
 	public Object[] generateOptionsByRequest(Request req);
+	
+	public int findAgentForNewRequest(); //random in v1
 
 }
