@@ -209,9 +209,7 @@ public class AccountController {
 		accountService.addNewUser(a, p, ident);
 		
 		logger.info("Email: " + email + " Password: " + password + " MD5: " + passwordmd5);
-		
 		return "register_success";
-		
 	}
 	
 	@RequestMapping(value="/forgetPwd", method=RequestMethod.GET)

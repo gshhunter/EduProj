@@ -22,16 +22,7 @@
 			 $.post('http://localhost:8080/agency/api/v1/newrequest',str2,function(data){
 			 	console.log(data);
 			 })
-// 			$.ajax({
-// 				method : "POST",
-// 				url : 'http://edu.comeon.today/api/v1/newrequest',
-// 				data : str2,
-// 				xhrFields : {
-// 					withCredentials : true
-// 				}
-// 			}).done(function(msg) {
-// 				console.log(msg)
-// 			});
+
 		})
 	</script>
 
