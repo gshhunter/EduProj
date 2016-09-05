@@ -162,7 +162,7 @@
 					console.log("========== " + cc[0]);
 					console.log("++++++++++ " + cc[1]);
 					$("#forwardEmail").click(function(){
-						window.open("http://www." + url);
+						window.open("http://mail." + url);
 					});
 					return "";
 				}
