@@ -209,9 +209,7 @@ public class AccountController {
 		accountService.addNewUser(a, p, ident);
 		
 		logger.info("Email: " + email + " Password: " + password + " MD5: " + passwordmd5);
-		
 		return "register_success";
-		
 	}
 	
 	@RequestMapping(value="/forgetPwd", method=RequestMethod.GET)
@@ -380,6 +378,8 @@ public class AccountController {
 		int accountId = getAccountIdByCookie(request, response);
 		Account account = accountService.findUserById(accountId);
 		String email = account.getEmail();
+		
+		model.addAttribute("loginEmail", email);
 		
 		String mingwen = accountId + "&" + email;
 		String miwen = MD5Encript.crypt(mingwen);
@@ -604,17 +604,26 @@ public class AccountController {
 	}
 	
 	@RequestMapping(value="/toVerification", method=RequestMethod.GET)
-	public String toVerification(Model model) {
+	public String toVerification(Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		String email = getEmailByCookie(request, response);
+		model.addAttribute("loginEmail", email);
 		return "trust_verification";
 	}
 	
 	@RequestMapping(value="/toPrivacySetting", method=RequestMethod.GET)
-	public String toPrivacySetting(Model model) {
+	public String toPrivacySetting(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String email = getEmailByCookie(request, response);
+		
+		model.addAttribute("loginEmail", email);
 		return "privacy_setting";
 	}
 	
 	@RequestMapping(value="/toSecuritySetting", method=RequestMethod.GET)
-	public String toSecuritySetting(Model model) {
+	public String toSecuritySetting(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String email = getEmailByCookie(request, response);
+		
+		model.addAttribute("loginEmail", email);
 		return "security_setting";
 	}
 	

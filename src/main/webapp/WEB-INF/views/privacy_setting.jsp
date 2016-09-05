@@ -53,9 +53,9 @@
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
-                    <li><a href="#">收件箱</a></li>
-                    <li><i class="fa fa-smile-o" aria-hidden="true"></i><a id="email_name" href="#"></a></li>
-                    <li><a href="#">退出</a></li>                                     
+                    
+                    <li><a id="email_name" href="#"></a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/logout">退出</a></li>                                     
                 </ul>
                 </div>
                 
@@ -67,11 +67,10 @@
             <div class="pure-u-2-24 "></div>
             <div class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
                 <ul class="menuStyleMcx">
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentDashboard.html">控制面板</a></li>
                     <!-- <li><a href="#">收件箱</a></li> -->
-                    <li ><a href="file:///Users/Chenxue/Documents/EduFont/agent1CaseList.html">工作列表</a></li>
-                    <li ><a href="file:///Users/Chenxue/Documents/EduFont/agentProfile2Edit.html" >个人资料</a></li>
-                    <li class="menuItemSelectedMcx"><a href="#" style="color:#f2f2f2;">账号管理</a></li>
+                    <li ><a href="file:///Users/Chenxue/Documents/EduFont/agent1CaseList.html">您的申请</a></li>
+                    <li ><a href="<%=request.getContextPath() %>/account/toEditProfile" >个人资料</a></li>
+                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toPrivacySetting" style="color:#f2f2f2;">账号管理</a></li>
                 </ul>
             </div>
         </div>
@@ -90,9 +89,9 @@
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc4TranSetting.html">交易记录</a></li>
                     <li class="menuItemSelectedMcx">
                         <i class="fa fa-caret-right" aria-hidden="true"></i>
-                        <a href="#" style="color:#333333;">隐私设置</a>
+                        <a href="<%=request.getContextPath() %>/account/toPrivacySetting" style="color:#333333;">隐私设置</a>
                     </li>
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc6ScuSetting.html">安全设置</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toSecuritySetting">安全设置</a></li>
                    
                 </ul>
             </div>

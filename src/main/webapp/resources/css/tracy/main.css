@@ -108,7 +108,7 @@
         }
         .testMenuMcx a:hover {
             font-weight: bold;
-            color: #d9d9d9;
+            
         }
         /*菜单每个组成部分的style，无下划线 灰色 padding5px*/
         .testMenuMcx a:active {           

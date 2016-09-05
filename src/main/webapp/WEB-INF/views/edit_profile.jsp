@@ -51,7 +51,7 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" style="font-size:250%;" href="">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" style="font-size:250%;" href="<%=request.getContextPath() %>">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
@@ -74,8 +74,8 @@
                     <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/studentDashboard.html">控制面板</a></li> -->
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a href="#">您的申请</a></li>
-                    <li class="menuItemSelectedMcx"><a href="#"style="color:#f2f2f2;">个人资料</a></li>
-                    <li><a href="">账号管理</a></li>
+                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toEditProfile" style="color:#f2f2f2;">个人资料</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting">账号管理</a></li>
                 </ul>
             </div>  
         </div>
@@ -90,9 +90,9 @@
                 <ul>
                     <li class="menuItemSelectedMcx"><i class="fa fa-caret-right" aria-hidden="true"></i><a href="#">编辑</a></li>
                     <li><a href="<%=request.getContextPath() %>/account/toVerification">信任验证</a></li>
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileComment.html#">评价</a></li>
+                    <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileComment.html#">评价</a></li> -->
                    	<br/>  
-                	<div class="pure-button">查看我的资料</div>
+                	<div class="pure-button"><a href="<%=request.getContextPath() %>/account/toViewProfile">查看我的资料</a></div>
                 </ul>
                 
             </div>
@@ -128,9 +128,6 @@
                         <label for="birthday">生日:</label>
                         <input id="birthday" class="pure-u-2-5" type="date" />
                     </div>
-
-                    
-
                 </fieldset>
                 
                 <fieldset>

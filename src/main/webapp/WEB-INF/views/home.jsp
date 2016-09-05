@@ -34,7 +34,7 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="<%=request.getContextPath() %>">Logo</a>
+        <a class="pure-menu-heading" href="<%=request.getContextPath() %>">Malimalihong</a>
 
         <ul class="pure-menu-list">
             <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>

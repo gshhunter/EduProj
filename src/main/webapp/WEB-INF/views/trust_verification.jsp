@@ -67,10 +67,10 @@
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
 	                <ul class="menuStyleMcx headerLinkStyleMcx">
-	                    <li class="highlightBorderMcx"><a href="#">成为中介</a></li>
-	                    <li><a href="#">收件箱</a></li>
-	                    <li><lable>Amy</label></li>
-	                    <li><a href="#">退出</a></li>                   
+	                    <li class="highlightBorderMcx"><a href="<%=request.getContextPath() %>/agent/toBeAgent">成为中介</a></li>
+	                    <!-- <li><a href="#">收件箱</a></li> -->
+	                    <li><a href="<%=request.getContextPath() %>/account/toViewProfile">${loginEmail}</a></li>
+	                    <li><a href="<%=request.getContextPath() %>/account/logout">退出</a></li>                   
 	                </ul>
             	</div> 
             </div>
@@ -81,11 +81,10 @@
             <div class="pure-u-2-24 headerMenuBackgroundMcx" ></div>           
             <div class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
                 <ul class="menuStyleMcx">
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/studentDashboard.html">控制面板</a></li>
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a href="#">您的申请</a></li>
-                    <li class="menuItemSelectedMcx"><a href="#"style="color:#D8D8D8;">个人资料</a></li>
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/studentAcc1MsgSetting.html">账号管理</a></li>
+                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toEditProfile"style="color:#D8D8D8;">个人资料</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting">账号管理</a></li>
                 </ul>
             </div>  
         </div>
@@ -98,11 +97,11 @@
 	        <!--垂直菜单-->
 	        <div class="pure-u-4-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx " >
 		        <ul>
-		            <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileEdit.html">编辑</a></li>
+		            <li><a href="<%=request.getContextPath() %>/account/toEditProfile">编辑</a></li>
 		            <li class="menuItemSelectedMcx"><i class="fa fa-caret-right" aria-hidden="true"></i><a href="#">信任验证</a></li>
-		            <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileComment.html#">评价</a></li>
+		            <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileComment.html#">评价</a></li> -->
 		            <br/>
-		            <div class="pure-button pure-button-primary">查看我的资料</div>
+		            <div class="pure-button"><a href="<%=request.getContextPath() %>/account/toViewProfile">查看我的资料</a></div>
 		        </ul>
 	        </div>
 			

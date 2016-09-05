@@ -17,10 +17,8 @@
 
     <title>中介账号管理 安全设置</title>
 
-
     <style>
         
-       
         .insidePageContent {
             background: white;
             margin-top: 15px;
@@ -44,14 +42,13 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>">Malimalihong</a>
                 </div>
                
                  <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
-                    <li><a href="#">收件箱</a></li>
-                    <li><i class="fa fa-smile-o" aria-hidden="true"></i><a href="#">张顾问</a></li>
-                    <li><a href="#">退出</a></li>                                     
+                    <li><a href="<%=request.getContextPath() %>/account/toViewProfile">${loginEmail}</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/logout">退出</a></li>                                     
                 </ul>
                 </div>
                 
@@ -63,11 +60,10 @@
             <div class="pure-u-2-24 "></div>
             <div class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
                 <ul class="menuStyleMcx">
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentDashboard.html">控制面板</a></li>
-                    <li><a href="#">收件箱</a></li>
-                    <li ><a href="file:///Users/Chenxue/Documents/EduFont/agent1CaseList.html">工作列表</a></li>
-                    <li ><a href="file:///Users/Chenxue/Documents/EduFont/agentProfile2Edit.html" >个人资料</a></li>
-                    <li class="menuItemSelectedMcx"><a href="#" style="color:#f2f2f2;">账号管理</a></li>
+
+                    <li ><a href="file:///Users/Chenxue/Documents/EduFont/agent1CaseList.html">您的申请</a></li>
+                    <li ><a href="<%=request.getContextPath() %>/account/toEditProfile" >个人资料</a></li>
+                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toPrivacySetting" style="color:#f2f2f2;">账号管理</a></li>
                 </ul>
             </div>
         </div>
@@ -79,14 +75,14 @@
             <!--垂直菜单-->
             <div class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx ">
                 <ul>
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc1MsgSetting.html">通知设置</a></li>
+                    <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc1MsgSetting.html">通知设置</a></li> -->
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc2PaySetting.html">付款方式</a></li>
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc3EarnSetting.html">收款偏好</a></li>
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc4TranSetting.html">交易记录</a></li>
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc5PcySetting.html">隐私设置</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting">隐私设置</a></li>
                     <li class="menuItemSelectedMcx">
                         <i class="fa fa-caret-right" aria-hidden="true"></i>
-                        <a href="#" style="color:#333333;">安全设置</a>
+                        <a href="<%=request.getContextPath() %>/account/toSecuritySetting" style="color:#333333;">安全设置</a>
                     </li>
                 </ul>
             </div>

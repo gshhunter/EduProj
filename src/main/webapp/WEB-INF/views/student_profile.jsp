@@ -71,7 +71,7 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <h1>Malimalihong</h1>
+                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">

@@ -40,7 +40,7 @@ public class CookieHelper {
 				if (cookieName.equals(cookie.getName())) {
 				cookie.setMaxAge(0);
 				cookie.setValue(null);
-				cookie.setPath("/agency/");
+				cookie.setPath("/");
 				response.addCookie(cookie);
 				break;
 				}
