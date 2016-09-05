@@ -210,28 +210,25 @@
 //                         return value;
 //                     });
                      
-                     msgToDisplay.innerHTML = 
+                     var innerH = 
                          '<div class= pure-g>'
-                             +'<label class="pure-u-3-24">'+ 'Option'+i+'</label>'
+                             +'<label class="pure-u-3-24">'+ 'Option'+(i+1)+'</label>'
                              +'<label class="pure-u-10-24">'+ 'COLLEGE:' + '<br>' 
-                                +'学院名称:'+ clgName + '<br>' 
-                                +'课程名称:'+ dipName + '<br>' 
-                                +'学费:'+ dipFee +'澳币每年'+'<br>' 
-                                +'学期长度:'+ dipSem +'学期'+'</label>' 
-                             + '<label class="pure-u-10-24" id="uni">'+ 'UNIVERSITY:'+ '<br>' + uniName + '</label>' 
-                         +'</div>';
-                     container.appendChild(msgToDisplay);
-                         
+                                +'预科名称：'+ clgName + '<br>' 
+                                +'课程名称：'+ dipName + '<br>' 
+                                +'学费：'+ dipFee +'澳币每年'+'<br>' 
+                                +'学期长度：'+ dipSem +'学期'+'</label>' 
+                             + '<label class="pure-u-10-24" id="uni">'+ 'UNIVERSITY:'+ '<br>' + '大学名称：'+ uniName ;
+
                      keys.map(function(thisKey){
                          console.log(returnPlan.options[i].bachelors[thisKey]);
-                         var addContainer = document.getElementById('uni');
-                         var addInfo = document.createElement('li');
                          courseOption = returnPlan.options[i].bachelors[thisKey].toString();
                          console.log(courseOption);
-                         addInfo.innerHTML=courseOption;
-                         addContainer.appendChild(addInfo);
-                         
+                          innerH=  innerH + '<li>课程名称：'+ courseOption + '</li>';
                      })
+                     innerH =  innerH + '</label>'+'</div>';
+                     msgToDisplay.innerHTML = innerH;
+                     container.appendChild(msgToDisplay);
                      
                      }
                      
