@@ -56,10 +56,12 @@
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">
-                    <li class="highlightBorderMcx"><a href="#">成为中介</a></li>
+                	<c:if test="${userType != 3}">
+                    	<li class="highlightBorderMcx"><a href="<%=request.getContextPath() %>/agent/toBeAgent">成为中介</a></li>
+                    </c:if>
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a id="email"></a></li>
-                    <li><a href="#">注销</a></li>                   
+                    <li><a href="<%=request.getContextPath() %>/account/logout">注销</a></li>                   
                 </ul>
             </div>
                 
@@ -74,10 +76,11 @@
                     <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/studentDashboard.html">控制面板</a></li> -->
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a href="#">您的申请</a></li>
+                    <li><a href="<%=request.getContextPath() %>/agent/toCaseList-done" >工作列表</a></li>
                     <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toEditProfile" style="color:#f2f2f2;">个人资料</a></li>
                     <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting">账号管理</a></li>
                 </ul>
-            </div>  
+            </div>
         </div>
         
         <!-- 信息提示 -->
@@ -123,7 +126,6 @@
                         </select>
 				    </div>
                     
-                    
                     <div class="pure-control-group">
                         <label for="birthday">生日:</label>
                         <input id="birthday" class="pure-u-2-5" type="date" />
@@ -137,12 +139,10 @@
                         <label for="cellphone">手机:</label>
                         <input id="cellphone" class="pure-u-1" type="tel" style="margin-right:-8px;"/>
                     </div>
-                    
                 	<div class="pure-control-group">
                 		<label>国家:</label>
                 		<select id="country" data-role="country-selector" class="pure-u-2-5"></select>
                 	</div>
-                	
                 	<div class="pure-control-group">
                 		<label>地址:</label>
                 		<input id="address" class="pure-u-2-5" type="text"></input>
@@ -161,7 +161,6 @@
                 		<button id="saveProfile" type="submit" class="pure-button pure-button-primary pure-u-2-5">保存</button>
                 	</div>
                 </fieldset>
-                
             </form>
             </div>
 

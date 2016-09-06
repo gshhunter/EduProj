@@ -304,7 +304,7 @@
             </div>
             <div class="pure-u-4-24"> 
                 <a class="alwaysRight linkStyle"
-                href="file:///Users/Chenxue/Documents/EduFont/agent1CaseListIng1.html">返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
+                href="<%=request.getContextPath() %>/agent/toCaseList">返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
             </div>
         </div>
 
@@ -313,7 +313,6 @@
 
        <!--显示收到／发出的评价的方法：参数showA为展示，hideB为隐藏-->
        
-           
     </div>
      <!--footer display here-->
     <div>

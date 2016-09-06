@@ -63,10 +63,9 @@ hr {
 				<div
 					class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
 					<ul class="menuStyleMcx headerLinkStyleMcx">
-						<li><a href="#">收件箱</a></li>
-						<li><i class="fa fa-smile-o" aria-hidden="true"></i><a
-							href="#">张顾问</a></li>
-						<li><a href="#">退出</a></li>
+						
+						<li><a href="<%=request.getContextPath() %>/account/toEditProfile">${loginEmail}</a></li>
+						<li><a href="<%=request.getContextPath() %>/account/logout">退出</a></li>
 
 					</ul>
 				</div>
@@ -80,15 +79,13 @@ hr {
 			<div
 				class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
 				<ul class="menuStyleMcx">
-					<li><a
-						href="file:///Users/Chenxue/Documents/EduFont/agentDashboard.html">控制面板</a></li>
-					<li><a href="#">收件箱</a></li>
-					<li class="menuItemSelectedMcx"><a href="#"
+					<li><a href="#">您的申请</a></li>
+					<li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/agent/toCaseList-done"
 						style="color: #f2f2f2; border-bottom: 3px solid #f2f2f2; padding-bottom: 7px;">工作列表</a></li>
 					<li><a
-						href="#">个人资料</a></li>
+						href="<%=request.getContextPath() %>/account/toEditProfile">个人资料</a></li>
 					<li><a
-						href="#">账号管理</a></li>
+						href="<%=request.getContextPath() %>/account/toPrivacySetting">账号管理</a></li>
 				</ul>
 			</div>
 		</div>
@@ -101,11 +98,11 @@ hr {
 				class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx ">
 				<ul>
 					<li><a
-						href="#">处理中的申请</a></li>
+						href="<%=request.getContextPath() %>/agent/toCaseList">处理中的申请</a></li>
 					<li><a style="font-size: 95%;"
 						href="#">未给出方案的申请</a></li>
 					<li class="menuItemSelectedMcx" style="color: black !important;"><i
-					class="fa fa-caret-right" aria-hidden="true"></i><a href="#">已完成的申请</a></li>
+					class="fa fa-caret-right" aria-hidden="true"></i><a href="<%=request.getContextPath() %>/agent/toCaseList-done">已完成的申请</a></li>
 				</ul>
 			</div>
 			<!--垂直菜单-->

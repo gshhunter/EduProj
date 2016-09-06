@@ -459,7 +459,11 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value="/toEditProfile", method=RequestMethod.GET)
-	public String toEditProfile(Model model) {
+	public String toEditProfile(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String email = getEmailByCookie(request, response);
+		Account account = accountService.findUserByEmail(email);
+		int userType = account.getType();
+		model.addAttribute("userType", userType);
 		model.addAttribute("editProfile", new EditProfile());
 		return "edit_profile";
 	}
@@ -607,6 +611,9 @@ public class AccountController {
 	public String toVerification(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		String email = getEmailByCookie(request, response);
+		Account account = accountService.findUserByEmail(email);
+		int userType = account.getType();
+		model.addAttribute("userType", userType);
 		model.addAttribute("loginEmail", email);
 		return "trust_verification";
 	}

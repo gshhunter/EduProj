@@ -67,7 +67,9 @@
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
 	                <ul class="menuStyleMcx headerLinkStyleMcx">
-	                    <li class="highlightBorderMcx"><a href="<%=request.getContextPath() %>/agent/toBeAgent">成为中介</a></li>
+	                	<c:if test="${userType != 3}">
+	                    	<li class="highlightBorderMcx"><a href="<%=request.getContextPath() %>/agent/toBeAgent">成为中介</a></li>
+	                    </c:if>
 	                    <!-- <li><a href="#">收件箱</a></li> -->
 	                    <li><a href="<%=request.getContextPath() %>/account/toViewProfile">${loginEmail}</a></li>
 	                    <li><a href="<%=request.getContextPath() %>/account/logout">退出</a></li>                   
@@ -183,7 +185,8 @@
        
     <div class="footer">Malimaligong.com ®</div>
     <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
-   	<script>
+    <script type="text/javascript" src="<c:url value="/resources/js/layer/layer.js" />"></script>
+   	<script type="text/javascript">
    	
    	$(document).ready(function(){
    		
@@ -269,7 +272,7 @@
    		});
    		
    		$("#verify_passport_btn").click(function(){
-   			alert("请联系后台工作人员帮您完成验证");
+   			alert("请联系后台工作人员帮您完成验证，电子邮箱： service@malimalihong.com.au");
    		});
    		
    	});

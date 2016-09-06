@@ -201,6 +201,12 @@ public class AgentController {
 	public String toCaseList(Model model, HttpServletRequest request, HttpServletResponse response) {
 		int uid = AccountController.getAccountIdByCookie(request, response);
 		Account account = accountService.findUserById(uid);
+		String email = account.getEmail();
+		int userType = account.getType();
+		
+		model.addAttribute("loginEmail", email);
+		model.addAttribute("userType", userType);
+		
 		if (account.getType() != 3) {
 			return "redirect:/agent/toBeAgent";
 		}
@@ -289,6 +295,11 @@ public class AgentController {
 	public String toCaseListDone(Model model, HttpServletRequest request, HttpServletResponse response) {
 		int uid = AccountController.getAccountIdByCookie(request, response);
 		Account account = accountService.findUserById(uid);
+		String email = account.getEmail();
+		int userType = account.getType();
+		
+		model.addAttribute("loginEmail", email);
+		model.addAttribute("userType", userType);
 		if (account.getType() != 3) {
 			return "redirect:/agent/toBeAgent";
 		}

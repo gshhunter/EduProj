@@ -306,7 +306,7 @@
             </div>
             <div class="pure-u-4-24"> 
                 <a class="alwaysRight linkStyle"
-                href="file:///Users/Chenxue/Documents/EduFont/agent1CaseListIng1.html">
+                href="<%=request.getContextPath() %>/agent/toCaseList-done">
                 返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
             </div>
         </div>
