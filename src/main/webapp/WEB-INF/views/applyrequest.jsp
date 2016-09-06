@@ -381,8 +381,8 @@ a {
 
 			var str = '<div id="suc"class="successMcx">操作成功哦！<i class="fa fa-check" aria-hidden="true"></i></div>';
 			$(document).ready(function() {
-				$("#blank").append(str);
-				$("#suc").fadeOut(2000);
+				//$("#blank").append(str);
+				//$("#suc").fadeOut(2000);
 			});
 
 			//跨域请求服务器 post 和 get 数据
