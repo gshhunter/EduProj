@@ -144,38 +144,44 @@ public class StudentRequestController {
 	}
 
 	// 中介为request创建plan
-	// TODO
+	// v2
 	@RequestMapping(value = "/api/v1/newplan", method = RequestMethod.POST)
-	public @ResponseBody String newPlan(@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
+	public @ResponseBody String newPlan(HttpServletRequest request,@RequestBody String r) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");		
 		ObjectMapper mapper = new ObjectMapper();
-		Plan plan= new Plan();
-		ObjectNode root=mapper.createObjectNode();		
-		root.put("status", 0);
-		//TODO
-		int agentID=67890;
-		try {
-			plan = mapper.readValue(r, Plan.class);
-			plan.setCreatedTime(new Date());
-			plan.setIdAgency(agentID);
-			//
-			List<Option> options=plan.getOptions();
-			plan.setOptions(null);
-			this.planService.add(plan);
-			logger.info(String.valueOf(plan.getIdPlan()));
-			for(Option option:options){
-				option.setIdPlan(plan.getIdPlan());
-				this.optionService.add(option);
-			}
-
-			
-			Request req=new Request();
-			req.setIsCancel(1);
-			req.setIdRequest(plan.getIdRequest());
-			this.reqService.update(req);
-		} catch (Exception e) {
-			root.put("status", 1);
+		ObjectNode root=mapper.createObjectNode();
+		Plan planFromAgent=new Plan();
+		Integer agentID=LoginCookieUtil.getAccountIdByCookie(request);
+		if(agentID==null){
+			root.put("status", 1); //未登录
+			root.put("info", "no login");
+			return root.toString();
 		}
+		try {
+			planFromAgent = mapper.readValue(r, Plan.class);
+		} catch (Exception e) {
+			root.put("status", 2); //data error
+			root.put("info", e.getMessage());
+			return root.toString();
+		}
+		Plan plan= this.planService.findByRequestIdAndAgencyId(planFromAgent.getIdRequest(),agentID);
+		if(plan==null){
+			root.put("status", 3); //no plan
+			root.put("info", "request id does not match agent id");
+			return root.toString();
+		}
+		plan.setStatus(5);
+		this.planService.update(plan);
+
+		List<Option> options=planFromAgent.getOptions();
+		logger.info(String.valueOf(plan.getIdPlan()));
+		for(Option option:options){
+			option.setIdPlan(plan.getIdPlan());
+			System.out.println(option.getAdvice());
+			this.optionService.add(option);
+		}
+		root.put("status", 0);
+		root.put("planId", plan.getIdPlan());
 		return root.toString();
 	}
 
