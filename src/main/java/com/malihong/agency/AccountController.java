@@ -647,7 +647,8 @@ public class AccountController {
 	@RequestMapping(value="/toSecuritySetting", method=RequestMethod.GET)
 	public String toSecuritySetting(Model model, HttpServletRequest request, HttpServletResponse response) {
 		String email = getEmailByCookie(request, response);
-		
+		Account account = accountService.findUserByEmail(email);
+		model.addAttribute("userType", account.getType());
 		model.addAttribute("loginEmail", email);
 		return "security_setting";
 	}
