@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="<c:url value="/resources/css/layouts/marketing.css" />" >
+        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
     <!--<![endif]-->
 
 </head>
@@ -34,18 +34,18 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="<%=request.getContextPath() %>">Malimalihong</a>
+        <a class="pure-menu-heading" href="http://edu.comeon.today">Malimalihong</a>
 
         <ul class="pure-menu-list">
-            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
+            <li class="pure-menu-item"><a href="http://edu.comeon.today/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
             <c:if test="${loginUser == null || loginUser == undefined}">
                 
-            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
+            	<li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailRegister" class="pure-menu-link">注册</a></li>
+            	<li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailLogin" class="pure-menu-link">登录</a></li>
             </c:if>
             <c:if test="${loginUser != null}">
-            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toViewProfile" class="pure-menu-link">${loginUser.email}</a></li>
-            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/logout" class="pure-menu-link">注销</a></li>
+            	<li class="pure-menu-item"><a href="http://edu.comeon.today/account/toViewProfile" class="pure-menu-link">${loginUser.email}</a></li>
+            	<li class="pure-menu-item"><a href="http://edu.comeon.today/account/logout" class="pure-menu-link">注销</a></li>
             </c:if>
         </ul>
     </div>
@@ -74,17 +74,17 @@
         <div class="pure-g">
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu">
-                    <img src="<c:url value="/resources/img/home/university1.jpg" />" alt="Monash University">
+                    <img src="http://edu.comeon.today/public/img/university1.jpg" alt="Monash University">
                 </a>
             </div>
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu.au">
-                    <img src="<c:url value="/resources/img/home/university2.jpg" />" alt="Monash University">
+                    <img src="http://edu.comeon.today/public/img/university2.jpg" alt="Monash University">
                 </a>
             </div>
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu.au">
-                    <img src="<c:url value="/resources/img/home/university3.jpeg" />" alt="Monash University">
+                    <img src="http://edu.comeon.today/public/img/university3.jpeg" alt="Monash University">
                 </a>
             </div>
             
@@ -92,17 +92,17 @@
         <div class="pure-g" style="margin-top:50px;">
         	<div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu">
-                    <img src="<c:url value="/resources/img/home/university1.jpg" />" alt="Monash University">
+                    <img src="http://edu.comeon.today/public/img/university1.jpg" alt="Monash University">
                 </a>
             </div>
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu.au">
-                    <img src="<c:url value="/resources/img/home/university2.jpg" />" alt="Monash University">
+                    <img src="http://edu.comeon.today/public/img/university2.jpg" alt="Monash University">
                 </a>
             </div>
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu.au">
-                    <img src="<c:url value="/resources/img/home/university3.jpeg" />" alt="Monash University">
+                    <img src="http://edu.comeon.today/public/img/university3.jpeg" alt="Monash University">
                 </a>
             </div>
         </div>
@@ -115,7 +115,7 @@
 	    		
 	    	</div>
 	    	<div class="l-box is-center pure-u-1-1 pure-u-md-3-5 pure-u-lg-3-5">
-	    		<img src="<c:url value="/resources/img/home/discovery.jpg" />" alt="Promotion" class="pure-img-responsive">
+	    		<img src="http://edu.comeon.today/public/img/discovery.jpg" alt="Promotion" class="pure-img-responsive">
 	    	</div>
 	    	<div class="l-box pure-u-md-1-5 pure-u-lg-1-5">
 	    		

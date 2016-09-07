@@ -8,12 +8,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="<c:url value="/resources/css/tracy/pure.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
+
 
 <title>中介工作列表-已完成申请</title>
 
@@ -64,8 +65,8 @@ hr {
 					class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
 					<ul class="menuStyleMcx headerLinkStyleMcx">
 						
-						<li><a href="<%=request.getContextPath() %>/account/toEditProfile">${loginEmail}</a></li>
-						<li><a href="<%=request.getContextPath() %>/account/logout">退出</a></li>
+						<li><a href="http://edu.comeon.today/account/toEditProfile">${loginEmail}</a></li>
+						<li><a href="http://edu.comeon.today/account/logout">退出</a></li>
 
 					</ul>
 				</div>
@@ -80,12 +81,12 @@ hr {
 				class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
 				<ul class="menuStyleMcx">
 					<li><a href="#">您的申请</a></li>
-					<li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/agent/toCaseList-done"
+					<li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/agent/toCaseList-done"
 						style="color: #f2f2f2; border-bottom: 3px solid #f2f2f2; padding-bottom: 7px;">工作列表</a></li>
 					<li><a
-						href="<%=request.getContextPath() %>/account/toEditProfile">个人资料</a></li>
+						href="http://edu.comeon.today/account/toEditProfile">个人资料</a></li>
 					<li><a
-						href="<%=request.getContextPath() %>/account/toPrivacySetting">账号管理</a></li>
+						href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
 				</ul>
 			</div>
 		</div>
@@ -98,11 +99,11 @@ hr {
 				class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx ">
 				<ul>
 					<li><a
-						href="<%=request.getContextPath() %>/agent/toCaseList">处理中的申请</a></li>
+						href="http://edu.comeon.today/agent/toCaseList">处理中的申请</a></li>
 					<li><a style="font-size: 95%;"
 						href="#">未给出方案的申请</a></li>
 					<li class="menuItemSelectedMcx" style="color: black !important;"><i
-					class="fa fa-caret-right" aria-hidden="true"></i><a href="<%=request.getContextPath() %>/agent/toCaseList-done">已完成的申请</a></li>
+					class="fa fa-caret-right" aria-hidden="true"></i><a href="http://edu.comeon.today/agent/toCaseList-done">已完成的申请</a></li>
 				</ul>
 			</div>
 			<!--垂直菜单-->
@@ -152,12 +153,12 @@ hr {
 	</div>
 
 </body>
-<script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+<script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
 <script type="text/javascript" src="<c:url value="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js" />"></script>
 <!-- <script type="text/javascript" src="<c:url value="https://cdn.datatables.net/plug-ins/1.10.12/sorting/chinese-string.js" />"></script> -->
 <script type="text/javascript">
 	$(document).ready(function(){
-		$.get('http://localhost:8080/agency/agent/api/getProcessedPlan', function(data){
+		$.get('http://edu.comeon.today/agent/api/getProcessedPlan', function(data){
 			var table = $("#tableid").DataTable({
 				"data": data,
 	            "columns": [{"mData":"username"},
@@ -167,7 +168,7 @@ hr {
 	                          {"mData":"createdTime"},
 	                          {"mData":"pid",
 	                           "render": function(data, type, full, meta){
-	                        	   return '<a href="http://localhost:8080/agency/plan/toCaseDetail?pid=' + data + '"> 详细\>\></a>';
+	                        	   return '<a href="http://edu.comeon.today/plan/toCaseDetail?pid=' + data + '"> 详细\>\></a>';
 	                           }
 	                         }],
 				"oLanguage": {

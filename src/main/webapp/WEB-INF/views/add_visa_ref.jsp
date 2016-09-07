@@ -9,11 +9,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/pure.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
 
     <title>填写签证号码</title>
 

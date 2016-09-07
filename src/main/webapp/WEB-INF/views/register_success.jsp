@@ -10,11 +10,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="css/pure.css">
-    <link rel="stylesheet" href="css/side-menu.css">
-    <link rel="stylesheet" href="font-awesome-4.6.3/CSS/font-awesome.min.css">
-    <link rel="stylesheet" href="css/grids-responsive.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
 
     <title>邮箱注册验证</title>
 
@@ -54,11 +55,8 @@
                 <div class="pure-u-16-24" style="text-align:left;">
                     <a class="webTitleh1FontMcx" href="">Malimalihong</a>
                 </div>
-                              
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
-                <ul class="menuStyleMcx headerLinkStyleMcx">   
-                    <li><a href="#">登录</a></li>
-                    <li><a href="#">注册</a></li>                                     
+                <ul class="menuStyleMcx headerLinkStyleMcx">                                  
                 </ul>
                 </div>
                 
@@ -71,8 +69,10 @@
             <div class="pure-u-9-24 middleBox">
                 <h1 class="titleStyle ">
                     <i class="fa fa-thumbs-up" style="margin-right:30px;" aria-hidden="true"></i>邮箱注册成功！</h1>
-                <br><br><br>
-                <a  class="verifyBtn" href="#"><span>立即验证</span></a>
+                <br><br>
+                <p>请用户先登录已经注册的邮箱，然后点击验证链接完成邮箱验证</p>
+                <br>
+                <a class="verifyBtn" href="http://${mail}" target="_blank"><span>前往电子邮箱验证</span></a>
             </div>
             <div class="pure-u-7-24"></div>
         </div>

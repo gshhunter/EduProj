@@ -8,11 +8,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/pure.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
 
     <title>申请成为顾问状态页面</title>
 
@@ -84,14 +84,14 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
                 </div>
                               
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
                     <!--<li><a href="#">收件箱</a></li>-->
-                    <li><a href="<%=request.getContextPath() %>/account/toViewProfile">${loginUser.email}</a></li>
-                    <li><a href="<%=request.getContextPath() %>/account/logout">退出</a></li>                                     
+                    <li><a href="http://edu.comeon.today/account/toViewProfile">${loginUser.email}</a></li>
+                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                                     
                 </ul>
                 </div>
                 
