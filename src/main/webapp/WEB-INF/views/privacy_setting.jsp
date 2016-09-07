@@ -48,7 +48,7 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
