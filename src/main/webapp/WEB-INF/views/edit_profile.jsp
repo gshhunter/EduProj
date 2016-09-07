@@ -9,13 +9,14 @@
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/pure.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/intlTelInput.css" />">
-	<link rel="stylesheet" href="<c:url value="/resources/css/jquery-countryselector.min.css" />">
+ 	<link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/intlTelInput.css" >
+	<link rel="stylesheet" href="http://edu.comeon.today/public/resources/jquery-countryselector.min.css" >
+
 	<title>学生个人资料编辑</title>
     
     <style>
@@ -51,15 +52,17 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" style="font-size:250%;" href="<%=request.getContextPath() %>">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" style="font-size:250%;" href="http://edu.comeon.today">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">
-                    <li class="highlightBorderMcx"><a href="#">成为中介</a></li>
+                	<c:if test="${userType != 3}">
+                    	<li class="highlightBorderMcx"><a href="http://edu.comeon.today/agent/toBeAgent">成为中介</a></li>
+                    </c:if>
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a id="email"></a></li>
-                    <li><a href="#">注销</a></li>                   
+                    <li><a href="http://edu.comeon.today/account/logout">注销</a></li>                   
                 </ul>
             </div>
                 
@@ -71,13 +74,14 @@
             <div class="pure-u-2-24 headerMenuBackgroundMcx" ></div>           
             <div class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
                 <ul class="menuStyleMcx">
-                    <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/studentDashboard.html">控制面板</a></li> -->
-                    <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a href="#">您的申请</a></li>
-                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toEditProfile" style="color:#f2f2f2;">个人资料</a></li>
-                    <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting">账号管理</a></li>
+                    <c:if test="${userType == 3}">
+                    	<li><a href="http://edu.comeon.today/agent/toCaseList" >工作列表</a></li>
+                    </c:if>
+                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/account/toEditProfile" style="color:#f2f2f2;">个人资料</a></li>
+                    <li><a href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
                 </ul>
-            </div>  
+            </div>
         </div>
         
         <!-- 信息提示 -->
@@ -89,10 +93,9 @@
           <div class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx " >
                 <ul>
                     <li class="menuItemSelectedMcx"><i class="fa fa-caret-right" aria-hidden="true"></i><a href="#">编辑</a></li>
-                    <li><a href="<%=request.getContextPath() %>/account/toVerification">信任验证</a></li>
-                    <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileComment.html#">评价</a></li> -->
+                    <li><a href="http://edu.comeon.today/account/toVerification">信任验证</a></li>    
                    	<br/>  
-                	<div class="pure-button"><a href="<%=request.getContextPath() %>/account/toViewProfile">查看我的资料</a></div>
+                	<div class="pure-button"><a href="http://edu.comeon.today/account/toViewProfile">查看我的资料</a></div>
                 </ul>
                 
             </div>
@@ -123,7 +126,6 @@
                         </select>
 				    </div>
                     
-                    
                     <div class="pure-control-group">
                         <label for="birthday">生日:</label>
                         <input id="birthday" class="pure-u-2-5" type="date" />
@@ -137,12 +139,10 @@
                         <label for="cellphone">手机:</label>
                         <input id="cellphone" class="pure-u-1" type="tel" style="margin-right:-8px;"/>
                     </div>
-                    
                 	<div class="pure-control-group">
                 		<label>国家:</label>
                 		<select id="country" data-role="country-selector" class="pure-u-2-5"></select>
                 	</div>
-                	
                 	<div class="pure-control-group">
                 		<label>地址:</label>
                 		<input id="address" class="pure-u-2-5" type="text"></input>
@@ -161,16 +161,17 @@
                 		<button id="saveProfile" type="submit" class="pure-button pure-button-primary pure-u-2-5">保存</button>
                 	</div>
                 </fieldset>
-                
             </form>
             </div>
 
         </div>
 	</div>
     <div class="footer">Malimaligong.com ®</div>
-    <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
-    <script src="<c:url value="/resources/js/intlTelInput.min.js" />"></script>
-    <script src="<c:url value="/resources/js/jquery.countryselector.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
+    
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/intlTelInput.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery-countryselector.min.js" />"></script>
+
 	<script>
 	$(document).ready(function(){
 		//电话号码国家自动选择
@@ -181,17 +182,17 @@
 					var countryCode = (resp && resp.country) ? resp.country : "";
 				    callback(countryCode);
 			});}
-			,utilsScript: "../resources/js/utils.js"
+			,utilsScript: "http://edu.comeon.today/public/resources/utils.js"
 		});
 
-		$.post("http://localhost:8080/agency/account/api/getProfile", function(data){
+		$.post("http://http://edu.comeon.today/account/api/getProfile", function(data){
 			
 			if (data == null) {
 				$("#info").text("Fail: Cannot load data");
 				$("#info").addClass("infoFail");
 			} else {
 				$("#email").text(data.email);
-				$("#email").attr("href", "<%=request.getContextPath() %>/account/toViewProfile");
+				$("#email").attr("href", "http://edu.comeon.today/account/toViewProfile");
 				$("#firstname").val(data.firstname);
 				$("#lastname").val(data.lastname);
 				$("#gender").val(data.gender);
@@ -228,19 +229,17 @@
 			profile.description = $("#description").val();
 			
 			var j = JSON.stringify(profile);
-			$.post("http://localhost:8080/agency/account/api/saveProfile", j, function(data) {
+			$.post("http://http://edu.comeon.today/account/api/saveProfile", j, function(data) {
 				if (data.status == 1) {
 					var str='<div id="suc" class="successMcx">操作成功哦！<i class="fa fa-check" aria-hidden="true"></i></div>';
 					$("#blank").empty();
 					$("#blank").append(str);				
 					$("#suc").fadeOut(2000);
-					
 				} else {
 					var str='<div id="fail" class="errorMcx">操作失败哦！<i class="fa fa-times" aria-hidden="true"></i></div>';
 					$("#black").empty();
 					$("#blank").append(str);				
 					$("#fail").fadeOut(2000);
-					
 				}
 			});
 			return false;

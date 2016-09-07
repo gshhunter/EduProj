@@ -8,12 +8,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/pure.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
+
 
     <title>中介工作详细内容 已有方案</title>
 
@@ -78,9 +79,9 @@
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
-                    <li><a href="#">收件箱</a></li>
-                    <li><i class="fa fa-smile-o" aria-hidden="true"></i><a href="#">张顾问</a></li>
-                    <li><a href="#">退出</a></li>                   
+                    
+                    <li><a href="http://edu.comeon.today/account/toViewProfile">${account.email}</a></li>
+                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                   
                 </ul>
             </div>
                 
@@ -92,11 +93,10 @@
             <div class="pure-u-2-24 "></div>
             <div class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
                 <ul class="menuStyleMcx">
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentDashboard.html">控制面板</a></li>
-                    <li><a href="#">收件箱</a></li>
-                    <li class="menuItemSelectedMcx"><a href="#" style="color:#f2f2f2; border-bottom:3px solid #f2f2f2;padding-bottom:7px;"">工作列表</a></li>
-                    <li ><a href="file:///Users/Chenxue/Documents/EduFont/agentProfile2Edit.html" >个人资料</a></li>
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc1MsgSetting.html">账号管理</a></li>
+                    <li ><a href="#">您的申请</a></li>
+                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/agent/toCaseList" style="color:#f2f2f2;">工作列表</a></li>
+                    <li ><a href="http://edu.comeon.today/account/toEditProfile" >个人资料</a></li>
+                    <li><a href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
                 </ul>
             </div>
         </div>
@@ -138,7 +138,7 @@
                                                     <label class="pure-u-1-5 ">电话:</label>
                                                     <label class="pure-u-4-5 ">
 	                                                    <c:if test="${account.cellphone eq null || account.cellphone == ''}">
-	                                                    	<a href="">前往验证</a>
+	                                                    	<a href="">前往添加</a>
 	                                                    </c:if>
 	                                                    <c:if test="${account.cellphone != null}">
 	                                                    	${account.cellphone}
@@ -306,7 +306,7 @@
             </div>
             <div class="pure-u-4-24"> 
                 <a class="alwaysRight linkStyle"
-                href="file:///Users/Chenxue/Documents/EduFont/agent1CaseListIng1.html">
+                href="http://edu.comeon.today/agent/toCaseList-done">
                 返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
             </div>
         </div>

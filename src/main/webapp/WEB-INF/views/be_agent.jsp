@@ -10,7 +10,7 @@
     <meta name="description" content="Email register page">
 
     <title>成为留学顾问</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <!--[if lte IE 8]>
     
@@ -29,7 +29,7 @@
         <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="<c:url value="/resources/css/layouts/marketing.css" />" >
+        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
     <!--<![endif]-->
 	<style>
 		#main-content {
@@ -46,12 +46,12 @@
 
 	<div class="header">
 	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>">Malimalihong</a>
+	        <a class="pure-menu-heading" href="http://edu.comeon.today">Malimalihong</a>
 	
 	        <ul class="pure-menu-list">
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>" class="pure-menu-link">${login_email}</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/logout" class="pure-menu-link">注销</a></li>
+	            <li class="pure-menu-item"><a href="http://edu.comeon.today/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
+	            <li class="pure-menu-item"><a href="http://edu.comeon.today" class="pure-menu-link">${login_email}</a></li>
+	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/logout" class="pure-menu-link">注销</a></li>
 	        </ul>
 	    </div>
 	</div>
@@ -189,7 +189,8 @@
 	<div class="footer l-box is-center"> Malimaligong.com ® </div>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
-  	<script src="<c:url value="/resources/js/datepicker/datepicker-zh-CN.js" />"></script>
+  	<script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/datepicker-zh-CN.js" />"></script>
+
   	<script>
 	  	$( function() {
 	  	    $( "#datepicker" ).datepicker({

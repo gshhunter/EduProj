@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="<c:url value="/resources/css/layouts/marketing.css" />" >
+        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
     <!--<![endif]-->
 	<style>
 		#main-content {

@@ -1,34 +1,32 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="zh">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Home Page of Studying Abroad">
 
     <title>填写留学意愿完成</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/fonts/font-awesome.min.css" />">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="<c:url value="/resources/css/layouts/main.css" />">
-        <link rel="stylesheet" href="<c:url value="/resources/css/layouts/request-complete.css" />">
+        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
+        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/request-complete.css" >
     <!--<![endif]-->
 </head>
 <body>
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="#">Logo（待确认）</a>
+        <a class="pure-menu-heading" href="http://edu.comeon.today">Logo（待确认）</a>
 
         <ul class="pure-menu-list">
-            <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
-            <li class="pure-menu-item"><a href="#" class="pure-menu-link">注册</a></li>
+            <li class="pure-menu-item"><a href="http://edu.comeon.today/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
+            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/" class="pure-menu-link">注册</a></li>
             <li class="pure-menu-item"><a href="#" class="pure-menu-link">登录</a></li>
         </ul>
     </div>

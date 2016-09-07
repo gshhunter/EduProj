@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="<c:url value="/resources/css/layouts/marketing.css" />" >
+        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
     <!--<![endif]-->
 	<style>
 		#main-content {
@@ -44,12 +44,12 @@
 
 	<div class="header">
 	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>">Malimalihong</a>
+	        <a class="pure-menu-heading" href="http://edu.comeon.today">Malimalihong</a>
 	
 	        <ul class="pure-menu-list">
 	            <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
+	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailRegister" class="pure-menu-link">注册</a></li>
+	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailLogin" class="pure-menu-link">登录</a></li>
 	        </ul>
 	    </div>
 	</div>

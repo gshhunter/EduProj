@@ -9,11 +9,11 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="<c:url value="/resources/css/tracy/pure.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
+	<link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
 
 	<title>学生个人资料信任与验证</title>
     
@@ -62,15 +62,17 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
 	                <ul class="menuStyleMcx headerLinkStyleMcx">
-	                    <li class="highlightBorderMcx"><a href="<%=request.getContextPath() %>/agent/toBeAgent">成为中介</a></li>
+	                	<c:if test="${userType != 3}">
+	                    	<li class="highlightBorderMcx"><a href="http://edu.comeon.today/agent/toBeAgent">成为中介</a></li>
+	                    </c:if>
 	                    <!-- <li><a href="#">收件箱</a></li> -->
-	                    <li><a href="<%=request.getContextPath() %>/account/toViewProfile">${loginEmail}</a></li>
-	                    <li><a href="<%=request.getContextPath() %>/account/logout">退出</a></li>                   
+	                    <li><a href="http://edu.comeon.today/account/toViewProfile">${loginEmail}</a></li>
+	                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                   
 	                </ul>
             	</div> 
             </div>
@@ -83,8 +85,11 @@
                 <ul class="menuStyleMcx">
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a href="#">您的申请</a></li>
-                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toEditProfile"style="color:#D8D8D8;">个人资料</a></li>
-                    <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting">账号管理</a></li>
+                    <c:if test="${userType == 3}">
+                    	<li><a href="http://edu.comeon.today/agent/toCaseList-done" >工作列表</a></li>
+                    </c:if>
+                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/account/toEditProfile"style="color:#D8D8D8;">个人资料</a></li>
+                    <li><a href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
                 </ul>
             </div>  
         </div>
@@ -97,11 +102,11 @@
 	        <!--垂直菜单-->
 	        <div class="pure-u-4-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx " >
 		        <ul>
-		            <li><a href="<%=request.getContextPath() %>/account/toEditProfile">编辑</a></li>
+		            <li><a href="http://edu.comeon.today/account/toEditProfile">编辑</a></li>
 		            <li class="menuItemSelectedMcx"><i class="fa fa-caret-right" aria-hidden="true"></i><a href="#">信任验证</a></li>
 		            <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileComment.html#">评价</a></li> -->
 		            <br/>
-		            <div class="pure-button"><a href="<%=request.getContextPath() %>/account/toViewProfile">查看我的资料</a></div>
+		            <div class="pure-button"><a href="http://edu.comeon.today/account/toViewProfile">查看我的资料</a></div>
 		        </ul>
 	        </div>
 			
@@ -182,8 +187,9 @@
 	</div>
        
     <div class="footer">Malimaligong.com ®</div>
-    <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
-   	<script>
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/layer/layer.js" />"></script>
+   	<script type="text/javascript">
    	
    	$(document).ready(function(){
    		
@@ -191,7 +197,7 @@
    		
    		var check = '<i class="fa fa-check" style="color:green" aria-hidden="true"></i>';
    		
-   		$.post("http://localhost:8080/agency/account/api/getProfile", function(data){
+   		$.post("http://edu.comeon.today/account/api/getProfile", function(data){
    			if (data == null) {
    				
    			} else {
@@ -262,14 +268,14 @@
    		});
    		
    		$("#verify_email_btn").click(function(){
-   			$.get('http://localhost:8080/agency/account/api/sendVerificationMail', function(sback){
+   			$.get('http://edu.comeon.today/account/api/sendVerificationMail', function(sback){
    					var sendEmail = $("#verify_email_btn");
    					settime(sendEmail);
    			});
    		});
    		
    		$("#verify_passport_btn").click(function(){
-   			alert("请联系后台工作人员帮您完成验证");
+   			alert("请联系后台工作人员帮您完成验证，电子邮箱： service@malimalihong.com.au");
    		});
    		
    	});

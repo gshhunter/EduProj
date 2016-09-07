@@ -51,6 +51,7 @@ import com.malihong.service.CookieHelper;
 import com.malihong.util.Base64Encript;
 import com.malihong.util.CountryList;
 import com.malihong.util.MD5Encript;
+import com.malihong.util.ToMailWebsite;
 import com.malihong.validation.ValidationUtil;
 
 @Controller
@@ -206,9 +207,22 @@ public class AccountController {
 		a.setPassword(passwordmd5);
 		a.setLastname(lastname);
 		a.setFirstname(firstname);
+		ident.setEmail(email);
+		a.setIdentification(ident);
 		accountService.addNewUser(a, p, ident);
 		
-		logger.info("Email: " + email + " Password: " + password + " MD5: " + passwordmd5);
+		String[] ss = email.split("@");
+		String mail = ToMailWebsite.getMailWebsite(ss[1]);
+		model.addAttribute("mail", mail);
+		logger.info("Email: " + email + " Password: " + password + " MD5: " + passwordmd5 + " MAIL: " + mail);
+		
+		String mingwen = "&" + email;
+		String miwen = MD5Encript.crypt(mingwen);
+		String url = "http://localhost:8080/agency/account/verify_email?vid=" + miwen + "&email=" + email;
+		ExecutorService executorService = Executors.newCachedThreadPool();  
+        Future<String> future = executorService.submit(new MailServer(email,"邮箱账号验证","<h1>" + url + "</h1>"));
+        logger.info("邮箱账号验证邮件发送成功, 邮件已经发送到： " + email);
+        
 		return "register_success";
 	}
 	
@@ -370,31 +384,34 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value="/verify_email", method=RequestMethod.GET)
-	public String toResetPwd(@RequestParam(value="vid", required=true) String vid, HttpServletRequest request, HttpServletResponse response, Model model){
+	public String toResetPwd(@RequestParam(value="vid", required=true) String vid, @RequestParam(value="email", required=true) String email, HttpServletRequest request, HttpServletResponse response, Model model){
 		if (vid == null || "".equals(vid.trim()) ) {
 			return "error_mail";
 		}
 		
-		int accountId = getAccountIdByCookie(request, response);
-		Account account = accountService.findUserById(accountId);
-		String email = account.getEmail();
-		
-		model.addAttribute("loginEmail", email);
-		
-		String mingwen = accountId + "&" + email;
-		String miwen = MD5Encript.crypt(mingwen);
-		
-		if (!vid.equals(miwen)) {
+		boolean isExist = accountService.checkAccountByEmail(email);
+		if (!isExist) {
 			return "error_mail";
+		} else {
+			Account account = accountService.findUserByEmail(email);
+			
+			model.addAttribute("loginEmail", email);
+			
+			String mingwen = "&" + email;
+			String miwen = MD5Encript.crypt(mingwen);
+			
+			if (!vid.equals(miwen)) {
+				return "error_mail";
+			}
+			
+			Identification ident = account.getIdentification();
+			ident.setEmail(email);
+			ident.setIsEmail(1);
+			account.setIdentification(ident);
+			accountService.update(account);
+			
+			return "trust_verification";
 		}
-		
-		Identification ident = account.getIdentification();
-		ident.setEmail(email);
-		ident.setIsEmail(1);
-		account.setIdentification(ident);
-		accountService.update(account);
-		
-		return "trust_verification";
 	}
 	
 	/**
@@ -427,12 +444,12 @@ public class AccountController {
 			return root.toString();
 		}
 		
-		int accountId = getAccountIdByCookie(request, response);
+		//int accountId = getAccountIdByCookie(request, response);
 		
-		String mingwen = accountId + "&" + cookieEmail;
+		String mingwen = "&" + cookieEmail;
 		String miwen = MD5Encript.crypt(mingwen);
 		
-		String url = "http://localhost:8080/agency/account/verify_email?vid=" + miwen;
+		String url = "http://localhost:8080/agency/account/verify_email?vid=" + miwen + "&email=" + cookieEmail;
 		
 		//发送邮件接口
 		ExecutorService executorService = Executors.newCachedThreadPool();  
@@ -459,7 +476,11 @@ public class AccountController {
 	 * @return
 	 */
 	@RequestMapping(value="/toEditProfile", method=RequestMethod.GET)
-	public String toEditProfile(Model model) {
+	public String toEditProfile(Model model, HttpServletRequest request, HttpServletResponse response) {
+		String email = getEmailByCookie(request, response);
+		Account account = accountService.findUserByEmail(email);
+		int userType = account.getType();
+		model.addAttribute("userType", userType);
 		model.addAttribute("editProfile", new EditProfile());
 		return "edit_profile";
 	}
@@ -607,6 +628,9 @@ public class AccountController {
 	public String toVerification(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		String email = getEmailByCookie(request, response);
+		Account account = accountService.findUserByEmail(email);
+		int userType = account.getType();
+		model.addAttribute("userType", userType);
 		model.addAttribute("loginEmail", email);
 		return "trust_verification";
 	}

@@ -8,11 +8,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/pure.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
 
     <title>个人资料查看</title>
 
@@ -71,7 +71,7 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
@@ -79,7 +79,7 @@
                     <li id="hightlightbox"><a id="beagent" href="#"></a></li>
                     <!--<li><a href="#">收件箱</a></li>-->
                     <li><a id="email"></a></li>
-                    <li><a href="<%=request.getContextPath() %>/account/logout">注销</a></li>                   
+                    <li><a href="http://edu.comeon.today/account/logout">注销</a></li>                   
                 </ul>
             </div>
                 
@@ -100,7 +100,7 @@
                 <br>
                 <br>
                 <br>
-                <a href="<%=request.getContextPath() %>/account/toEditProfile" style="color:#0D47A1;">编辑我的信息</a>
+                <a href="http://edu.comeon.today/account/toEditProfile" style="color:#0D47A1;">编辑我的信息</a>
             </div>
            <div class="pure-u-16-24 insidePageContent">
                <h1 id="name">你好，我是</h1>
@@ -132,14 +132,14 @@
         
     </div>
     <div class="footer">Malimaligong.com ®</div>
-    <script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
-		$.post("http://localhost:8080/agency/account/api/getProfile", function(data){
+		$.post("http://edu.comeon.today/account/api/getProfile", function(data){
 			$("#hightlightbox").prop("disabled", true);
 			$("#email").text(data.email);
-			$("#email").attr("href", "<%=request.getContextPath() %>/account/toViewProfile");
+			$("#email").attr("href", "http://edu.comeon.today/account/toViewProfile");
 			
 			if (data.isCellphone == 1) {
 				$("#isCellphone").addClass("iconYes");
@@ -182,7 +182,7 @@
 				$("#hightlightbox").removeClass("highlightBorderMcx");
 			} else {
 				$("#beagent").text("成为中介");
-				$("#beagent").attr("href", "<%=request.getContextPath() %>/agent/toBeAgent");
+				$("#beagent").attr("href", "http://edu.comeon.today/agent/toBeAgent");
 				$("#hightlightbox").prop("disabled", false);
 				$("#hightlightbox").addClass("highlightBorderMcx");
 			}

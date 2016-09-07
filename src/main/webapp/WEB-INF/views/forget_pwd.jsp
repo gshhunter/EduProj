@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
     <![endif]-->
     <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="<c:url value="/resources/css/layouts/marketing.css" />" >
+        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
     <!--<![endif]-->
 	<style>
 		#main-content {
@@ -48,12 +48,12 @@
 
 	<div class="header">
 	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>">Logo</a>
+	        <a class="pure-menu-heading" href="http://edu.comeon.today">Logo</a>
 	
 	        <ul class="pure-menu-list">
 	            <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
+	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailRegister" class="pure-menu-link">注册</a></li>
+	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailLogin" class="pure-menu-link">登录</a></li>
 	        </ul>
 	    </div>
 	</div>
@@ -114,7 +114,7 @@
 	
 	<div class="footer l-box is-center"> Malimaligong.com ® </div>
 
-	<script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
+	<script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -137,7 +137,7 @@
 			}
 			$("#error").text("");
 			
-			$.get('http://localhost:8080/agency/account/api/sendResetMail?email=' + email, function(sback){
+			$.get('http://edu.comeon.today/account/api/sendResetMail?email=' + email, function(sback){
 	
 				if (sback.status == -1) {
 					$("#error").css("color", "red");

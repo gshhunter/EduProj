@@ -8,12 +8,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/pure.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/side-menu.css" />">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="http://edu.comeon.today/public/resources/pure.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/side-menu.css" >
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/grids-responsive.css" >
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/main.css" />">
-    <link rel="stylesheet" href="<c:url value="/resources/css/tracy/grids-responsive.css" />">
+
 
     <title>中介工作详细内容 已有方案</title>
 
@@ -73,14 +74,13 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
-                    <li><a href="#">收件箱</a></li>
-                    <li><i class="fa fa-smile-o" aria-hidden="true"></i><a href="#">张顾问</a></li>
-                    <li><a href="#">退出</a></li>                   
+                    <li><a href="http://edu.comeon.today/account/toViewProfile">${account.email}</a></li>
+                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                    
                 </ul>
             </div>
                 
@@ -92,11 +92,10 @@
             <div class="pure-u-2-24 "></div>
             <div class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
                 <ul class="menuStyleMcx">
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentDashboard.html">控制面板</a></li>
-                    <li><a href="#">收件箱</a></li>
-                    <li class="menuItemSelectedMcx"><a href="#" style="color:#f2f2f2; border-bottom:3px solid #f2f2f2;padding-bottom:7px;"">工作列表</a></li>
-                    <li ><a href="file:///Users/Chenxue/Documents/EduFont/agentProfile2Edit.html" >个人资料</a></li>
-                    <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc1MsgSetting.html">账号管理</a></li>
+                    <li ><a href="#">您的申请</a></li>
+                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/agent/toCaseList" style="color:#f2f2f2;">工作列表</a></li>
+                    <li ><a href="http://edu.comeon.today/account/toEditProfile" >个人资料</a></li>
+                    <li><a href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
                 </ul>
             </div>
         </div>
@@ -304,7 +303,7 @@
             </div>
             <div class="pure-u-4-24"> 
                 <a class="alwaysRight linkStyle"
-                href="file:///Users/Chenxue/Documents/EduFont/agent1CaseListIng1.html">返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
+                href="http://edu.comeon.today/agent/toCaseList">返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
             </div>
         </div>
 
@@ -313,7 +312,6 @@
 
        <!--显示收到／发出的评价的方法：参数showA为展示，hideB为隐藏-->
        
-           
     </div>
      <!--footer display here-->
     <div>
@@ -326,8 +324,8 @@
         <script>riot.mount('footerpage')</script>
         
     </div>
-  	<script type="text/javascript" src="<c:url value="/resources/js/lib/jquery.js" />"></script>
-  	<script type="text/javascript" src="<c:url value="/resources/js/layer/layer.js" />"></script>
+  	<script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/layer/layer.js" />"></script>
     <script>
         $(document).ready(function() {
         	var trn;
@@ -338,9 +336,9 @@
             	}, function(pass){
             		
                 	layer.msg('TRN: '+ pass+' 输入成功！' );
-                	$.get('http://localhost:8080/agency/plan/api/saveTRN?pid='+${plan.idPlan}+'&trn='+pass, function(data){
+                	$.get('http://edu.comeon.today/plan/api/saveTRN?pid='+${plan.idPlan}+'&trn='+pass, function(data){
             			
-                		$(location).attr('href','http://localhost:8080/agency/plan/toCaseDetail?pid='+${plan.idPlan});
+                		$(location).attr('href','http://edu.comeon.today/plan/toCaseDetail?pid='+${plan.idPlan});
                 	});
             	});
                 
