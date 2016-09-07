@@ -170,7 +170,7 @@
     <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
     
     <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/intlTelInput.min.js" />"></script>
-    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery-countryselector.min.js" />"></script>
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.countryselector.min.js" />"></script>
 
 	<script>
 	$(document).ready(function(){
@@ -185,7 +185,7 @@
 			,utilsScript: "http://edu.comeon.today/public/resources/utils.js"
 		});
 
-		$.post("http://http://edu.comeon.today/account/api/getProfile", function(data){
+		$.post("http://edu.comeon.today/account/api/getProfile", function(data){
 			
 			if (data == null) {
 				$("#info").text("Fail: Cannot load data");
@@ -229,7 +229,7 @@
 			profile.description = $("#description").val();
 			
 			var j = JSON.stringify(profile);
-			$.post("http://http://edu.comeon.today/account/api/saveProfile", j, function(data) {
+			$.post("http://edu.comeon.today/account/api/saveProfile", j, function(data) {
 				if (data.status == 1) {
 					var str='<div id="suc" class="successMcx">操作成功哦！<i class="fa fa-check" aria-hidden="true"></i></div>';
 					$("#blank").empty();
