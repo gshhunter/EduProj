@@ -143,4 +143,8 @@ public class PlanServiceImpl implements PlanService{
 		return this.accDao.findAgentIdByRandom();
 	}
 
+	@Override
+	public Plan findByRequestIdAndAgencyId(Integer rid, Integer aid){
+		return this.planDao.findByRequestIdAndAgencyId(rid, aid);
+	}
 }

@@ -30,4 +30,5 @@ public interface PlanService {
 	
 	public int findAgentForNewRequest(); //random in v1
 
+	public Plan findByRequestIdAndAgencyId(Integer rid, Integer aid);
 }
