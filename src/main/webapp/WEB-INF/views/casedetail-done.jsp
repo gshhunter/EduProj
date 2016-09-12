@@ -80,7 +80,7 @@
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
                     
-                    <li><a href="http://edu.comeon.today/account/toViewProfile">${account.email}</a></li>
+                    <li><a href="http://edu.comeon.today/account/toViewProfile">${loginEmail}</a></li>
                     <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                   
                 </ul>
             </div>

@@ -23,6 +23,7 @@ import com.malihong.entity.Request;
 import com.malihong.service.AccountService;
 import com.malihong.service.PlanService;
 import com.malihong.service.StudentRequestService;
+import com.malihong.util.CookieUtil;
 
 @Controller
 @RequestMapping("/plan")
@@ -45,6 +46,8 @@ public class PlanController {
 	public String toCaseDetail(@RequestParam(value="pid", required=true) Integer pid , HttpServletRequest request, HttpServletResponse response, Model model) {
 		Plan plan = planService.findPlanById(pid);
 		model.addAttribute("plan", plan);
+		String loginEmail = CookieUtil.getEmailByCookie(request, response);
+		model.addAttribute("loginEmail", loginEmail);
 		
 		if (plan == null) {
 			return "casedetail-noplan";
