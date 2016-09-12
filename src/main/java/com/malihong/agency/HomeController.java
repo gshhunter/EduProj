@@ -29,7 +29,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home.do", method = RequestMethod.GET)
 	public String home(Locale locale, Model model, HttpServletRequest request) {
 
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);

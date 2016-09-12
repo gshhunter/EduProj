@@ -287,8 +287,11 @@ public class StudentRequestController {
 	
 	//学生查看request页面（可能包括收到的plans）
 	
-	@RequestMapping(value = "/testpage", method = RequestMethod.GET)
+	@RequestMapping(value = "/page/testpage.do", method = RequestMethod.GET)
 	public String testPage() throws JsonProcessingException {
+		
+		System.out.println("test here");
+		logger.info("test!");
 		return "testpage";
 	}
 	//For Test

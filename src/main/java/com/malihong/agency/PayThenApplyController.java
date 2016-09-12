@@ -94,7 +94,7 @@ public class PayThenApplyController {
 			root.put("info", "bad code:(");
 			return root.toString();
 		}
-		//寻找中介, 开发使用id： 
+		//寻找中介
 		//random selection
 		int aid=this.planService.findAgentForNewRequest();
 		root.put("agentId", aid);
