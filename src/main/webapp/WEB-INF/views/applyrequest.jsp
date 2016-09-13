@@ -94,7 +94,7 @@ a {
 			<div class="pure-g">
 				<div class="pure-u-1-24"></div>
 				<div class="pure-u-16-24" style="text-align: left;">
-					<a class="webTitleh1FontMcx" href="">Malimalihong</a>
+					<a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
 				</div>
 
 				<div

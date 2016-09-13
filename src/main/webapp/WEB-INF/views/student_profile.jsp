@@ -71,7 +71,7 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
@@ -79,7 +79,7 @@
                     <li id="hightlightbox"><a id="beagent" href="#"></a></li>
                     <!--<li><a href="#">收件箱</a></li>-->
                     <li><a id="email"></a></li>
-                    <li><a href="http://edu.comeon.today/account/logout">注销</a></li>                   
+                    <li><a href="<%=request.getContextPath() %>/account/logout.do">注销</a></li>                   
                 </ul>
             </div>
                 
@@ -100,7 +100,7 @@
                 <br>
                 <br>
                 <br>
-                <a href="http://edu.comeon.today/account/toEditProfile" style="color:#0D47A1;">编辑我的信息</a>
+                <a href="<%=request.getContextPath() %>/account/toEditProfile.do" style="color:#0D47A1;">编辑我的信息</a>
             </div>
            <div class="pure-u-16-24 insidePageContent">
                <h1 id="name">你好，我是</h1>
@@ -136,10 +136,10 @@
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
-		$.post("http://edu.comeon.today/account/api/getProfile", function(data){
+		$.post("http://edu.comeon.today/api/v1/getProfile", function(data){
 			$("#hightlightbox").prop("disabled", true);
 			$("#email").text(data.email);
-			$("#email").attr("href", "http://edu.comeon.today/account/toViewProfile");
+			$("#email").attr("href", "http://edu.comeon.today/account/toViewProfile.do");
 			
 			if (data.isCellphone == 1) {
 				$("#isCellphone").addClass("iconYes");
@@ -182,7 +182,7 @@
 				$("#hightlightbox").removeClass("highlightBorderMcx");
 			} else {
 				$("#beagent").text("成为中介");
-				$("#beagent").attr("href", "http://edu.comeon.today/agent/toBeAgent");
+				$("#beagent").attr("href", "http://edu.comeon.today/agent/toBeAgent.do");
 				$("#hightlightbox").prop("disabled", false);
 				$("#hightlightbox").addClass("highlightBorderMcx");
 			}

@@ -84,14 +84,14 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
                 </div>
                               
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
                     <!--<li><a href="#">收件箱</a></li>-->
-                    <li><a href="http://edu.comeon.today/account/toViewProfile">${loginUser.email}</a></li>
-                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                                     
+                    <li><a href="<%=request.getContextPath() %>/account/toViewProfile.do">${loginUser.email}</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/logout.do">退出</a></li>                                     
                 </ul>
                 </div>
                 

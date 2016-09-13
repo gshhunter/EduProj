@@ -41,7 +41,6 @@ import com.malihong.util.Base64Encript;
 import com.malihong.util.CountryList;
 
 @Controller
-@RequestMapping("/agent")
 public class AgentController {
 
 	private static final Logger logger = LoggerFactory.getLogger(AgentController.class);
@@ -52,7 +51,7 @@ public class AgentController {
 	@Autowired
 	private PlanService planService;
 	
-	@RequestMapping(value="/toBeAgent", method=RequestMethod.GET)
+	@RequestMapping(value="/agent/toBeAgent.do", method=RequestMethod.GET)
 	public String toBeAgent(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
@@ -81,7 +80,7 @@ public class AgentController {
 		return "be_agent";
 	}
 	
-	@RequestMapping(value="/beAgent", method=RequestMethod.GET)
+	@RequestMapping(value="/agent/beAgent.do", method=RequestMethod.GET)
 	public String beAgent(@ModelAttribute("beAgentBean") BeAgentBean beAgentBean, BindingResult result, Model model,
 			HttpServletRequest request, HttpServletResponse response) throws ParseException {
 		
@@ -197,7 +196,7 @@ public class AgentController {
 		}
 	}
 	
-	@RequestMapping(value="/toCaseList", method=RequestMethod.GET)
+	@RequestMapping(value="/agent/toCaseList.do", method=RequestMethod.GET)
 	public String toCaseList(Model model, HttpServletRequest request, HttpServletResponse response) {
 		int uid = AccountController.getAccountIdByCookie(request, response);
 		Account account = accountService.findUserById(uid);
@@ -213,7 +212,7 @@ public class AgentController {
 		return "caselist-ing";
 	}
 	
-	@RequestMapping(value="/api/getUnprocessedPlan", method=RequestMethod.GET)
+	@RequestMapping(value="/api/v1/getUnprocessedPlan", method=RequestMethod.GET)
 	public @ResponseBody List<AgentCaseBean> getUnprocessedPlan(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -247,7 +246,7 @@ public class AgentController {
 		return caselist;
 	}
 	
-	@RequestMapping(value="/api/getProcessedPlan", method=RequestMethod.GET)
+	@RequestMapping(value="/api/v1/getProcessedPlan", method=RequestMethod.GET)
 	public @ResponseBody List<AgentCaseBean> getProcessedPlan(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -281,7 +280,7 @@ public class AgentController {
 		return caselist;
 	}
 	
-	@RequestMapping(value="/api/countUnprocessedPlan", method=RequestMethod.GET)
+	@RequestMapping(value="/api/v1/countUnprocessedPlan", method=RequestMethod.GET)
 	public @ResponseBody Integer countUnprocessedPlan(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		int accountid = AccountController.getAccountIdByCookie(request, response);
@@ -291,7 +290,7 @@ public class AgentController {
 		return num;
 	}
 	
-	@RequestMapping(value="/toCaseList-done", method=RequestMethod.GET)
+	@RequestMapping(value="/agent/toCaseList-done.do", method=RequestMethod.GET)
 	public String toCaseListDone(Model model, HttpServletRequest request, HttpServletResponse response) {
 		int uid = AccountController.getAccountIdByCookie(request, response);
 		Account account = accountService.findUserById(uid);

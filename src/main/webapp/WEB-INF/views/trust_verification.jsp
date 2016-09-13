@@ -62,17 +62,17 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
 	                <ul class="menuStyleMcx headerLinkStyleMcx">
 	                	<c:if test="${userType != 3}">
-	                    	<li class="highlightBorderMcx"><a href="http://edu.comeon.today/agent/toBeAgent">成为中介</a></li>
+	                    	<li class="highlightBorderMcx"><a href="http://edu.comeon.today/agent/toBeAgent.do">成为中介</a></li>
 	                    </c:if>
 	                    <!-- <li><a href="#">收件箱</a></li> -->
-	                    <li><a href="http://edu.comeon.today/account/toViewProfile">${loginEmail}</a></li>
-	                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                   
+	                    <li><a href="http://edu.comeon.today/account/toViewProfile.do">${loginEmail}</a></li>
+	                    <li><a href="http://edu.comeon.today/account/logout.do">退出</a></li>                   
 	                </ul>
             	</div> 
             </div>
@@ -86,10 +86,10 @@
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a href="#">您的申请</a></li>
                     <c:if test="${userType == 3}">
-                    	<li><a href="http://edu.comeon.today/agent/toCaseList-done" >工作列表</a></li>
+                    	<li><a href="http://edu.comeon.today/agent/toCaseList-done.do" >工作列表</a></li>
                     </c:if>
-                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/account/toEditProfile"style="color:#D8D8D8;">个人资料</a></li>
-                    <li><a href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
+                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/account/toEditProfile.do"style="color:#D8D8D8;">个人资料</a></li>
+                    <li><a href="http://edu.comeon.today/account/toPrivacySetting.do">账号管理</a></li>
                 </ul>
             </div>  
         </div>
@@ -102,11 +102,11 @@
 	        <!--垂直菜单-->
 	        <div class="pure-u-4-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx " >
 		        <ul>
-		            <li><a href="http://edu.comeon.today/account/toEditProfile">编辑</a></li>
+		            <li><a href="http://edu.comeon.today/account/toEditProfile.do">编辑</a></li>
 		            <li class="menuItemSelectedMcx"><i class="fa fa-caret-right" aria-hidden="true"></i><a href="#">信任验证</a></li>
 		            <!-- <li><a href="file:///Users/Chenxue/Documents/EduFont/studentProfileComment.html#">评价</a></li> -->
 		            <br/>
-		            <div class="pure-button"><a href="http://edu.comeon.today/account/toViewProfile">查看我的资料</a></div>
+		            <div class="pure-button"><a href="http://edu.comeon.today/account/toViewProfile.do">查看我的资料</a></div>
 		        </ul>
 	        </div>
 			
@@ -197,7 +197,7 @@
    		
    		var check = '<i class="fa fa-check" style="color:green" aria-hidden="true"></i>';
    		
-   		$.post("http://edu.comeon.today/account/api/getProfile", function(data){
+   		$.post("http://edu.comeon.today/api/v1/getProfile", function(data){
    			if (data == null) {
    				
    			} else {
@@ -268,14 +268,14 @@
    		});
    		
    		$("#verify_email_btn").click(function(){
-   			$.get('http://edu.comeon.today/account/api/sendVerificationMail', function(sback){
+   			$.get('http://edu.comeon.today/api/v1/sendVerificationMail', function(sback){
    					var sendEmail = $("#verify_email_btn");
    					settime(sendEmail);
    			});
    		});
    		
    		$("#verify_passport_btn").click(function(){
-   			alert("请联系后台工作人员帮您完成验证，电子邮箱： service@malimalihong.com.au");
+   			alert("请发送您的护照影印件到我们的电子邮箱： service@malimalihong.com.au，后台将会帮助您完成验证");
    		});
    		
    	});

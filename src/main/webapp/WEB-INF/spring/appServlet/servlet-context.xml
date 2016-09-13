@@ -29,7 +29,8 @@
 	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
-
+	<mvc:resources mapping="/pages/**" location="/pages/" />
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
@@ -40,13 +41,15 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/*/*" />
-			<mvc:exclude-mapping path="/account/toEmailLogin"/>
-			<mvc:exclude-mapping path="/account/loginEmail"/>
-			<mvc:exclude-mapping path="/account/logout"/>
-			<mvc:exclude-mapping path="/account/forgetPwd"/>
-			<mvc:exclude-mapping path="/account/reset_password"/>
-			<mvc:exclude-mapping path="/account/registerEmail"/>
-			<mvc:exclude-mapping path="/account/resetPassword"/>
+			<mvc:exclude-mapping path="/account/toEmailLogin.do"/>
+			<mvc:exclude-mapping path="/account/loginEmail.do"/>
+			<mvc:exclude-mapping path="/account/logout.do"/>
+			<mvc:exclude-mapping path="/account/forgetPwd.do"/>
+			<mvc:exclude-mapping path="/account/reset_password.do"/>
+			<mvc:exclude-mapping path="/account/registerEmail.do"/>
+			<mvc:exclude-mapping path="/account/resetPassword.do"/>
+			<mvc:exclude-mapping path="/account/toTestPage.do"/>
+			<mvc:exclude-mapping path="/pages/*"/>
 			<mvc:exclude-mapping path="/1/*"/>
 			<mvc:exclude-mapping path="/apply/*"/>
 			<mvc:exclude-mapping path="/req/*"/>
@@ -68,7 +71,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<!-- Package -->
 	<context:component-scan base-package="com.malihong.agency" />
 	<context:component-scan base-package="com.malihong.service" />
