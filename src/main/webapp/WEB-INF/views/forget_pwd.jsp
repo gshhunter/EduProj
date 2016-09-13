@@ -48,12 +48,12 @@
 
 	<div class="header">
 	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="http://edu.comeon.today">Logo</a>
+	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Logo</a>
 	
 	        <ul class="pure-menu-list">
-	            <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailLogin" class="pure-menu-link">登录</a></li>
+	            <!-- <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li> -->
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister.do" class="pure-menu-link">注册</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin.do" class="pure-menu-link">登录</a></li>
 	        </ul>
 	    </div>
 	</div>
@@ -137,7 +137,7 @@
 			}
 			$("#error").text("");
 			
-			$.get('http://edu.comeon.today/account/api/sendResetMail?email=' + email, function(sback){
+			$.get('http://edu.comeon.today/api/v1/sendResetMail?email=' + email, function(sback){
 	
 				if (sback.status == -1) {
 					$("#error").css("color", "red");

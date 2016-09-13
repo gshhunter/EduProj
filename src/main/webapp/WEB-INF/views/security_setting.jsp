@@ -42,16 +42,16 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
                 </div>
                
                  <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">
                 	<c:if test="${userType != 3}">
-	                	<li class="highlightBorderMcx"><a href="http://edu.comeon.today/agent/toBeAgent">成为中介</a></li>
+	                	<li class="highlightBorderMcx"><a href="<%=request.getContextPath() %>/agent/toBeAgent.do">成为中介</a></li>
 	                </c:if>            
-                    <li><a href="http://edu.comeon.today/account/toViewProfile">${loginEmail}</a></li>
-                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                                     
+                    <li><a href="<%=request.getContextPath() %>/account/toViewProfile.do">${loginEmail}</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/logout.do">退出</a></li>                                     
                 </ul>
                 </div>
                 
@@ -66,10 +66,10 @@
 
                     <li ><a href="file:///Users/Chenxue/Documents/EduFont/agent1CaseList.html">您的申请</a></li>
                     <c:if test="${userType == 3}">
-                    	<li><a href="http://edu.comeon.today/agent/toCaseList-done" >工作列表</a></li>
+                    	<li><a href="<%=request.getContextPath() %>/agent/toCaseList-done.do" >工作列表</a></li>
                     </c:if>
-                    <li ><a href="http://edu.comeon.today/account/toEditProfile" >个人资料</a></li>
-                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/account/toPrivacySetting" style="color:#f2f2f2;">账号管理</a></li>
+                    <li ><a href="<%=request.getContextPath() %>/account/toEditProfile.do" >个人资料</a></li>
+                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toPrivacySetting.do" style="color:#f2f2f2;">账号管理</a></li>
                 </ul>
             </div>
         </div>
@@ -85,10 +85,10 @@
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc2PaySetting.html">付款方式</a></li>
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc3EarnSetting.html">收款偏好</a></li>
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc4TranSetting.html">交易记录</a></li>
-                    <li><a href="http://edu.comeon.today/account/toPrivacySetting">隐私设置</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting.do">隐私设置</a></li>
                     <li class="menuItemSelectedMcx">
                         <i class="fa fa-caret-right" aria-hidden="true"></i>
-                        <a href="http://edu.comeon.today/account/toSecuritySetting" style="color:#333333;">安全设置</a>
+                        <a href="<%=request.getContextPath() %>/account/toSecuritySetting.do" style="color:#333333;">安全设置</a>
                     </li>
                 </ul>
             </div>
@@ -235,7 +235,7 @@
         	ss.againpwd = againpwd;
         	var r = JSON.stringify(ss);
         	
-			$.post('http://edu.comeon.today/account/api/changePassword', r, function(data){
+			$.post('http://edu.comeon.today/api/v1/changePassword', r, function(data){
 				console.log(r);
 				console.log(data.status);
 				

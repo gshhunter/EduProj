@@ -44,12 +44,11 @@
 
 	<div class="header">
 	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="http://edu.comeon.today">Malimalihong</a>
+	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
 	
 	        <ul class="pure-menu-list">
-	            <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailLogin" class="pure-menu-link">登录</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister.do" class="pure-menu-link">注册</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin.do" class="pure-menu-link">登录</a></li>
 	        </ul>
 	    </div>
 	</div>
@@ -58,7 +57,7 @@
 		
 		<h2 class="content-head is-center"><b>邮箱注册<!-- | <a href="">手机注册</a> --></b></h2>
 			
-		<form:form class="pure-form pure-form-stacked" method="POST" commandName="account" action="registerEmail" >
+		<form:form class="pure-form pure-form-stacked" method="POST" commandName="account" action="registerEmail.do" >
 			<fieldset>
 				<legend>创建用户</legend>
 				<div class="pure-g">

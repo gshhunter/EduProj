@@ -74,14 +74,14 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
                     
-                    <li><a href="http://edu.comeon.today/account/toViewProfile">${loginEmail}</a></li>
-                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                   
+                    <li><a href="<%=request.getContextPath() %>/account/toViewProfile.do">${loginEmail}</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/logout.do">退出</a></li>                   
                 </ul>
             </div>
                 
@@ -94,9 +94,9 @@
             <div class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
                 <ul class="menuStyleMcx">
                     <li ><a href="#">您的申请</a></li>
-                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/agent/toCaseList" style="color:#f2f2f2;">工作列表</a></li>
-                    <li ><a href="http://edu.comeon.today/account/toEditProfile" >个人资料</a></li>
-                    <li><a href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
+                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/agent/toCaseList.do" style="color:#f2f2f2;">工作列表</a></li>
+                    <li ><a href="<%=request.getContextPath() %>/account/toEditProfile.do" >个人资料</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting.do">账号管理</a></li>
                 </ul>
             </div>
         </div>
@@ -306,7 +306,7 @@
             </div>
             <div class="pure-u-4-24"> 
                 <a class="alwaysRight linkStyle"
-                href="http://edu.comeon.today/agent/toCaseList-done">
+                href="<%=request.getContextPath() %>/agent/toCaseList-done.do">
                 返回列表<i class="fa fa-caret-left" aria-hidden="true"></i></a>
             </div>
         </div>

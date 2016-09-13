@@ -52,17 +52,17 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" style="font-size:250%;" href="http://edu.comeon.today">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" style="font-size:250%;" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">
                 	<c:if test="${userType != 3}">
-                    	<li class="highlightBorderMcx"><a href="http://edu.comeon.today/agent/toBeAgent">成为中介</a></li>
+                    	<li class="highlightBorderMcx"><a href="<%=request.getContextPath() %>/agent/toBeAgent.do">成为中介</a></li>
                     </c:if>
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li><a id="email"></a></li>
-                    <li><a href="http://edu.comeon.today/account/logout">注销</a></li>                   
+                    <li><a href="<%=request.getContextPath() %>/account/logout.do">注销</a></li>                   
                 </ul>
             </div>
                 
@@ -76,10 +76,10 @@
                 <ul class="menuStyleMcx">
                     <li><a href="#">您的申请</a></li>
                     <c:if test="${userType == 3}">
-                    	<li><a href="http://edu.comeon.today/agent/toCaseList" >工作列表</a></li>
+                    	<li><a href="<%=request.getContextPath() %>/agent/toCaseList.do" >工作列表</a></li>
                     </c:if>
-                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/account/toEditProfile" style="color:#f2f2f2;">个人资料</a></li>
-                    <li><a href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
+                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toEditProfile.do" style="color:#f2f2f2;">个人资料</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toPrivacySetting.do">账号管理</a></li>
                 </ul>
             </div>
         </div>
@@ -93,9 +93,9 @@
           <div class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx " >
                 <ul>
                     <li class="menuItemSelectedMcx"><i class="fa fa-caret-right" aria-hidden="true"></i><a href="#">编辑</a></li>
-                    <li><a href="http://edu.comeon.today/account/toVerification">信任验证</a></li>    
+                    <li><a href="<%=request.getContextPath() %>/account/toVerification.do">信任验证</a></li>    
                    	<br/>  
-                	<div class="pure-button"><a href="http://edu.comeon.today/account/toViewProfile">查看我的资料</a></div>
+                	<div class="pure-button"><a href="<%=request.getContextPath() %>/account/toViewProfile.do">查看我的资料</a></div>
                 </ul>
                 
             </div>
@@ -185,14 +185,14 @@
 			,utilsScript: "http://edu.comeon.today/public/resources/utils.js"
 		});
 
-		$.post("http://edu.comeon.today/account/api/getProfile", function(data){
+		$.post("http://edu.comeon.today/api/v1/getProfile", function(data){
 			
 			if (data == null) {
 				$("#info").text("Fail: Cannot load data");
 				$("#info").addClass("infoFail");
 			} else {
 				$("#email").text(data.email);
-				$("#email").attr("href", "http://edu.comeon.today/account/toViewProfile");
+				$("#email").attr("href", "http://edu.comeon.today/account/toViewProfile.do");
 				$("#firstname").val(data.firstname);
 				$("#lastname").val(data.lastname);
 				$("#gender").val(data.gender);
@@ -229,7 +229,7 @@
 			profile.description = $("#description").val();
 			
 			var j = JSON.stringify(profile);
-			$.post("http://edu.comeon.today/account/api/saveProfile", j, function(data) {
+			$.post("http://edu.comeon.today/api/v1/saveProfile", j, function(data) {
 				if (data.status == 1) {
 					var str='<div id="suc" class="successMcx">操作成功哦！<i class="fa fa-check" aria-hidden="true"></i></div>';
 					$("#blank").empty();

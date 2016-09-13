@@ -55,14 +55,13 @@ import com.malihong.util.ToMailWebsite;
 import com.malihong.validation.ValidationUtil;
 
 @Controller
-@RequestMapping("/account")
 public class AccountController {
 	private static final Logger logger = LoggerFactory.getLogger(AccountController.class);
 	
 	@Autowired
 	private AccountService accountService;
 	
-	@RequestMapping(value="/toEmailLogin", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toEmailLogin.do", method=RequestMethod.GET)
 	public String toEmailLogin(Model model, HttpServletRequest request) {
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 		if (null != miwen) {
@@ -74,7 +73,7 @@ public class AccountController {
 		}
 	}
 	
-	@RequestMapping(value="/logout", method=RequestMethod.GET)
+	@RequestMapping(value="/account/logout.do", method=RequestMethod.GET)
 	public String logout(Model model, HttpServletRequest request, HttpServletResponse response) {
 		CookieHelper.deleteCookieValue("EDUJSESSION", request, response);
 		model.addAttribute("userLogin", null);
@@ -90,7 +89,7 @@ public class AccountController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value="/loginEmail", method=RequestMethod.POST)
+	@RequestMapping(value="/account/loginEmail.do", method=RequestMethod.POST)
 	public String loginEmail(@ModelAttribute("emailLoginBean") EmailLoginBean emailLoginBean, BindingResult result, Model model,
 			HttpServletRequest request, HttpServletResponse response) {
 		String email = emailLoginBean.getEmail();
@@ -145,13 +144,13 @@ public class AccountController {
 		return "home";
 	}
 	
-	@RequestMapping(value="/toEmailRegister", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toEmailRegister.do", method=RequestMethod.GET)
 	public String toEmailRegister(ModelMap model) {
 		model.addAttribute("account", new RegisterAccount());
 		return "email_register";
 	}
 	
-	@RequestMapping(value="/toCellphoneRegister", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toCellphoneRegister.do", method=RequestMethod.GET)
 	public String toCellphoneRegister(Locale locale, Model model) {
 		logger.info("Welcome cellphone register! The client locale is {}.", locale);
 		return "cellphone_register";
@@ -164,7 +163,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/registerEmail", method=RequestMethod.POST)
+	@RequestMapping(value="/account/registerEmail.do", method=RequestMethod.POST)
 	public String registerEmail(@ModelAttribute("account") RegisterAccount account, BindingResult result, ModelMap model) {
 
 		String email = account.getEmail();
@@ -226,13 +225,13 @@ public class AccountController {
 		return "register_success";
 	}
 	
-	@RequestMapping(value="/forgetPwd", method=RequestMethod.GET)
+	@RequestMapping(value="/account/forgetPwd.do", method=RequestMethod.GET)
 	public String toForgetPassword(ModelMap model) {
 		model.addAttribute("emailBean", new EmailBean());
 		return "forget_pwd";
 	}
 	
-	@RequestMapping(value="/toChangePwd", method=RequestMethod.POST)
+	@RequestMapping(value="/account/toChangePwd.do", method=RequestMethod.POST)
 	public String toChangePwd(@ModelAttribute("emailBean") EmailBean emailBean, BindingResult result, ModelMap model) {
 		String email = emailBean.getEmail();
 		String code = emailBean.getCode();
@@ -254,7 +253,7 @@ public class AccountController {
 		return "change_pwd";
 	}
 	
-	@RequestMapping(value="/reset_password", method=RequestMethod.GET)
+	@RequestMapping(value="/account/reset_password.do", method=RequestMethod.GET)
 	public String toResetPwd(@RequestParam(value="sid", required=false) String sid , @RequestParam(value="email", required=false) String email, ModelMap model, HttpServletResponse response) {
 		if (sid == null || "".equals(sid.trim()) || email ==null || "".equals(email.trim())) {
 			return "error_mail";
@@ -277,7 +276,7 @@ public class AccountController {
 		return "error_mail";
 	}
 	
-	@RequestMapping(value="/resetPassword", method=RequestMethod.POST)
+	@RequestMapping(value="/account/resetPassword.do", method=RequestMethod.POST)
 	public String resetPassword(Model model, @ModelAttribute("resetPasswordBean") ResetPasswordBean resetPasswordBean, BindingResult result, HttpServletRequest request, HttpServletResponse response) {
 		
 		String email = getResetEmail(request, response);
@@ -327,7 +326,7 @@ public class AccountController {
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/api/sendResetMail", method=RequestMethod.GET)
+	@RequestMapping(value="/api/v1/sendResetMail", method=RequestMethod.GET)
 	public @ResponseBody String sendResetMail (@ModelAttribute("reset") ResetPwd reset, @RequestParam(value="email", required=true) String email) throws JsonParseException, JsonMappingException, IOException {
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -357,7 +356,7 @@ public class AccountController {
 				//明文格式：<email>&<uuid_key>&<expire>
 				String mingcode = email + "&" + key + "&" + expire;
 				String micode = MD5Encript.crypt(mingcode);
-				String url = "http://localhost:8080/agency/account/reset_password?sid=" + micode + "&email=" + email;
+				String url = "http://edu.comeon.today/account/reset_password?sid=" + micode + "&email=" + email;
 				
 				reset.setCode(key);
 				reset.setEmail(email);
@@ -383,7 +382,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/verify_email", method=RequestMethod.GET)
+	@RequestMapping(value="/account/verify_email.do", method=RequestMethod.GET)
 	public String toResetPwd(@RequestParam(value="vid", required=true) String vid, @RequestParam(value="email", required=true) String email, HttpServletRequest request, HttpServletResponse response, Model model){
 		if (vid == null || "".equals(vid.trim()) ) {
 			return "error_mail";
@@ -423,7 +422,7 @@ public class AccountController {
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/api/sendVerificationMail", method=RequestMethod.GET)
+	@RequestMapping(value="/api/v1/sendVerificationMail", method=RequestMethod.GET)
 	public @ResponseBody String sendVerificationMail(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode root = mapper.createObjectNode();
@@ -449,7 +448,7 @@ public class AccountController {
 		String mingwen = "&" + cookieEmail;
 		String miwen = MD5Encript.crypt(mingwen);
 		
-		String url = "http://localhost:8080/agency/account/verify_email?vid=" + miwen + "&email=" + cookieEmail;
+		String url = "http://edu.comeon.today/account/verify_email?vid=" + miwen + "&email=" + cookieEmail;
 		
 		//发送邮件接口
 		ExecutorService executorService = Executors.newCachedThreadPool();  
@@ -464,7 +463,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/toViewProfile", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toViewProfile.do", method=RequestMethod.GET)
 	public String toStudentProfile(Model model) {
 		
 		return "student_profile";
@@ -475,7 +474,7 @@ public class AccountController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/toEditProfile", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toEditProfile.do", method=RequestMethod.GET)
 	public String toEditProfile(Model model, HttpServletRequest request, HttpServletResponse response) {
 		String email = getEmailByCookie(request, response);
 		Account account = accountService.findUserByEmail(email);
@@ -494,7 +493,7 @@ public class AccountController {
 	 * @throws JsonMappingException
 	 * @throws IOException
 	 */
-	@RequestMapping(value="/api/getProfile", method=RequestMethod.POST)
+	@RequestMapping(value="/api/v1/getProfile", method=RequestMethod.POST)
 	public @ResponseBody String getProfile(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 		String mingwen = Base64Encript.decode(miwen);
@@ -547,7 +546,7 @@ public class AccountController {
 		return json.toString();
 	}
 	
-	@RequestMapping(value="/api/saveProfile", method=RequestMethod.POST)
+	@RequestMapping(value="/api/v1/saveProfile", method=RequestMethod.POST)
 	public @ResponseBody String saveProfile(@RequestBody String r, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");
 		ObjectMapper mapper = new ObjectMapper();
@@ -581,7 +580,7 @@ public class AccountController {
 		return root.toString();
 	}
 	
-	@RequestMapping(value="/api/setPrivacy", method=RequestMethod.GET)
+	@RequestMapping(value="/api/v1/setPrivacy", method=RequestMethod.GET)
 	public @ResponseBody String setPrivacy(@RequestParam(value="pid", required=true) String pid, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		ObjectNode root=mapper.createObjectNode();
@@ -624,7 +623,7 @@ public class AccountController {
 		return root.toString();
 	}
 	
-	@RequestMapping(value="/toVerification", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toVerification.do", method=RequestMethod.GET)
 	public String toVerification(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		String email = getEmailByCookie(request, response);
@@ -635,7 +634,7 @@ public class AccountController {
 		return "trust_verification";
 	}
 	
-	@RequestMapping(value="/toPrivacySetting", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toPrivacySetting.do", method=RequestMethod.GET)
 	public String toPrivacySetting(Model model, HttpServletRequest request, HttpServletResponse response) {
 		String email = getEmailByCookie(request, response);
 		Account account = accountService.findUserByEmail(email);
@@ -644,7 +643,7 @@ public class AccountController {
 		return "privacy_setting";
 	}
 	
-	@RequestMapping(value="/toSecuritySetting", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toSecuritySetting.do", method=RequestMethod.GET)
 	public String toSecuritySetting(Model model, HttpServletRequest request, HttpServletResponse response) {
 		String email = getEmailByCookie(request, response);
 		Account account = accountService.findUserByEmail(email);
@@ -653,7 +652,13 @@ public class AccountController {
 		return "security_setting";
 	}
 	
-	@RequestMapping(value="/api/changePassword", method=RequestMethod.POST)
+	@RequestMapping(value="/account/toTestPage", method=RequestMethod.GET)
+	public String toTestPage(Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		return "pages/test.html";
+	}
+	
+	@RequestMapping(value="/api/v1/changePassword", method=RequestMethod.POST)
 	public @ResponseBody String changePassword(@RequestBody String r, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		r = URLDecoder.decode(r, "UTF-8");
 		ObjectMapper mapper = new ObjectMapper();

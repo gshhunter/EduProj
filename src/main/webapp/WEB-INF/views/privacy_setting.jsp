@@ -48,16 +48,16 @@
             <div class="pure-g">
                 <div class="pure-u-1-24"></div>
                 <div class="pure-u-16-24" style="text-align:left;">
-                    <a class="webTitleh1FontMcx" href="http://edu.comeon.today">Malimalihong</a>
+                    <a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
                 </div>
                
                 <div class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
                 <ul class="menuStyleMcx headerLinkStyleMcx">                  
                     <c:if test="${userType != 3}">
-	                	<li class="highlightBorderMcx"><a href="http://edu.comeon.today/agent/toBeAgent">成为中介</a></li>
+	                	<li class="highlightBorderMcx"><a href="<%=request.getContextPath() %>/agent/toBeAgent.do">成为中介</a></li>
 	                </c:if> 
                     <li><a id="email_name" href="#"></a></li>
-                    <li><a href="http://edu.comeon.today/account/logout">退出</a></li>                                     
+                    <li><a href="<%=request.getContextPath() %>/account/logout.do">退出</a></li>                                     
                 </ul>
                 </div>
                 
@@ -72,10 +72,10 @@
                     <!-- <li><a href="#">收件箱</a></li> -->
                     <li ><a href="#">您的申请</a></li>
                     <c:if test="${userType == 3}">
-                    	<li><a href="http://edu.comeon.today/agent/toCaseList" >工作列表</a></li>
+                    	<li><a href="<%=request.getContextPath() %>/agent/toCaseList.do" >工作列表</a></li>
                     </c:if>
-                    <li ><a href="http://edu.comeon.today/account/toEditProfile" >个人资料</a></li>
-                    <li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/account/toPrivacySetting" style="color:#f2f2f2;">账号管理</a></li>
+                    <li ><a href="<%=request.getContextPath() %>/account/toEditProfile.do" >个人资料</a></li>
+                    <li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/account/toPrivacySetting.do" style="color:#f2f2f2;">账号管理</a></li>
                 </ul>
             </div>
         </div>
@@ -94,9 +94,9 @@
                     <li><a href="file:///Users/Chenxue/Documents/EduFont/agentAcc4TranSetting.html">交易记录</a></li>
                     <li class="menuItemSelectedMcx">
                         <i class="fa fa-caret-right" aria-hidden="true"></i>
-                        <a href="http://edu.comeon.today/account/toPrivacySetting" style="color:#333333;">隐私设置</a>
+                        <a href="<%=request.getContextPath() %>/account/toPrivacySetting.do" style="color:#333333;">隐私设置</a>
                     </li>
-                    <li><a href="http://edu.comeon.today/account/toSecuritySetting">安全设置</a></li>
+                    <li><a href="<%=request.getContextPath() %>/account/toSecuritySetting.do">安全设置</a></li>
                    
                 </ul>
             </div>
@@ -154,7 +154,7 @@
 	
 	$(document).ready(function(){
 		
-		$.post("http://edu.comeon.today/account/api/getProfile", function(data){
+		$.post("http://edu.comeon.today/api/v1/getProfile", function(data){
 			if (data == null) {
 				
 			} else {
@@ -203,7 +203,7 @@
 			
 			$("#save").prop("disabled", true);
 			
-			$.get("http://edu.comeon.today/account/api/setPrivacy?pid=" + pid, function(data){
+			$.get("http://edu.comeon.today/api/v1/setPrivacy?pid=" + pid, function(data){
 				console.log(pid);
 				console.log("hhhhhhh: " + data.status);
 				

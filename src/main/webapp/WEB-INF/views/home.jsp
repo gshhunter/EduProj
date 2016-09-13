@@ -34,18 +34,18 @@
 
 <div class="header">
     <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-        <a class="pure-menu-heading" href="http://edu.comeon.today">Malimalihong</a>
+        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
 
         <ul class="pure-menu-list">
-            <li class="pure-menu-item"><a href="http://edu.comeon.today/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
+            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/agent/toBeAgent.do" class="pure-menu-link">成为留学顾问</a></li>
             <c:if test="${loginUser == null || loginUser == undefined}">
                 
-            	<li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-            	<li class="pure-menu-item"><a href="http://edu.comeon.today/account/toEmailLogin" class="pure-menu-link">登录</a></li>
+            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister.do" class="pure-menu-link">注册</a></li>
+            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin.do" class="pure-menu-link">登录</a></li>
             </c:if>
             <c:if test="${loginUser != null}">
-            	<li class="pure-menu-item"><a href="http://edu.comeon.today/account/toViewProfile" class="pure-menu-link">${loginUser.email}</a></li>
-            	<li class="pure-menu-item"><a href="http://edu.comeon.today/account/logout" class="pure-menu-link">注销</a></li>
+            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toViewProfile.do" class="pure-menu-link">${loginUser.email}</a></li>
+            	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/logout.do" class="pure-menu-link">注销</a></li>
             </c:if>
         </ul>
     </div>
@@ -61,7 +61,7 @@
             提供专业留学信息，自主选择留学服务
         </p>
         <p>
-            <a href="http://edu.comeon.today/req/newrequest" class="pure-button pure-button-primary">我要留学</a>
+            <a href="<%=request.getContextPath() %>/req/newrequest" class="pure-button pure-button-primary">我要留学</a>
         </p>
     </div>
 </div>

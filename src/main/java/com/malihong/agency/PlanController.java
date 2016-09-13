@@ -26,7 +26,6 @@ import com.malihong.service.StudentRequestService;
 import com.malihong.util.CookieUtil;
 
 @Controller
-@RequestMapping("/plan")
 public class PlanController {
 
 	@Autowired
@@ -36,13 +35,13 @@ public class PlanController {
 	@Autowired
 	private StudentRequestService requestService;
 	
-	@RequestMapping(value="/api/getPlan", method=RequestMethod.GET)
+	@RequestMapping(value="/api/v1/getPlan", method=RequestMethod.GET)
 	public @ResponseBody String getPlan(@RequestParam(value="pid", required=true) Integer pid , HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		
 		return "";
 	}
 	
-	@RequestMapping(value="/toCaseDetail", method=RequestMethod.GET)
+	@RequestMapping(value="/plan/toCaseDetail.do", method=RequestMethod.GET)
 	public String toCaseDetail(@RequestParam(value="pid", required=true) Integer pid , HttpServletRequest request, HttpServletResponse response, Model model) {
 		Plan plan = planService.findPlanById(pid);
 		model.addAttribute("plan", plan);
@@ -83,13 +82,13 @@ public class PlanController {
 		
 	}
 	
-	@RequestMapping(value="/toVisaRefNumber", method=RequestMethod.GET)
+	@RequestMapping(value="/plan/toVisaRefNumber.do", method=RequestMethod.GET)
 	public String toVisaRefNumber(Model model) {
 
 		return "add_visa_ref";
 	}
 	
-	@RequestMapping(value="/api/saveTRN", method=RequestMethod.GET)
+	@RequestMapping(value="/api/v1/saveTRN", method=RequestMethod.GET)
 	public @ResponseBody String saveTRN(@RequestParam(value="pid", required=true) Integer pid, @RequestParam(value="trn", required=true) String trn , HttpServletRequest request, HttpServletResponse response, Model model){
 		
 		ObjectMapper mapper = new ObjectMapper();

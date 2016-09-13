@@ -46,12 +46,12 @@
 
 	<div class="header">
 	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="http://edu.comeon.today">Malimalihong</a>
+	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
 	
 	        <ul class="pure-menu-list">
-	            <li class="pure-menu-item"><a href="http://edu.comeon.today/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="http://edu.comeon.today" class="pure-menu-link">${login_email}</a></li>
-	            <li class="pure-menu-item"><a href="http://edu.comeon.today/account/logout" class="pure-menu-link">注销</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/agent/toBeAgent.do" class="pure-menu-link">成为留学顾问</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toViewProfile.do" class="pure-menu-link">${login_email}</a></li>
+	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/logout.do" class="pure-menu-link">注销</a></li>
 	        </ul>
 	    </div>
 	</div>

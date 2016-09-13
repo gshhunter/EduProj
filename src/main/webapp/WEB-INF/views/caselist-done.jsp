@@ -58,15 +58,15 @@ hr {
 			<div class="pure-g">
 				<div class="pure-u-1-24"></div>
 				<div class="pure-u-16-24" style="text-align: left;">
-					<a class="webTitleh1FontMcx" href="">Malimalihong</a>
+					<a class="webTitleh1FontMcx" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
 				</div>
 
 				<div
 					class="pure-u-6-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx">
 					<ul class="menuStyleMcx headerLinkStyleMcx">
 						
-						<li><a href="http://edu.comeon.today/account/toEditProfile">${loginEmail}</a></li>
-						<li><a href="http://edu.comeon.today/account/logout">退出</a></li>
+						<li><a href="<%=request.getContextPath() %>/account/toEditProfile.do">${loginEmail}</a></li>
+						<li><a href="<%=request.getContextPath() %>/account/logout.do">退出</a></li>
 
 					</ul>
 				</div>
@@ -81,12 +81,12 @@ hr {
 				class="pure-u-22-24 pure-menu pure-menu-open testMenuMcx horizontalMenuMcx headerMenuBackgroundMcx">
 				<ul class="menuStyleMcx">
 					<li><a href="#">您的申请</a></li>
-					<li class="menuItemSelectedMcx"><a href="http://edu.comeon.today/agent/toCaseList-done"
+					<li class="menuItemSelectedMcx"><a href="<%=request.getContextPath() %>/agent/toCaseList-done.do"
 						style="color: #f2f2f2; border-bottom: 3px solid #f2f2f2; padding-bottom: 7px;">工作列表</a></li>
 					<li><a
-						href="http://edu.comeon.today/account/toEditProfile">个人资料</a></li>
+						href="<%=request.getContextPath() %>/account/toEditProfile.do">个人资料</a></li>
 					<li><a
-						href="http://edu.comeon.today/account/toPrivacySetting">账号管理</a></li>
+						href="<%=request.getContextPath() %>/account/toPrivacySetting.do">账号管理</a></li>
 				</ul>
 			</div>
 		</div>
@@ -99,11 +99,11 @@ hr {
 				class="pure-u-3-24 pure-menu pure-menu-open testMenuMcx menustyleVerMcx ">
 				<ul>
 					<li><a
-						href="http://edu.comeon.today/agent/toCaseList">处理中的申请</a></li>
+						href="<%=request.getContextPath() %>/agent/toCaseList.do">处理中的申请</a></li>
 					<li><a style="font-size: 95%;"
 						href="#">未给出方案的申请</a></li>
 					<li class="menuItemSelectedMcx" style="color: black !important;"><i
-					class="fa fa-caret-right" aria-hidden="true"></i><a href="http://edu.comeon.today/agent/toCaseList-done">已完成的申请</a></li>
+					class="fa fa-caret-right" aria-hidden="true"></i><a href="<%=request.getContextPath() %>/agent/toCaseList-done.do">已完成的申请</a></li>
 				</ul>
 			</div>
 			<!--垂直菜单-->
@@ -158,7 +158,7 @@ hr {
 <!-- <script type="text/javascript" src="<c:url value="https://cdn.datatables.net/plug-ins/1.10.12/sorting/chinese-string.js" />"></script> -->
 <script type="text/javascript">
 	$(document).ready(function(){
-		$.get('http://edu.comeon.today/agent/api/getProcessedPlan', function(data){
+		$.get('http://edu.comeon.today/api/v1/getProcessedPlan', function(data){
 			var table = $("#tableid").DataTable({
 				"data": data,
 	            "columns": [{"mData":"username"},
@@ -168,7 +168,7 @@ hr {
 	                          {"mData":"createdTime"},
 	                          {"mData":"pid",
 	                           "render": function(data, type, full, meta){
-	                        	   return '<a href="http://edu.comeon.today/plan/toCaseDetail?pid=' + data + '"> 详细\>\></a>';
+	                        	   return '<a href="http://edu.comeon.today/plan/toCaseDetail.do?pid=' + data + '"> 详细\>\></a>';
 	                           }
 	                         }],
 				"oLanguage": {
