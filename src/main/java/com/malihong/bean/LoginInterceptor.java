@@ -21,13 +21,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		 String miwen = CookieHelper.getCookieValue("EDUJSESSION", request);
 		 String url = request.getRequestURI().replace(request.getContextPath(), "");
 		 logger.info("----------------- URI: " + url);
-		 if (null != miwen || url.equals("/account/toEmailLogin") || url.equals("/account/toEmailRegister")) {
+		 if (null != miwen || url.equals("/account/toEmailLogin.do") || url.equals("/account/toEmailRegister.do")) {
 			return true; 
 		 }
-		 
-		 response.sendRedirect("/agency/account/toEmailLogin");
+		 String header = request.getContextPath();
+		 System.out.println(header);
+		 response.sendRedirect(header + "/account/toEmailLogin.do");
 		 return false;
-		 
 	 }
 	 
 	 
