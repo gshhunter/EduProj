@@ -47,6 +47,7 @@
 	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
 	
 	        <ul class="pure-menu-list">
+	        	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
 	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister.do" class="pure-menu-link">注册</a></li>
 	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin.do" class="pure-menu-link">登录</a></li>
 	        </ul>
