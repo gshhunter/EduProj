@@ -10,9 +10,9 @@
     <title>首页</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
     <!--[if lte IE 8]>
-    
+
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-    
+
     <![endif]-->
     <!--[if gt IE 8]><!-->
     
@@ -20,7 +20,7 @@
     
     <!--<![endif]-->
     
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
@@ -74,17 +74,17 @@
         <div class="pure-g">
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu">
-                    <img src="http://edu.comeon.today/public/img/university1.jpg" alt="Monash University">
+                    <img id="img_uni_1" alt="Monash University">
                 </a>
             </div>
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu.au">
-                    <img src="http://edu.comeon.today/public/img/university2.jpg" alt="Monash University">
+                    <img id="img_uni_2" alt="Monash University">
                 </a>
             </div>
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu.au">
-                    <img src="http://edu.comeon.today/public/img/university3.jpeg" alt="Monash University">
+                    <img id="img_uni_3"  alt="Monash University">
                 </a>
             </div>
             
@@ -92,17 +92,17 @@
         <div class="pure-g" style="margin-top:50px;">
         	<div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu">
-                    <img src="http://edu.comeon.today/public/img/university1.jpg" alt="Monash University">
+                    <img id="img_uni_4" alt="Monash University">
                 </a>
             </div>
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu.au">
-                    <img src="http://edu.comeon.today/public/img/university2.jpg" alt="Monash University">
+                    <img id="img_uni_5" alt="Monash University">
                 </a>
             </div>
             <div class="photo-box pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
                 <a href="www.monash.edu.au">
-                    <img src="http://edu.comeon.today/public/img/university3.jpeg" alt="Monash University">
+                    <img id="img_uni_6" alt="Monash University">
                 </a>
             </div>
         </div>
@@ -112,13 +112,13 @@
     	<h2 class="content-head is-center" >学生风采</h2>
     	<div class="pure-g">
 	    	<div class="l-box pure-u-md-1-5 pure-u-lg-1-5">
-	    		
+	    	
 	    	</div>
 	    	<div class="l-box is-center pure-u-1-1 pure-u-md-3-5 pure-u-lg-3-5">
 	    		<img src="http://edu.comeon.today/public/img/discovery.jpg" alt="Promotion" class="pure-img-responsive">
 	    	</div>
 	    	<div class="l-box pure-u-md-1-5 pure-u-lg-1-5">
-	    		
+	    	
 	    	</div>
     	</div>
     </div>
@@ -235,13 +235,22 @@
     <div class="footer l-box is-center">
         Malimaligong.com ®
     </div>
-
+	
+	<script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
+    <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/layer/layer.js" />"></script>
+   	<script type="text/javascript">
+   	$(document).ready(function(){
+   		$.post("http://localhost:8080/agency/api/v1/getColleges", function(data){
+   			var link = "http://edu.comeon.today/public/img/"
+   			console.log(data);
+   			var arr = data.sort(function(){return Math.random()>.5 ? -1:1;});
+   			for (var i=0; i<5; i++) {
+				var num = i+1;
+   				$("#img_uni_" + num).attr("src", link + arr[i].img_name);
+   			}
+   		});
+   	});
+   	</script>
 </div>
-
-
-
-
-
-
 </body>
 </html>

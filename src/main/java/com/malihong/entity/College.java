@@ -24,6 +24,10 @@ public class College implements Serializable{
 	private int type;
 	@Column(name="name")
 	private String name;
+	@Column(name="country")
+	private String country;
+	@Column(name="img_name")
+	private String img_name;
 	
 	public College() {
 	}
@@ -51,4 +55,22 @@ public class College implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getImg_name() {
+		return img_name;
+	}
+
+	public void setImg_name(String img_name) {
+		this.img_name = img_name;
+	}
+	
+	
 }

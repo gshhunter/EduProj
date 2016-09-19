@@ -48,4 +48,9 @@ public class CollegeServiceImpl implements CollegeService {
 		return this.fcDao.findCourseByCollegeId(cid);
 	}
 
+	@Override
+	public College findCollegeById(int id) {
+		return collegeDao.findCollegeById(id);
+	}
+
 }
