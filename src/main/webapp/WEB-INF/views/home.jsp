@@ -168,7 +168,7 @@
     
     <div class="ribbon l-box-lrg pure-g">
         <div class="l-box-lrg is-center pure-u-1 pure-u-md-1-2 pure-u-lg-2-5">
-            <img class="pure-img-responsive" alt="File Icons" width="300" src="<c:url value="/resources/img/common/file-icons.png" />">
+            <img class="pure-img-responsive" alt="File Icons" width="300" src="<%=request.getContextPath() %>/publish/img/file-icons.png">
         </div>
         <div class="pure-u-1 pure-u-md-1-2 pure-u-lg-3-5">
 
@@ -240,8 +240,8 @@
     <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/layer/layer.js" />"></script>
    	<script type="text/javascript">
    	$(document).ready(function(){
-   		$.post("http://localhost:8080/agency/api/v1/getColleges", function(data){
-   			var link = "http://edu.comeon.today/public/img/"
+   		$.post("http://edu.comeon.today/api/v1/getColleges", function(data){
+   			var link = "http://edu.comeon.today/public/img/";
    			console.log(data);
    			var arr = data.sort(function(){return Math.random()>.5 ? -1:1;});
    			for (var i=0; i<5; i++) {
