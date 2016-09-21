@@ -7,4 +7,6 @@ import com.malihong.entity.College;
 
 public interface CollegeDao {
 	public List<College> findCollegesByType(int type);
+	
+	public College findCollegeById(int id);
 }

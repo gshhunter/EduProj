@@ -17,19 +17,26 @@ public class CollegeDaoImpl implements CollegeDao {
 	@PersistenceContext
 	private EntityManager em;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public List<College> findCollegesByType(int type) {
 		String str="select c from College c where c.type= ?1";
 		Query query = em.createQuery(str, College.class);
 		query.setParameter(1, type);
-		List<College> list =query.getResultList();
+		List<College> list = query.getResultList();
 		if(list.isEmpty()){
 			return null;
 		}else{
 			return list;
 		}
 		
+	}
+
+	@Override
+	@Transactional
+	public College findCollegeById(int id) {
+		return (College)em.find(College.class, id);
 	}
 
 }
