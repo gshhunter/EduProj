@@ -320,7 +320,6 @@ public class StudentRequestController {
 		reqs.add(req);
 		ObjectMapper mapper = new ObjectMapper();
 
-
 		ObjectNode root=mapper.createObjectNode();		
 		root.put("status", acc);
 		//String json=mapper.writeValueAsString(reqs);

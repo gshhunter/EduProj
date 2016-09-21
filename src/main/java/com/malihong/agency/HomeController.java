@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -66,16 +67,19 @@ public class HomeController {
 		return "home";
 	}
 	
-	
-	@RequestMapping(value = "/api/v1/getCollegeMap", method = RequestMethod.POST)
-	public @ResponseBody HashMap<Integer, String> getCollegeMap(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
-		return CollegeBean.totalCollegeName;
-	}
-	
 	@RequestMapping(value = "/api/v1/getColleges", method = RequestMethod.POST)
 	public @ResponseBody List<College> getColleges(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		List<College> list = collegeService.findCollegesByType(1);
 		
 		return list;
+	}
+	
+	@RequestMapping(value = "/api/v1/getCollegeById", method = RequestMethod.GET)
+	public @ResponseBody String getCollegeById(@RequestParam(value="cid") int cid, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		College college = collegeService.findCollegeById(cid);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(college);
+		return json.toString();
 	}
 }

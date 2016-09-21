@@ -300,7 +300,7 @@ public class AgentController {
 		model.addAttribute("loginEmail", email);
 		model.addAttribute("userType", userType);
 		if (account.getType() != 3) {
-			return "redirect:/agent/toBeAgent";
+			return "redirect:/agent/toBeAgent.do";
 		}
 		return "caselist-done";
 	}

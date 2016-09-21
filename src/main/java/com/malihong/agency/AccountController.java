@@ -217,7 +217,7 @@ public class AccountController {
 		
 		String mingwen = "&" + email;
 		String miwen = MD5Encript.crypt(mingwen);
-		String url = "http://localhost:8080/agency/account/verify_email?vid=" + miwen + "&email=" + email;
+		String url = "http://edu.comeon.today/account/verify_email.do?vid=" + miwen + "&email=" + email;
 		ExecutorService executorService = Executors.newCachedThreadPool();  
         Future<String> future = executorService.submit(new MailServer(email,"邮箱账号验证","<h1>" + url + "</h1>"));
         logger.info("邮箱账号验证邮件发送成功, 邮件已经发送到： " + email);
@@ -356,7 +356,7 @@ public class AccountController {
 				//明文格式：<email>&<uuid_key>&<expire>
 				String mingcode = email + "&" + key + "&" + expire;
 				String micode = MD5Encript.crypt(mingcode);
-				String url = "http://edu.comeon.today/account/reset_password?sid=" + micode + "&email=" + email;
+				String url = "http://edu.comeon.today/account/reset_password.do?sid=" + micode + "&email=" + email;
 				
 				reset.setCode(key);
 				reset.setEmail(email);
@@ -448,7 +448,7 @@ public class AccountController {
 		String mingwen = "&" + cookieEmail;
 		String miwen = MD5Encript.crypt(mingwen);
 		
-		String url = "http://edu.comeon.today/account/verify_email?vid=" + miwen + "&email=" + cookieEmail;
+		String url = "http://edu.comeon.today/account/verify_email.do?vid=" + miwen + "&email=" + cookieEmail;
 		
 		//发送邮件接口
 		ExecutorService executorService = Executors.newCachedThreadPool();  
@@ -652,7 +652,7 @@ public class AccountController {
 		return "security_setting";
 	}
 	
-	@RequestMapping(value="/account/toTestPage", method=RequestMethod.GET)
+	@RequestMapping(value="/account/toTestPage.do", method=RequestMethod.GET)
 	public String toTestPage(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		return "pages/test.html";
