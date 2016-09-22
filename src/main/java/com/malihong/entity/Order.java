@@ -28,14 +28,14 @@ public class Order implements Serializable {
 	@Column(name="complete_time")
 	private Date completeTime;
 	
-	@Column(name="id_agency")
-	private int idAgency;
+	@Column(name="id_vendor")
+	private int idVendor;
 
-	@Column(name="id_plan")
-	private int idPlan;
+	@Column(name="type")
+	private int type;
 
-	@Column(name="id_student")
-	private int idStudent;
+	@Column(name="id_purchaser")
+	private int idPurchaser;
 
 	@Column(name="status")
 	private int status;
@@ -72,28 +72,28 @@ public class Order implements Serializable {
 		this.completeTime = completeTime;
 	}
 	
-	public int getIdAgency() {
-		return this.idAgency;
+	public int getIdVendor() {
+		return this.idVendor;
 	}
 
-	public void setIdAgency(int idAgency) {
-		this.idAgency = idAgency;
+	public void setIdVendor(int idVendor) {
+		this.idVendor = idVendor;
 	}
 
-	public int getIdPlan() {
-		return this.idPlan;
+	public int getType() {
+		return this.type;
 	}
 
-	public void setIdPlan(int idPlan) {
-		this.idPlan = idPlan;
+	public void setType(int type) {
+		this.type = type;
 	}
 
-	public int getIdStudent() {
-		return this.idStudent;
+	public int getIdPurchaser() {
+		return this.idPurchaser;
 	}
 
-	public void setIdStudent(int idStudent) {
-		this.idStudent = idStudent;
+	public void setIdPurchaser(int idPurchaser) {
+		this.idPurchaser = idPurchaser;
 	}
 
 	public int getStatus() {
