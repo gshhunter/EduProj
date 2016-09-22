@@ -111,9 +111,10 @@ public class PayThenApplyController {
 		Order order=new Order();
 		order.setCreateTime(new Date());
 		order.setStatus(2);
-		order.setIdPlan(plan.getIdPlan());
-		order.setIdAgency(plan.getIdAgency());
-		order.setIdStudent(plan.getIdStudent());
+		//TODO: Need update
+		//order.setIdPlan(plan.getIdPlan());
+		order.setIdVendor(plan.getIdAgency());
+		order.setIdPurchaser(plan.getIdStudent());
 		this.orderService.add(order);
 		
 		req.setIsCancel(2);
