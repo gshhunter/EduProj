@@ -69,13 +69,14 @@ public class HomeController {
 	
 	@RequestMapping(value = "/api/v1/getColleges", method = RequestMethod.POST)
 	public @ResponseBody List<College> getColleges(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		//获取所有的University： type=1
 		List<College> list = collegeService.findCollegesByType(1);
 		
 		return list;
 	}
 	
 	@RequestMapping(value = "/api/v1/getCollegeById", method = RequestMethod.GET)
-	public @ResponseBody String getCollegeById(@RequestParam(value="cid") int cid, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+	public @ResponseBody String getCollegeById(@RequestParam(value="cid", required=true) int cid, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
 		College college = collegeService.findCollegeById(cid);
 		
 		ObjectMapper mapper = new ObjectMapper();

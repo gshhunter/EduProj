@@ -1,6 +1,5 @@
 package com.malihong.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.EntityManager;
