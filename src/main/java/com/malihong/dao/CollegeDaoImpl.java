@@ -38,4 +38,24 @@ public class CollegeDaoImpl implements CollegeDao {
 		return (College)em.find(College.class, id);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<College> findUniversityByPage (int type, Integer pageIndex, Integer pageSize) {
+		String str = "select c from College c where c.type = ?1 order by c.aus_rank";
+		Query query = em.createQuery(str, College.class);
+		query.setParameter(1, type);
+		query.setFirstResult((pageIndex-1)*pageSize);
+		query.setMaxResults(pageSize);
+		List<College> clist = query.getResultList();
+		return clist;
+	}
+	
+	@Override
+	@Transactional
+	public Integer getTotalCountOfUniversity(int type) {
+	    return Integer.valueOf(em.createQuery(
+	            "SELECT COUNT(*) FROM College c WHERE c.type = ?1")
+	.setParameter(1,type).getSingleResult().toString());
+	}
 }

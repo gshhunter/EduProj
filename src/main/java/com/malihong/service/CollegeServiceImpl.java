@@ -53,4 +53,14 @@ public class CollegeServiceImpl implements CollegeService {
 		return collegeDao.findCollegeById(id);
 	}
 
+	@Override
+	public List<College> findUniversityByPage(int type, Integer pageIndex, Integer pageSize) {
+		return collegeDao.findUniversityByPage(type, pageIndex, pageSize);
+	}
+
+	@Override
+	public Integer getTotalCountOfUniversity(int type) {
+		return collegeDao.getTotalCountOfUniversity(type);
+	}
+
 }

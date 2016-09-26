@@ -83,4 +83,18 @@ public class HomeController {
 		String json = mapper.writeValueAsString(college);
 		return json.toString();
 	}
+	
+	@RequestMapping(value = "/api/v1/getAllUniversityByPage", method = RequestMethod.GET)
+	public @ResponseBody List<College> getAllUniversityByPage(@RequestParam(value="pageIndex", required=true) int pageIndex, @RequestParam(value="pageSize", required=true) int pageSize, HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		
+		List<College> list = collegeService.findUniversityByPage(1, pageIndex, pageSize);
+		return list;
+	}
+	
+	@RequestMapping(value = "/api/v1/getCountOfUniversity", method = RequestMethod.POST)
+	public @ResponseBody Integer getCountOfUniversity(HttpServletRequest request, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		
+		Integer number = collegeService.getTotalCountOfUniversity(1);
+		return number;
+	}
 }
