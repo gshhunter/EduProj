@@ -262,38 +262,6 @@ public class StudentRequestController {
 		}
 	}
 	
-	/********************************PAGES**********************************************/
-	//学生创建request页面
-	@RequestMapping(value = "/req/newrequest", method = RequestMethod.GET)
-	public String applyRequestPage() throws JsonProcessingException {
-		return "applyrequest";
-	}
-	
-	//学生创建request页面
-	@RequestMapping(value = "req/sysoption", method = RequestMethod.GET)
-	public String sysOptionPage() throws JsonProcessingException {
-		return "sysoption";
-	}
-	
-	//学生创建request成功页面
-	@RequestMapping(value = "/reqcom", method = RequestMethod.GET)
-	public String requestCompletePage() throws JsonProcessingException {
-		return "requestcomplete";
-	}
-	
-	//中介查看待回应requests页面
-	
-	//中介创建plan页面
-	
-	//学生查看request页面（可能包括收到的plans）
-	
-	@RequestMapping(value = "/page/testpage.do", method = RequestMethod.GET)
-	public String testPage() throws JsonProcessingException {
-		
-		System.out.println("test here");
-		logger.info("test!");
-		return "testpage";
-	}
 	//For Test
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public @ResponseBody String newtest(HttpServletRequest request,@RequestParam(value="id") int id) throws JsonProcessingException, UnsupportedEncodingException {

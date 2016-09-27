@@ -66,4 +66,19 @@ public class OrderDaoImpl implements OrderDao {
 		em.flush();
 	}
 
+	@Override
+	@Transactional
+	public Order findOrderByPurchaserAndType(int pid, int type) {
+		String str = "SELECT o FROM Order o WHERE o.idPurchaser = ?1 AND o.type = ?2";
+		Query query = em.createQuery(str, Order.class);
+		query.setParameter(1, pid);
+		query.setParameter(2, type);
+		List<Order> list = query.getResultList();
+		if (list.isEmpty() == true) {
+			return null;
+		} else {
+			return list.get(0);
+		}
+	}
+
 }

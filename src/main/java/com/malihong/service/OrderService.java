@@ -12,4 +12,6 @@ public interface OrderService {
 	
 	public void add(Order o);
 	public void update(Order o);
+	
+	public boolean isPaid(int accountId,int type);
 }

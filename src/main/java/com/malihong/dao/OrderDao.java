@@ -13,4 +13,5 @@ public interface OrderDao {
 	public void add(Order o);
 	public void update(Order o);
 	
+	public Order findOrderByPurchaserAndType(int pid, int type);
 }

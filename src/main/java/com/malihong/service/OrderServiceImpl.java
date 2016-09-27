@@ -45,4 +45,13 @@ public class OrderServiceImpl implements OrderService{
 		this.orderDao.update(o);
 	}
 
+	@Override
+	public boolean isPaid(int accountId, int type) {
+		if(this.orderDao.findOrderByPurchaserAndType(accountId, type)==null){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 }
