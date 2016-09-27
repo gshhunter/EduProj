@@ -13,4 +13,8 @@ public interface CollegeService {
 	public List<BachelorCourse> findBachelorCourseByUniversityId(int uid);
 	public List<DiplomaCourse> findDiplomaCourseByCollegeId(int cid);
 	public List<FoundationCourse> findFoundationCourseByCollegeId(int cid);
+	
+	public List<College> findUniversityByPage (int type, Integer pageIndex, Integer pageSize);
+	
+	Integer getTotalCountOfUniversity(int type);
 }

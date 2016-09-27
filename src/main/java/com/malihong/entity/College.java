@@ -64,7 +64,13 @@ public class College implements Serializable{
 	private String start_date;
 	@Column(name="language_requirement")
 	private String language_requirement;
-
+	@Column(name="start_year")
+	private int start_year;
+	@Column(name="logo_name")
+	private String logo_name;
+	@Column(name="is_group8")
+	private int is_group8;
+	
 	public College() {
 	}
 
@@ -250,6 +256,30 @@ public class College implements Serializable{
 
 	public void setLanguage_requirement(String language_requirement) {
 		this.language_requirement = language_requirement;
+	}
+
+	public int getStart_year() {
+		return start_year;
+	}
+
+	public void setStart_year(int start_year) {
+		this.start_year = start_year;
+	}
+
+	public String getLogo_name() {
+		return logo_name;
+	}
+
+	public void setLogo_name(String logo_name) {
+		this.logo_name = logo_name;
+	}
+
+	public int getIs_group8() {
+		return is_group8;
+	}
+
+	public void setIs_group8(int is_group8) {
+		this.is_group8 = is_group8;
 	}
 	
 	
