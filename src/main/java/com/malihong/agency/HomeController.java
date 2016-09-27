@@ -1,8 +1,6 @@
 package com.malihong.agency;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,14 +18,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.malihong.bean.CollegeBean;
 import com.malihong.entity.Account;
 import com.malihong.entity.College;
 import com.malihong.service.AccountService;
 import com.malihong.service.CollegeService;
 import com.malihong.service.CookieHelper;
 import com.malihong.util.Base64Encript;
-import com.malihong.util.RandomNumber;
 
 /**
  * Handles requests for the application home page.
