@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.malihong.entity.BachelorCourse;
+import com.malihong.entity.DiplomaCourse;
 
 @Component
 public class BachelorCourseDaoImpl implements BachelorCourseDao{
@@ -52,6 +53,21 @@ public class BachelorCourseDaoImpl implements BachelorCourseDao{
 		String str = "SELECT bc FROM BachelorCourse bc WHERE bc.universityId = ?1";
 		Query query = em.createQuery(str, BachelorCourse.class);
 		query.setParameter(1, uid);
+		List<BachelorCourse> list = query.getResultList();
+		if (list.isEmpty()) {
+			return null;
+		} else {
+			return list;
+		}
+	}
+
+	@Override
+	@Transactional
+	public List<BachelorCourse> findCoursesByField(String field) {
+		String str = "SELECT bc FROM BachelorCourse bc WHERE bc.field like ?1";
+		Query query = em.createQuery(str, BachelorCourse.class);
+		String s="%&"+field+"&%";
+		query.setParameter(1, s);
 		List<BachelorCourse> list = query.getResultList();
 		if (list.isEmpty()) {
 			return null;
