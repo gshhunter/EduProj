@@ -87,12 +87,15 @@
     	<property name="url" value="jdbc:mysql://mel-edu.comx0njktrjq.ap-southeast-2.rds.amazonaws.com:3306/edu?characterEncoding=UTF-8"/>
     	<property name="username" value="root0"/>
     	<property name="password" value="12345678"/>
+    	<property name="testOnBorrow" value="true" />
+    	<property name="validationQuery" value="SELECT 1" />
 	</bean>
 	
 	<!-- EntityManagerFactory -->
     <bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
 	    <property name="persistenceUnitName" value="persistenceUnit"/>
 	    <property name="dataSource" ref="dataSource"/>
+	    
     </bean>
    
 	<!-- Transaction Manager -->
