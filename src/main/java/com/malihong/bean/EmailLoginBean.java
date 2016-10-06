@@ -31,7 +31,4 @@ public class EmailLoginBean {
 	public void setRemember_me(boolean remember_me) {
 		this.remember_me = remember_me;
 	}
-	
-	
-	
 }

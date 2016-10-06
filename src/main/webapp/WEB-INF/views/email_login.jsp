@@ -1,140 +1,128 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html;charset=utf-8" isELIgnored="false"%>
-<!doctype html>
-<html>
+<html lang="zh">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Email login page">
+    <script src="http://edu.comeon.today/public/resources/riot.js"></script>
+    <script src="http://edu.comeon.today/public/resources/jquery.js"></script>
+    <script src="http://edu.comeon.today/public/js/main.js"></script>
+   
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/bulma.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
 
-    <title>登录页面</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-    <!--[if lte IE 8]>
-    
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-    
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    
-    <!--<![endif]-->
-    
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
 
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-       <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
-    <!--<![endif]-->
-	<style>
-		#main-content {
-			position: absolute;
-			top: 50px;
-			width: 100%;
-		}
-		.error {
+    <script src="http://edu.comeon.today/public/resources/jquery.cookie.js"></script>
+    <script src="http://edu.comeon.today/public/resources/layer/layer.js"></script>
+    <script src="http://edu.comeon.today/public/resources/md5.js"></script>
+    
+    
+    <title>邮箱登录页面</title>
+    <style>
+        .middle{text-align: center;}
+        .right{text-align: right;}
+        .left{text-align: left;}
+        .title1{
+            font-size: 2.5em;
+/*            color:#484848;*/
+            font-weight: bold;
+        }
+        .font1{font-size: 18px; font-weight: bold;}
+        .height{line-height: 20px;}
+        .bg{
+            background: #6DBFE4;
+            color: white;
+            border:1px solid #6DBFE4;
+            border-radius: 5px;
+            box-shadow: 6px 6px 12px #BDBDBD;
+        }
+        input{color:#484848;font-size:18px;}
+        .btn{
+            background: #CCFDE4;
+            color: #484848;
+            text-align: center;
+            border:1px solid #CCFDE4;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgba(66, 66, 66,0.6);
+            font-size: 19px;
+        }
+        .btn:hover{
+            background: #FBC02D;
+            border-color: #FBC02D;
+            color: white;
+        }
+        .error {
 			color: red;
 		}
-	</style>
+		a{color:white;}
+    </style>
 </head>
+
 <body>
+<div class="wrap">
+    <headerdiv></headerdiv>
+    <br><br><br><br>
+    <form:form method="POST" commandName="emailLoginBean" action="loginEmail.do" >
+    <div class="columns">
+        
+        <div class="column is-3"></div>
+        <div class="column is-6 bg">
+            <br>
+            <p class="title1 middle"><i class="fa fa-laptop" aria-hidden="true" style="padding:9px 3px 0px 0px;"></i>&nbsp&nbsp邮箱登录</p>
+            <br><br>
+            <div class="columns">
+                <div class="column is-4 right font1">
+                    <form:label path="email">*电子邮箱</form:label><br><br>
+                    <form:label path="password">*密码</form:label><br><br>
+                </div>
+                <div class="column is-8 height">
+                    <form:input path="email" type="email" placeHolder="电子邮箱"/>
+                    <form:label path="email" class="hint">
+                    	<form:errors path="email" cssClass="error" />
+                    </form:label>
+                    <br><br>
+                    <form:password path="password" placeHolder="密码"/>
+                    <form:label path="password">
+                    	<form:errors path="password" cssClass="error" />
+                    </form:label>
+                </div>
+           
+            </div>
+            
+            <div class="columns">
+                <div class="column is-4">
 
-	<div class="header">
-	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
-	
-	        <ul class="pure-menu-list">
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister.do" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin.do" class="pure-menu-link">登录</a></li>
-	        </ul>
-	    </div>
-	</div>
-	
-	<div class="content" id="main-content">
-		
-		<h2 class="content-head is-center">邮箱登录<!-- <a href="">手机登录</a> --></h2>
-			
-		<form:form class="pure-form pure-form-stacked" method="POST" commandName="emailLoginBean" action="loginEmail.do" >
-			<fieldset>
-				<legend>用户登录</legend>
-				<div class="pure-g">
-					<!-- 行1 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <form:label path="email">电子邮箱</form:label>
-                        <form:input path="email" class="pure-input-1" type="email" placeHolder="电子邮箱"/>
-                        <form:label path="email" class="hint">
-                    		<form:errors path="email" cssClass="error" />
-                    	</form:label>
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
+                </div>
+                <div class="column is-2">
+                    <form:label path="remember_me" class="pure-checkbox">
+                    	<form:checkbox path="remember_me" /> &nbsp;记住登录密码
+                    </form:label> 
+                </div>
+                <div class="column is-6">
+                	<label for="forget">
+                    	<a id="forget" href="<%=request.getContextPath() %>/account/forgetPwd.do">忘记密码？</a> | <a href="<%=request.getContextPath() %>/account/toEmailRegister.do">去注册</a>
+                    </label>
+                </div>
+            </div>
+            <br>
+            <div class="columns">
+                <input class="btn column is-4 is-offset-4" type="submit" value="登录账号" />
+            </div>
+            <br><br>
+        </div>
+        <div class="column is-3"></div>
+    </div>
+    </form:form>
+</div>
+<footerpage></footerpage>
+<script src="tag/header.tag" type="riot/tag"></script>
+<script src="tag/footerpage.tag" type="riot/tag"></script>
 
-                    </div>
-                    <!-- 行1 end -->
-                    
-                    <!-- 行2 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <form:label path="password">密码</form:label>
-                        <form:password path="password" class="pure-input-1" placeHolder="密码"/>
-                        <form:label path="password">
-                    		<form:errors path="password" cssClass="error" />
-                    	</form:label>
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    	
-                    </div>
-                    <!-- 行2 end -->
-                    
-                    <!-- 行3 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                    	<form:label path="remember_me" class="pure-checkbox">
-                    		<form:checkbox path="remember_me" /> &nbsp;&nbsp;记住登录密码
-                    	</form:label>
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                    	<label for="forget">
-                    		<a id="forget" href="<%=request.getContextPath() %>/account/forgetPwd.do">忘记密码？</a> | <a href="<%=request.getContextPath() %>/account/toEmailRegister.do">去注册</a>
-                    	</label>
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    
-                    </div>
-                    <!-- 行3 end -->
-                    
-                    <!-- 行4 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <input class="pure-button pure-input-1" type="submit" value="登录" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行4 end -->
-				</div>
-			</fieldset>
-		</form:form>
-		
-	</div>
-	
-	<div class="footer l-box is-center"> Malimaligong.com ® </div>
-
+<script>
+    riot.mount('*');
+</script>
 </body>
 </html>

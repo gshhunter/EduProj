@@ -29,6 +29,5 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		 response.sendRedirect(header + "/account/toEmailLogin.do");
 		 return false;
 	 }
-	 
-	 
+ 
 }
