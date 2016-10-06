@@ -90,7 +90,7 @@ public class StudentRequestController {
 			return root.toString();
 		}
 		
-		if(re.getGaokaoLocation()==null||re.getGaokaoResult()==0||re.getInterestMajor1()==null){
+		if(re.getInterestCity()==null||re.getCurrentDegree()==0||re.getInterestMajor1()==null){
 			root.put("status", 3); //request解析失败
 			root.put("info", "非法数据请求");
 			return root.toString();
@@ -101,9 +101,11 @@ public class StudentRequestController {
 //		}
 			re.setIdAccount(accountId);
 			re.setCreatedTime(new Date());		
-			re.setCurrentDegree(2);
+			//re.setCurrentDegree(2);
 			re.setGaokaoYear(2016);
-			re.setInterestCity("MelBySys");
+			//re.setInterestCity("MelBySys");
+			re.setGaokaoLocation("untapped");
+			re.setGaokaoResult(0);
 			this.reqService.save(re);
 			
 			root.put("requestId", re.getIdRequest());
