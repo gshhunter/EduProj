@@ -106,8 +106,8 @@
     </div>
 </div>
 <footerpage></footerpage>
-<script src="tag/header.tag" type="riot/tag"></script>
-<script src="tag/footerpage.tag" type="riot/tag"></script>
+<script src="http://edu.comeon.today/public/tag/header.tag" type="riot/tag"></script>
+<script src="http://edu.comeon.today/public/tag/footerpage.tag" type="riot/tag"></script>
 <script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {

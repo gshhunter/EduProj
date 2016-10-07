@@ -118,8 +118,8 @@
     </form:form>
 </div>
 <footerpage></footerpage>
-<script src="tag/header.tag" type="riot/tag"></script>
-<script src="tag/footerpage.tag" type="riot/tag"></script>
+<script src="http://edu.comeon.today/public/tag/header.tag" type="riot/tag"></script>
+<script src="http://edu.comeon.today/public/tag/footerpage.tag" type="riot/tag"></script>
 
 <script>
     riot.mount('*');
