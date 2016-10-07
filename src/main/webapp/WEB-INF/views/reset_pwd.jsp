@@ -2,123 +2,119 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html;charset=utf-8" isELIgnored="false"%>
 <!doctype html>
-<html>
+<html lang="zh">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Reset Password Page">
+    <script src="http://edu.comeon.today/public/resources/riot.js"></script>
+    <script src="http://edu.comeon.today/public/resources/jquery.js"></script>
+    <script src="http://edu.comeon.today/public/js/main.js"></script>
+   
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/bulma.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
 
-    <title>重置密码页面</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-    <!--[if lte IE 8]>
-    
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-    
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    
-    <!--<![endif]-->
-    
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
 
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
-    <!--<![endif]-->
-	<style>
-		#main-content {
-			position: absolute;
-			top: 35px;
-			width: 100%;
-		}
-		.error {
-			color: red;
-		}
-	</style>
+    <script src="http://edu.comeon.today/public/resources/jquery.cookie.js"></script>
+    <script src="http://edu.comeon.today/public/resources/layer/layer.js"></script>
+    <script src="http://edu.comeon.today/public/resources/md5.js"></script>
+    
+    
+    <title>重置密码</title>
+    <style>
+        .middle{text-align: center;}
+        .right{text-align: right;}
+        .left{text-align: left;}
+        .title1{
+            font-size: 2.5em;
+/*            color:#484848;*/
+            font-weight: bold;
+        }
+        .font1{font-size: 18px; font-weight: bold;}
+        .height{line-height: 20px;}
+        .bg{
+            background: #92BBAE;
+            color: white;
+            border:1px solid #92BBAE;
+/*
+            border-radius: 5px;
+            box-shadow: 6px 6px 12px #BDBDBD;
+*/
+        }
+        input{color:#484848; font-size: 22px;}
+        .btn{
+            background: #F7E289;
+            color: #484848;
+            text-align: center;
+            border:1px solid #F7E289;
+            border-radius: 3px;
+            box-shadow: 1px 1px 5px rgba(66, 66, 66,0.6);
+            font-size: 18px;
+        }
+        .btn:hover{
+            background: #F6D380;
+            border-color: #F6D380;
+            color: #484848;
+        }
+        .btnsm{
+            background: #5ED3B6;
+            color: #484848;
+            text-align: center;
+            border:1px solid #5ED3B6;
+            border-radius: 2px;
+            box-shadow: 1px 1px 3px rgba(66, 66, 66,0.3);
+            font-size: 14px;
+            padding:5px 15px;
+        }
+        .btnsm:hover{
+            background: #54f8a3;
+            border-color: #54f8a3;
+            color: #484848;
+        }
+        
+    </style>
 </head>
+
 <body>
+<div class="wrap">
+    <headerdiv></headerdiv>
+    <br><br><br>
+    <form:form method="POST" commandName="resetPasswordBean" action="resetPassword.do" >
+    <div class="columns bg">
+        
+        <div class="column is-3"></div>
+        <div class="column is-6">
+            <br>
+            <p class="title1 middle"><i class="fa fa-wrench" aria-hidden="true" style="padding:9px 0px 0px 0px;"></i>&nbsp;重置密码</p>
+            <br><br>
+            <div class="columns">
+                <div class="column is-9 is-offset-3 left font1">
+                    <form:label path="new_pass">*新密码</form:label><br>
+                    <form:password path="new_pass" placeHolder="新密码"/><br>
+                    <form:errors path="new_pass" cssClass="error" /><br>
+                    <br>
+                    <form:label path="confirm_pass">*确认密码</form:label><br>
+                    <form:password path="confirm_pass" placeHolder="再次输入"/><br>
+                    <form:errors path="confirm_pass" cssClass="error" /><br>
+                </div>
+            </div>
+            <br>
+            <div class="columns">
+                <input class="btn column is-4 is-offset-4" type="submit" value="重置密码" />
+            </div>
+            <br><br>
+        </div>
+        <div class="column is-3"></div>
+    </div>
+    </form:form>
+</div>
+<footerpage></footerpage>
+<script src="tag/header.tag" type="riot/tag"></script>
+<script src="tag/footerpage.tag" type="riot/tag"></script>
 
-	<div class="header">
-	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Logo</a>
-	
-	        <ul class="pure-menu-list">
-	            <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin" class="pure-menu-link">登录</a></li>
-	        </ul>
-	    </div>
-	</div>
-	
-	<div class="content" id="main-content">
-		
-		<h2 class="content-head is-center"><b>重置密码<!-- | <a href="">手机注册</a> --></b></h2>
-			
-		<form:form class="pure-form pure-form-stacked" method="POST" commandName="resetPasswordBean" action="resetPassword" >
-			<fieldset>
-				<legend>输入新密码</legend>
-				<div class="pure-g">
-					<!-- 行1 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <form:label path="new_pass">*新密码</form:label>
-                        <form:password path="new_pass" class="pure-input-1" placeHolder="新密码"/>
-                    	<form:errors path="new_pass" cssClass="error" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行1 end -->
-                    
-                    <!-- 行2 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <form:label path="confirm_pass">*确认密码</form:label>
-                        <form:password path="confirm_pass" class="pure-input-1" placeHolder="再次输入"/>
-                    	<form:errors path="confirm_pass" cssClass="error" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行2 end -->
-                    
-                    <!-- 行3 -->
-                    
-                    <!-- 行3 end -->
-                    
-                    
-                    <!-- 行4 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    	<br/>
-                        <input class="pure-button pure-input-1" type="submit" value="重置密码" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行4 end -->
-                    <br/>
-                    
-                    <!-- 行5 -->
-                    
-                    <!-- 行5 end -->
-				</div>
-			</fieldset>
-		</form:form>
-		
-	</div>
-	
-	<div class="footer l-box is-center"> Malimaligong.com ® </div>
-
+<script>
+    riot.mount('*');
+</script>
 </body>
 </html>

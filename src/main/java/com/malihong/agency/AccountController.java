@@ -170,11 +170,20 @@ public class AccountController {
 		String password = account.getPassword();
 		String firstname = account.getFirstname();
 		String lastname = account.getLastname();
-		String passwordmd5 = MD5Encript.crypt(password);
-		
+
 		Account a = new Account();
 		Profile p = new Profile();
 		Identification ident = new Identification();
+		
+		if (lastname == null || "".equals(lastname.trim())) {
+			result.rejectValue("lastname", "请输入你的姓氏", "请输入你的姓氏");
+			return "email_register";
+		}
+		
+		if (firstname == null || "".equals(firstname.trim())) {
+			result.rejectValue("firstname", "请输入你的名称", "请输入你的名称");
+			return "email_register";
+		}
 		
 		if (!ValidationUtil.isEmail(email)) {
 			result.rejectValue("email", "请输入正确的电子邮箱", "请输入正确的电子邮箱");
@@ -186,15 +195,7 @@ public class AccountController {
 			return "email_register";
 		}
 		
-		if (firstname == null || "".equals(firstname.trim())) {
-			result.rejectValue("firstname", "请输入你的名称", "请输入你的名称");
-			return "email_register";
-		}
-		
-		if (lastname == null || "".equals(lastname.trim())) {
-			result.rejectValue("lastname", "请输入你的姓氏", "请输入你的姓氏");
-			return "email_register";
-		}
+		String passwordmd5 = MD5Encript.crypt(password);
 		
 		boolean isEmailExist = this.accountService.checkAccountByEmail(email);
 		if (isEmailExist) {
@@ -289,7 +290,7 @@ public class AccountController {
 		}
 		
 		if (confirmPass == null || "".equals(confirmPass.trim())) {
-			result.rejectValue("confirm_pwd", "请输入您的确认密码", "请输入您的确认密码");
+			result.rejectValue("confirm_pass", "请输入您的确认密码", "请输入您的确认密码");
 			return "reset_pwd";
 		}
 		
@@ -299,7 +300,7 @@ public class AccountController {
 		}
 		
 		if (!confirmPass.equals(newPass)) {
-			result.rejectValue("confirm_pwd", "两次输入密码不一致", "两次输入密码不一致");
+			result.rejectValue("confirm_pass", "两次输入密码不一致", "两次输入密码不一致");
 			return "reset_pwd";
 		}
 		

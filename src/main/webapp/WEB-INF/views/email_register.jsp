@@ -2,147 +2,118 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html;charset=utf-8" isELIgnored="false"%>
 <!doctype html>
-<html>
+<html lang="zh">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Email register page">
+    <script src="http://edu.comeon.today/public/resources/riot.js"></script>
+    <script src="http://edu.comeon.today/public/resources/jquery.js"></script>
+    <script src="http://edu.comeon.today/public/js/main.js"></script>
+   
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/bulma.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
 
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
+
+    <script src="http://edu.comeon.today/public/resources/jquery.cookie.js"></script>
+    <script src="http://edu.comeon.today/public/resources/layer/layer.js"></script>
+    <script src="http://edu.comeon.today/public/resources/md5.js"></script>
+    
+    
     <title>邮箱注册页面</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-    <!--[if lte IE 8]>
-    
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-    
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    
-    <!--<![endif]-->
-    
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
-    <!--<![endif]-->
-	<style>
-		#main-content {
-			position: absolute;
-			top: 35px;
-			width: 100%;
-		}
-		.error {
+    <style>
+        .middle{text-align: center;}
+        .right{text-align: right;}
+        .left{text-align: left;}
+        .title1{
+            font-size: 2.5em;
+/*            color:#484848;*/
+            font-weight: bold;
+        }
+        .font1{font-size: 18px; font-weight: bold;}
+        .height{line-height: 20px;}
+        .bg{
+            background: #5ED3B6;
+            color: white;
+            border:1px solid #5ED3B6;
+            border-radius: 5px;
+            box-shadow: 6px 6px 12px #BDBDBD;
+        }
+        input{color:#484848;font-size:22px;}
+        .btn{
+            background: #F6D380;
+            color: #484848;
+            text-align: center;
+            border:1px solid #F6D380;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgba(66, 66, 66,0.6);
+            font-size: 19px;
+        }
+        .btn:hover{
+            background: #CCFDE4;
+            border-color: #CCFDE4;
+        }
+        .error {
 			color: red;
 		}
-	</style>
+    </style>
 </head>
+
 <body>
+<div class="wrap">
+    <headerdiv></headerdiv>
+    <br><br><br>
+    <form:form method="POST" commandName="account" action="registerEmail.do" >
+    <div class="columns">
+        
+        <div class="column is-3"></div>
+        <div class="column is-6 bg">
+            <br>
+            <p class="title1 middle"><i class="fa fa-envelope" aria-hidden="true" style="padding:5px 5px 0px 0px;"></i>&nbsp;邮箱注册</p>
+            <br>
+            <div class="columns">
+                <div class="column is-2"></div>
+                <div class="column is-4 left font1">
+                    <form:label path="lastname">*姓氏</form:label><br>
+                    <form:input id="lastname" path="lastname" placeHolder="姓氏"/><br>
+                    <form:errors path="lastname" cssClass="error" />
+                </div>
+                <div class="column is-6 left font1">
+                    <form:label path="firstname">*名称</form:label><br>
+                    <form:input path="firstname" placeHolder="名称"/><br>
+                    <form:errors path="firstname" cssClass="error" />
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column is-2"></div>
+                <div class="column is-10 height font1">
+                    <form:label path="email">*电子邮箱</form:label><br>
+                    <form:input path="email" type="email" placeHolder="电子邮箱" size="47"/><br>
+                    <form:errors path="email" cssClass="error" /><br>
 
-	<div class="header">
-	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Malimalihong</a>
-	
-	        <ul class="pure-menu-list">
-	        	<li class="pure-menu-item"><a href="<%=request.getContextPath() %>/agent/toBeAgent" class="pure-menu-link">成为留学顾问</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister.do" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin.do" class="pure-menu-link">登录</a></li>
-	        </ul>
-	    </div>
-	</div>
-	
-	<div class="content" id="main-content">
-		
-		<h2 class="content-head is-center"><b>邮箱注册<!-- | <a href="">手机注册</a> --></b></h2>
-			
-		<form:form class="pure-form pure-form-stacked" method="POST" commandName="account" action="registerEmail.do" >
-			<fieldset>
-				<legend>创建用户</legend>
-				<div class="pure-g">
-					<!-- 行1 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <form:label path="email">*电子邮箱</form:label>
-                        <form:input path="email" class="pure-input-1" type="email" placeHolder="电子邮箱"/>
-                    	<form:errors path="email" cssClass="error" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行1 end -->
-                    
-                    <!-- 行2 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                        <form:label path="password">*密码</form:label>
-                        <form:password path="password" class="pure-input-1" placeHolder="密码"/>
-                    	<form:errors path="password" cssClass="error" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行2 end -->
-                    
-                    <!-- 行3 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                        <form:label path="firstname">*名称</form:label>
-                        <form:input path="firstname" class="pure-input-1" placeHolder="名称"/>
-                        <form:errors path="firstname" cssClass="error" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                    	<form:label path="lastname">*姓氏</form:label>
-                    	<form:input id="lastname" path="lastname" class="pure-input-1" placeHolder="姓氏"/>
-                    	<form:errors path="lastname" cssClass="error" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行3 end -->
-                    
-                    
-                    <!-- 行4 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    	<br/>
-                        <input class="pure-button pure-input-1" type="submit" value="创建账户" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行4 end -->
-                    <br/>
-                    
-                    <!-- 行5 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    	<p><b>单击"创建账户"，即表示同意XXX的<a href="">条款和条件</a>以及<a href="">隐私策略</a></b></p>
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    <!-- 行5 end -->
-				</div>
-			</fieldset>
-		</form:form>
-		
-	</div>
-	
-	<div class="footer l-box is-center"> Malimaligong.com ® </div>
+                    <form:label path="password">*密码</form:label><br>
+                    <form:password path="password" placeHolder="密码" size="47"/><br>
+                    <form:errors path="password" cssClass="error" /><br>
+                </div>
+            </div>
+            
+            <br>
+            <div class="columns">
+                <input class="btn column is-4 is-offset-4" type="submit" value="创建账户" /><br>
+            </div>
+            <br>
+        </div>
+        <div class="column is-3"></div>
+    </div>
+    </form:form>
+</div>
+<footerpage></footerpage>
+<script src="tag/header.tag" type="riot/tag"></script>
+<script src="tag/footerpage.tag" type="riot/tag"></script>
 
+<script>
+    riot.mount('*');
+</script>
 </body>
 </html>

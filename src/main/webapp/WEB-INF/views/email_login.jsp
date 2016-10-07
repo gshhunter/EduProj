@@ -71,7 +71,7 @@
         <div class="column is-3"></div>
         <div class="column is-6 bg">
             <br>
-            <p class="title1 middle"><i class="fa fa-laptop" aria-hidden="true" style="padding:9px 3px 0px 0px;"></i>&nbsp&nbsp邮箱登录</p>
+            <p class="title1 middle"><i class="fa fa-laptop" aria-hidden="true" style="padding:9px 3px 0px 0px;"></i>&nbsp;邮箱登录</p>
             <br><br>
             <div class="columns">
                 <div class="column is-4 right font1">

@@ -2,119 +2,113 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page language="java" contentType="text/html;charset=utf-8" isELIgnored="false"%>
 <!doctype html>
-<html>
+<html lang="zh">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Forget Password Page">
+    <script src="http://edu.comeon.today/public/resources/riot.js"></script>
+    <script src="http://edu.comeon.today/public/resources/jquery.js"></script>
+    <script src="http://edu.comeon.today/public/js/main.js"></script>
+   
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/bulma.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/css/main.css">
 
-    <title>忘记密码页面</title>
-    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
-    <!--[if lte IE 8]>
-    
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
-    
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
-    
-    <!--<![endif]-->
-    
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+    <link rel="stylesheet" href="http://edu.comeon.today/public/resources/fontawesome/css/font-awesome.min.css">
 
-    <!--[if lte IE 8]>
-        <link rel="stylesheet" href="css/layouts/marketing-old-ie.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-        <link rel="stylesheet" href="http://edu.comeon.today/public/css/shuhao/marketing.css" >
-    <!--<![endif]-->
-	<style>
-		#main-content {
-			position: absolute;
-			top: 35px;
-			width: 100%;
-		}
-		.error {
+    <script src="http://edu.comeon.today/public/resources/jquery.cookie.js"></script>
+    <script src="http://edu.comeon.today/public/resources/layer/layer.js"></script>
+    <script src="http://edu.comeon.today/public/resources/md5.js"></script>
+    
+    
+    <title>找回密码</title>
+    <style>
+        .middle{text-align: center;}
+        .right{text-align: right;}
+        .left{text-align: left;}
+        .title1{
+            font-size: 2.5em;
+/*            color:#484848;*/
+            font-weight: bold;
+        }
+        .font1{font-size: 18px; font-weight: bold;}
+        .height{line-height: 20px;}
+        .bg{
+            background: #ADAFDE;
+            color: white;
+        }
+        input{color:#484848;font-size:22px;}
+        .btn{
+            background: #757575;
+            color: white;
+            text-align: center;
+            border:1px solid #757575;
+            border-radius: 3px;
+            box-shadow: 1px 1px 5px rgba(66, 66, 66,0.6);
+            font-size: 18px;
+        }
+        .btn:hover{
+            background: #9E9E9E;
+            border-color: #9E9E9E;
+            color:white;
+        }
+        .btnsm{
+            background: #F7E289;
+            color: #484848;
+            text-align: center;
+            border:1px solid #F7E289;
+            border-radius: 2px;
+            box-shadow: 1px 1px 3px rgba(66, 66, 66,0.3);
+            font-size: 14px;
+            padding:5px 15px;
+        }
+        .btnsm:hover{
+            background: #faeeb7;
+            border-color: #faeeb7;
+            color: #484848;
+        }
+        .error {
 			color: red;
 		}
-		#sendEmail, #errorMsg {
+		/*#sendEmail, #errorMsg {
 			position:relative;
 			top: 47px;
-		}
-	</style>
+		}*/
+    </style>
 </head>
+
 <body>
-
-	<div class="header">
-	    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
-	        <a class="pure-menu-heading" href="<%=request.getContextPath() %>/home.do">Logo</a>
-	
-	        <ul class="pure-menu-list">
-	            <!-- <li class="pure-menu-item"><a href="#" class="pure-menu-link">成为留学顾问</a></li> -->
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailRegister.do" class="pure-menu-link">注册</a></li>
-	            <li class="pure-menu-item"><a href="<%=request.getContextPath() %>/account/toEmailLogin.do" class="pure-menu-link">登录</a></li>
-	        </ul>
-	    </div>
-	</div>
-	
-	<div class="content" id="main-content">
-		
-		<h2 class="content-head is-center"><b>找回密码<!-- | <a href="">手机注册</a> --></b></h2>
-			
-		<form class="pure-form pure-form-stacked">
-			<fieldset>
-				<legend>请填写邮箱并发送验证</legend>
-				<div class="pure-g">
-					<!-- 行1 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-4 pure-u-lg-1-4">
-                        <label for="email">电子邮箱</label>
-                        <input id="email" class="pure-input-1" type="email" placeHolder="电子邮箱"/>
-                    	<span id="error"></span>
-                    </div>
-                    
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-8 pure-u-lg-1-8">
-                    	<input id="sendEmail" type="button" class="pure-button pure-input-1" value="发送邮件"/>
-                    </div>
-
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-8 pure-u-lg-1-8">
-                    	<a id="errorMsg"></a>
-                    </div>
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-6 pure-u-lg-1-6">
-                    </div>
-                    <!-- 行1 end -->
-                    
-                    <!-- 行2 -->
-                   
-                    <!-- 行2 end -->
-                    
-                    <!-- 行4 -->
-                    <div class="l-box-sm pure-u-1 pure-u-md-1-3 pure-u-lg-1-3">
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-3-8 pure-u-lg-3-8">
-                    	<br/>
-                        <input id="forwardEmail" class="pure-button pure-input-1" type="button" value="前往邮箱验证" />
-                    </div>
-                    
-                    <div class="l-box-sm pure-u-1 pure-u-md-7-24 pure-u-lg-7-24">
-                    </div>
-                    <!-- 行4 end -->
-                    <br/>
-
-				</div>
-			</fieldset>
-		</form>
-		
-	</div>
-	
-	<div class="footer l-box is-center"> Malimaligong.com ® </div>
-
-	<script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
+<div class="wrap">
+    <headerdiv></headerdiv>
+    <br><br><br>
+    <div class="columns bg">
+        
+        <div class="column is-3"></div>
+        <div class="column is-6">
+            <br>
+            <p class="title1 middle"><i class="fa fa-key" aria-hidden="true" style="padding:9px 0px 0px 0px;"></i>&nbsp&nbsp找回密码</p>
+            <br><br>
+            <div class="columns">
+                <div class="column is-9 is-offset-3 left font1">
+                    <label for="email">电子邮箱</label><br>
+                    <input id="email" type="email" placeHolder="电子邮箱" size="25">
+                    <input id="sendEmail" type="button" class="btnsm" value="发送验证邮件"><br>
+                    <span id="error"></span>
+                </div>
+            </div>
+            <br>
+            <div class="columns">
+                <input id="forwardEmail" class="btn column is-4 is-offset-4" type="button" value="前往邮箱验证" />
+            </div>
+            <br><br>
+        </div>
+        <div class="column is-3"></div>
+    </div>
+</div>
+<footerpage></footerpage>
+<script src="tag/header.tag" type="riot/tag"></script>
+<script src="tag/footerpage.tag" type="riot/tag"></script>
+<script type="text/javascript" src="<c:url value="http://edu.comeon.today/public/resources/jquery.js" />"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		
@@ -221,5 +215,8 @@
 			settime(obj);	
 	}
 	</script>
+<script>
+    riot.mount('*');
+</script>
 </body>
 </html>
